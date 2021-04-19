@@ -1,0 +1,45 @@
+.modal-header,
+h4,
+.close {
+    background-color: #286090;
+    color: white !important;
+    text-align: center;
+    font-size: 20px;
+}
+
+.help-block {
+    color: red;
+}
+
+.form-group.has-error .form-control-label {
+    color: red;
+}
+
+.form-group.has-error .form-control {
+    border: 1px solid red;
+    box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
+}
+
+.dataTables_length {
+    display: none;
+}
+
+.dataTables_filter {
+    text-align: right;
+}
+
+.dataTables_info {
+    display: none;
+}
+
+.dataTables_paginate {
+    cursor: pointer;
+}
+
+table.dataTable {
+    border-collapse: collapse;
+}
+
+.table {
+    border-collapse: collapse;
+}

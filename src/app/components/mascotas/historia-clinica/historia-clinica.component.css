@@ -1,0 +1,29 @@
+form>div>input {
+    outline: none;
+    color: #024059;
+    border: none;
+    border-bottom: 1px solid #024059;
+    width: 85%;
+    display: flex;
+}
+
+.sub_input {
+    outline: none;
+    color: #024059;
+    border: none;
+    border-bottom: 1px solid #024059;
+    width: 85%;
+    display: flex;
+}
+
+form>div>label {
+    width: 25%;
+}
+
+.collapse {
+    padding-right: 5%;
+}
+
+#table-historial {
+    display: none;
+}

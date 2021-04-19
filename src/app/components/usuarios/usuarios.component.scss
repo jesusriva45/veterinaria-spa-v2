@@ -1,0 +1,22 @@
+/* -------------------- Page Styles (not required) */
+
+div {
+    margin: 20px;
+}
+
+
+/* -------------------- Select Box Styles: bavotasan.com Method (with special adaptations by ericrasch.com) */
+
+
+/* -------------------- Source: http://bavotasan.com/2011/style-select-box-using-only-css/ */
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 50px;
+    outline: none;
+    cursor: pointer;
+    background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat right center;
+    background-origin: content-box, border-box;
+}

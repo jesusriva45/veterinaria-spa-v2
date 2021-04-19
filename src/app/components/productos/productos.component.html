@@ -1,0 +1,18 @@
+<div class="row col-12 row-cols-1 row-cols-md-4 g-4 p-5">
+
+    <div class="col mb-2" *ngFor="let producto of productos; let i = index">
+        <div class="card-header text-center">
+            <h3>{{ producto.nombre }} - {{ producto.marca }}</h3>
+        </div>
+        <div class="card">
+            <img class="img-fluid me-auto ms-auto" src="../../../../assets/img/antipulgas.png" width="200px" height="200px">
+            <div class="card-body">
+                <h1 class="card-text text-center p-4">S/.{{ producto.precio}}</h1>
+                <p class="card-text" style="text-align: justify;">{{ producto.descripcion}}</p>
+            </div>
+            <button class="btn btn-primary w-75 me-auto ms-auto mb-4" [routerLink]="['/productos/carrito-producto', producto.id_producto]">Comprar</button>
+        </div>
+
+    </div>
+
+</div>

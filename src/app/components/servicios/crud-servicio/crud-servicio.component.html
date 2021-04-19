@@ -1,0 +1,177 @@
+<div class="container mt-5">
+    <!--button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Agregar Usuario
+  </button*-->
+
+    <!--button type="button" class="btn btn-primary crud" (click)="openModalCrud(mymodal,'agregar')">Agregar Servicio</button-->
+
+    <div class="card border-primary mb-5 container mt-5">
+
+        <div class="card-header row text-primary">
+            <h2>Listado de Servicio</h2>
+        </div>
+
+        <div class="card-body text-secondary table-responsive align-middle">
+
+
+
+            <table class="table table-responsive-md  text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Servicio</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Handle</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let servicio of servicios">
+                        <th class="align-middle">{{ servicio.idservicio }}</th>
+                        <th class="align-middle"><img class="img-fluid me-auto ms-auto" src="../../../../assets/img/antipulgas.png" width="50px" height="50px"></th>
+                        <th class="align-middle">{{ servicio.nombre }}</th>
+                        <th class="align-middle">{{ servicio.precio }}</th>
+                        <th class="align-middle">{{ servicio.descripcion }}</th>
+
+                        <td class="align-middle"><button type="button" class="btn btn-primary crud btn-outline">Detalle</button></td>
+                        <td class="align-middle">
+                            <!--button type="button" class="btn btn-warning align-middle crud" value="Detalle" (click)="openModalCrud(mymodal,'editar',servicio.idservicio)">Editar</button-->
+                        </td>
+
+                        <td class="align-middle"><button type="button" class="btn btn-danger btn-sm px-3" value="Eliminar" (click)="delete(servicio)">X</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<ng-template #mymodal let-modal>
+
+    <div role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-basic-title" class="d-block  modal fade show">
+
+        <div role="document" class="modal-dialog  modal-xl modal-dialog-centered">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">{{ titulo }}</h5>
+
+                </div>
+                <div class="modal-body">
+
+                    <form id="form-producto" [formGroup]="myform" (ngSubmit)="verificarDatos()" class="row container me-auto ms-auto justify-content-center">
+
+                        <fieldset class="col-12 p-5" formGroupName="name">
+
+
+
+
+                            <div class="form-group col-12">
+
+                                <input type="text" class="form-input" [(ngModel)]="servicio.idservicio" formControlName="IdServicio" required hidden>
+                                <div class="form-control-feedback" *ngIf="IdServicio.errors && (IdServicio.dirty || IdServicio.touched)">
+                                    <p class="alert alert-danger" role="alert" *ngIf="IdServicio.errors.required">Codigo incorrecto</p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group col-12">
+                                <label>Nombre</label>
+                                <input type="text" [ngClass]="{
+                                    'is-invalid': (Nombre.errors?.required && submitted) || ((Nombre.dirty || Nombre.touched) && Nombre.invalid ),
+                                    'is-valid': Nombre.valid && (Nombre.dirty || Nombre.touched)
+                                  }" class="form-control" [(ngModel)]="servicio.nombre" formControlName="Nombre" required>
+
+                                <div class="m-0">
+                                    <p class="alert-danger" *ngIf=" (Nombre.errors && Nombre.errors.required && submitted) || ((Nombre.dirty || Nombre.touched) && Nombre.invalid )">Nombre is required</p>
+                                    <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-12">
+                                <label>Descripcion</label>
+
+                                <angular-editor [ngClass]="{
+                                    'is-invalid': (Descripcion.errors?.required && submitted) || ((Descripcion.dirty || Descripcion.touched) && Descripcion.invalid ),
+                                    'is-valid': Descripcion.valid && (Descripcion.dirty || Descripcion.touched)
+                                  }" class="form-control" [(ngModel)]="servicio.descripcion" formControlName="Descripcion" required>
+                                </angular-editor>
+
+
+                                <div class="m-0">
+                                    <p class="alert-danger" *ngIf=" (Descripcion.errors?.required && submitted) || ((Descripcion.dirty || Descripcion.touched) && Descripcion.invalid )">Descripcion is required</p>
+                                    <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group col-12">
+                                <label>Precio</label>
+                                <input type="text" [ngClass]="{
+                                    'is-invalid': (Precio.errors?.required && submitted) || ((Precio.dirty || Precio.touched) && Precio.invalid ),
+                                    'is-valid': Precio.valid && (Precio.dirty || Precio.touched)
+                                  }" class="form-control" [(ngModel)]="servicio.precio" formControlName="Precio" required>
+
+                                <div class="m-0">
+                                    <p class="alert-danger" *ngIf=" (Precio.errors?.required && submitted) || ((Precio.dirty || Precio.touched) && Precio.invalid )">Precio is required</p>
+                                    <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group col-12">
+                                <label>Categoria</label>
+
+                                <select class="w-100 " [(ngModel)]="servicio.serCategoria" [compareWith]="compareCategoria" formControlName="IdCategoria" required>
+                                       
+                                        <option class="" [ngValue]="undefined" aria-hidden="aria-hidden" selected>--- selecionar una marca ---</option>
+
+                                       
+                                        <option *ngFor="let cat of categoria" [ngValue]="cat" > {{ cat.descripcion  }}</option>
+                                   
+                                       
+                                    </select>
+
+                                <div class="m-0">
+                                    <p class="alert-danger" *ngIf="(IdCategoria.errors?.required && submitted) || ((IdCategoria.dirty || IdCategoria.touched) && IdCategoria.invalid )">Categoria is required</p>
+                                    <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+
+                        <div class="col-12 btn-submit">
+
+                            <button type="button" id="Guerra" class="cancel btn  m-4" aria-label="Close" (click)="cerrarmodal()">Cancelar</button>
+
+
+                            <button type="submit" id="Guerra" class="acept btn m-4" *ngIf="(servicio.idservicio == 0) else elseBlock">Registrar</button>
+
+                            <ng-template #elseBlock>
+                                <button type="" role="button" class="acept btn m-4" [disabled]="myform.invalid">Actualizar</button>
+                            </ng-template>
+                        </div>
+
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ng-template>

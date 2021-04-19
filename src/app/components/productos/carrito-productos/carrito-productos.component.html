@@ -1,0 +1,31 @@
+<div class="row col-12 d-inline-flex justify-content-center p-5">
+    <main class="col-4 m-4">
+        <div class="card col-12">
+            <div class="card-body">
+                <img class="img-fluid" src="../../../../assets/img/antipulgas.png">
+
+                <button class="btn btn-primary m-2" marcador="1">+</button>
+                <button class="btn btn-danger m-2" marcador="1">-</button>
+            </div>
+        </div>
+    </main>
+
+    <aside class="row col-4 d-flex m-4">
+        <div class="col-12">
+            <h2>{{ producto.nombre }}</h2>
+            <hr>
+            <h3>Indicaciones</h3>
+            <h5>{{ producto.indicaciones}}</h5>
+        </div>
+        <div class="col-12  ">
+            <h2>Carrito</h2>
+            <!-- Elementos del carrito -->
+            <ul id="carrito" class="list-group"></ul>
+            <hr>
+            <!-- Precio total -->
+            <h5 class="text-right">Cantidad : <span id="total"></span> 1</h5>
+            <h5 class="text-right">Total: <span id="total"></span>S/.{{ producto.precio }}</h5>
+            <button id="boton-vaciar" class="btn btn-danger">Vaciar</button>
+        </div>
+    </aside>
+</div>

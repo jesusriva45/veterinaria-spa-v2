@@ -1,0 +1,68 @@
+.card {
+    display: flex;
+}
+
+form {
+    width: 100%;
+}
+
+form>div>div {
+    padding-bottom: 10%;
+    padding-right: 0%;
+}
+
+.form-control {
+    margin: 0;
+}
+
+.form-control-feedback {
+    width: 85%;
+}
+
+.btn-submit {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-submit>button {
+    border-radius: 25px 25px 25px 25px;
+    border: #9FA2B4 1px solid;
+    width: 100%;
+    color: #9FA2B4;
+}
+
+.btn-submit>button:hover {
+    cursor: pointer;
+    background-color: #024059;
+    color: #F7F8FC;
+}
+
+
+/*-------- VALIDACION DE FORMULARIO -------------------*/
+
+.alert-danger {
+    border-radius: 0px 0px 10px 10px;
+    padding: 5px;
+    padding-left: 10px;
+}
+
+
+/*------------------------------------------------------*/
+
+
+/***************** FILE FOTO ************************************/
+
+.image-upload>input {
+    display: none;
+}
+
+.image-upload>label>svg:hover {
+    cursor: pointer;
+}
+
+.image-upload>label>svg>img {
+    cursor: pointer;
+}
+
+
+/*-------------------------- SELECT - OPTION ----------------------------*/

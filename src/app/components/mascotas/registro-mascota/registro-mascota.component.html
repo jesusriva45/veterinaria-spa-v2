@@ -1,0 +1,38 @@
+<section class="contenedor">
+    <h4 class="h4tit text-center registrateh4">
+        ¡Registra a tu mascota!
+    </h4>
+    <div class="row">
+
+        <div class="col-md-5 offset-2">
+
+            <br>
+            <p>
+                Ingrese los datos de la Mascota:
+            </p>
+            <form action="registraMascota">
+                <input class="form-control" type="text" name="nombreMas" id="idnombreMas" placeholder="Nombre de la mascota">
+                <input class="form-control" type="text" name="edad" id="idedad" placeholder="Ingrese la edad de la mascota">
+                <select id="inputState" class="form-control">
+                    <option selected>Sexo</option>
+                    <option>Macho</option>
+                    <option>Hembra</option>
+                </select>
+                <select id="inputState" class="form-control">
+                    <option selected>Tipo de Mascota</option>
+                    <option>Perro</option>
+                    <option>Gato</option>
+                    <option>Ave</option>
+                    <option>Roedor</option>
+                    <option>Dinosaurio</option>
+                    <option>Otros</option>
+                </select>
+                <textarea class="form-control" type="textarea" name="descripcion" id="iddescripcion" placeholder="Ingresa una breve descripción de su mascota"></textarea>
+            </form>
+
+        </div>
+        <div class="w-100 text-center">
+            <a href="#"><button type="button" class="btnRegistra ">Registrar</button></a>
+        </div>
+    </div>
+</section>
