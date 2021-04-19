@@ -1,14 +1,60 @@
 /* -------------------- Page Styles (not required) */
 
-div {
-    margin: 20px;
-}
-
 
 /* -------------------- Select Box Styles: bavotasan.com Method (with special adaptations by ericrasch.com) */
 
 
 /* -------------------- Source: http://bavotasan.com/2011/style-select-box-using-only-css/ */
+
+.modal-header,
+h4,
+.close {
+    background-color: #286090;
+    color: white !important;
+    text-align: center;
+    font-size: 20px;
+}
+
+.help-block {
+    color: red;
+}
+
+.form-group.has-error .form-control-label {
+    color: red;
+}
+
+.form-group.has-error .form-control {
+    border: 1px solid red;
+    box-shadow: 0 0 0 0.2rem rgba(250, 16, 0, 0.18);
+}
+
+.dataTables_length {
+    display: none;
+}
+
+.dataTables_filter {
+    text-align: right;
+}
+
+.dataTables_info {
+    display: none;
+}
+
+.dataTables_paginate {
+    cursor: pointer;
+}
+
+table.dataTable {
+    border-collapse: collapse;
+}
+
+.table {
+    border-collapse: collapse;
+}
+
+mdb-icon {
+    outline: none;
+}
 
 select {
     -webkit-appearance: none;
@@ -19,4 +65,8 @@ select {
     cursor: pointer;
     background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat right center;
     background-origin: content-box, border-box;
+}
+
+mdb-card {
+    min-width: 95.5vmax;
 }

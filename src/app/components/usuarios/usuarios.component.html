@@ -1,165 +1,22 @@
-<div class="container-fluid mt-5">
+<div class="container-fluid p-5 ">
     <!--button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
     Agregar Usuario
   </button*-->
-
     <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="openModalCrud('agregar')" mdbWavesEffect>AGREGAR USUARIO</button>
 
 
+    <!--Card image-->
+
+    <!--/Card image-->
+
+    <!-- Card content -->
 
 
+    <!--Title-->
 
-    <div mdbModal #content="mdbModal" style="overflow-y: auto" [config]="{backdrop: 'static' , keyboard: false}" class="modal fade left" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-full-height modal-left" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">AGREGAR USUARIO</h4>
-                </div>
-                <div class="modal-body">
-
-
-                    <form id="form-usuario" [ngFormOptions]="{updateOn: 'usuario.apellidos'}" [formGroup]="myform" (ngSubmit)="verificarDatos()" class="row container me-auto ms-auto justify-content-center">
-
-
-                        <fieldset class="col-12 p-5">
-
-
-                            <div class="md-form ">
-                                <mdb-icon fas icon="user envelope" class="prefix"></mdb-icon>
-                                <input type="text" class="form-input form-control" id="nomForm" mdbInput mdbValidate [(ngModel)]="usuario.nombres" [formControl]="Nombres" required>
-                                <label>Nombres</label>
-                                <div class="p-1" *ngIf="(Nombres.errors && submitted ) ||((Nombres.dirty || Nombres.touched) && Nombres.invalid)">
-
-                                    <mdb-error class="mt-2" *ngIf="Nombres.errors.required ">Nombres is required</mdb-error>
-                                    <mdb-error class="mt-2" *ngIf="Nombres.errors.pattern ">Nombres invalido </mdb-error>
-                                </div>
-
-                            </div>
-
-
-                            <div class="md-form">
-
-                                <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.apellidos" [formControl]="Apellidos" required>
-                                <label>Apellidos</label>
-                                <div class="p-1" *ngIf="(Apellidos.errors && submitted ) ||((Apellidos.dirty || Apellidos.touched) && Apellidos.invalid)">
-
-                                    <mdb-error class="mt-2" *ngIf="Apellidos.errors.required ">Correo is required</mdb-error>
-                                    <mdb-error class="mt-2" *ngIf="Apellidos.errors.pattern ">Patron invalido </mdb-error>
-                                </div>
-                            </div>
-
-
-                            <div class="md-form">
-
-                                <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.dni" [formControl]="Dni" required>
-                                <label>DNI</label>
-                                <div class="p-1" *ngIf="(Dni.errors && submitted ) ||((Dni.dirty || Dni.touched) && Dni.invalid)">
-
-                                    <mdb-error class="mt-2" *ngIf="Dni.errors.required ">Correo is required</mdb-error>
-                                    <mdb-error class="mt-2" *ngIf="Dni.errors.pattern ">Patron invalido </mdb-error>
-                                </div>
-                            </div>
-
-                            <div class="md-form ">
-
-                                <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.telefono" [formControl]="Telef" required>
-                                <label>Telefono</label>
-                                <div class="p-1" *ngIf="(Telef.errors && submitted ) ||((Telef.dirty || Telef.touched) && Telef.invalid)">
-
-                                    <mdb-error class="mt-2" *ngIf="Telef.errors.required ">Correo is required</mdb-error>
-                                    <mdb-error class="mt-2" *ngIf="Telef.errors.pattern ">Patron invalido </mdb-error>
-                                </div>
-                            </div>
-
-                            <div class="md-form ">
-
-                                <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.direccion" [formControl]="Direc" required>
-                                <label>Dirección</label>
-                                <div class="p-1" *ngIf="(Direc.errors && submitted ) ||((Direc.dirty || Direc.touched) && Direc.invalid)">
-
-                                    <mdb-error class="mt-2" *ngIf="Direc.errors.required ">Correo is required</mdb-error>
-                                    <mdb-error class="mt-2" *ngIf="Direc.errors.pattern ">Patron invalido </mdb-error>
-                                </div>
-
-                            </div>
-
-                            <div class="md-form ">
-
-                                <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.correo" [formControl]="Correo" required>
-                                <label>Correo</label>
-                                <div class="p-1" *ngIf="(Correo.errors && submitted ) ||((Correo.dirty || Correo.touched) && Correo.invalid)">
-
-                                    <mdb-error class="mt-2" *ngIf="Correo.errors.required ">Correo is required</mdb-error>
-                                    <mdb-error class="mt-2" *ngIf="Correo.errors.pattern ">Patron invalido </mdb-error>
-                                </div>
-                            </div>
-
-                            <div class="md-form">
-
-                                <input type="date" class="form-control" id="form58" mdbInput mdbValidate [(ngModel)]="usuario.fechaNac" [formControl]="FechaNac" required>
-                                <label for="form58">Fecha Nacimiento</label>
-                            </div>
-
-                            <div class=" md-form">
-
-                                <select [ngClass]="{
-                                    'is-invalid': IdUbi.invalid && (IdUbi.dirty || IdUbi.touched),
-                                    'is-valid': IdUbi.valid && (IdUbi.dirty || IdUbi.touched)
-                                  }" class="form-control" [(ngModel)]="usuario.ubigeo" [compareWith]="compareUbigeo" [formControl]="IdUbi" required>
-                                    
-                                    <option [ngValue]="null" selected>--- selecionar una región ---</option>
-                                        <option *ngFor="let region of ubigeo" [ngValue]="region" > {{ region.departamento  }} - {{ region.provincia  }} - {{ region.distrito  }}</option>
-                                   
-                                    </select>
-
-                                <div class="p-1">
-                                    <mdb-error class="mt-2" *ngIf="(IdUbi.errors && submitted ) ||((IdUbi.dirty || IdUbi.touched) && IdUbi.invalid)">
-                                        Seleccione su ubicación
-                                    </mdb-error>
-                                </div>
-
-                            </div>
-
-
-                        </fieldset>
-
-
-
-
-
-                        <div class="btn-group w-100 justify-content-center d-flex" role="group" aria-label="Basic example">
-
-                            <button type="button" mdbBtn color="secondary" class="waves-light" (click)="cerrarmodal()" mdbWavesEffect>Cancelar</button>
-                            <button type="submit" mdbBtn color="primary" class="waves-light" mdbWavesEffect>Registrar</button>
-
-                        </div>
-
-                    </form>
-
-
-                </div>
-                <div class="modal-footer">
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div>
-
-    </div>
-
-    <div class="card border-primary mb-5 container-fluid mt-5">
-
-        <div class="card-header row text-primary">
-            <h2>Listado de usuarios</h2>
-        </div>
-
-        <div class="card-body text-secondary table-responsive">
-
-
-
-            <table class="table table-responsive-md">
+    <div class="card border-primary p-4">
+        <div class="table-responsive">
+            <table class="table" style="width:100%">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -179,7 +36,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let usuario of usuarios; let i = index">
+                    <tr mdbTableCol *ngFor="let usuario of usuarios; let i = index">
                         <th>{{ usuario.idusuario }}</th>
                         <td>{{ usuario.nombres }}</td>
                         <td>{{ usuario.apellidos }}</td>
@@ -191,14 +48,165 @@
                         <td>{{ usuario.ubigeo.departamento }}</td>
                         <td>{{ usuario.ubigeo.provincia }}</td>
                         <td>{{ usuario.ubigeo.distrito }}</td>
-                        <td><button type="button" mdbBtn color="danger" (click)="openModalCrud('detalle', usuario.idusuario)" mdbWavesEffect>Detalle</button></td>
-                        <td><button type="button" mdbBtn color="danger" (click)="openModalCrud('editar',usuario.idusuario)" mdbWavesEffect>Editar</button></td>
-                        <td><button type="button" mdbBtn color="danger" (click)="delete(usuario)" mdbWavesEffect>Eliminar</button></td>
+                        <td>
+                            <mdb-icon (click)="openModalCrud('detalle',usuario.idusuario)" type="button" size="3x" far icon="file-alt"></mdb-icon>
+                        </td>
+                        <td>
+                            <mdb-icon (click)="openModalCrud('editar',usuario.idusuario)" type="button" fas size="3x" icon="edit"></mdb-icon>
+                        </td>
+                        <td>
+                            <mdb-icon (click)="delete(usuario)" type="button" fas size="3x" icon="minus-circle"></mdb-icon>
+                        </td>
 
                     </tr>
 
                 </tbody>
             </table>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+<div mdbModal #content="mdbModal" style="overflow-y: auto" [config]="{backdrop: 'static' , keyboard: false}" class="modal fade left" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-full-height modal-left modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-secondary">
+                <p class="modal-title" id="exampleModalLabel">AGREGAR USUARIO</p>
+            </div>
+            <div class="modal-body">
+
+
+                <form id="form-usuario" [ngFormOptions]="{updateOn: 'usuario.apellidos'}" [formGroup]="myform" (ngSubmit)="verificarDatos()" class="row container me-auto ms-auto justify-content-center">
+
+
+                    <fieldset class="col-12 p-5">
+
+
+                        <div class="md-form ">
+                            <mdb-icon fas icon="user envelope" class="prefix"></mdb-icon>
+                            <input type="text" class="form-input form-control" id="nomForm" mdbInput mdbValidate [(ngModel)]="usuario.nombres" [formControl]="Nombres" required>
+                            <label>Nombres</label>
+                            <div class="p-1" *ngIf="(Nombres.errors && submitted ) ||((Nombres.dirty || Nombres.touched) && Nombres.invalid)">
+
+                                <mdb-error class="mt-2" *ngIf="Nombres.errors.required ">Nombres is required</mdb-error>
+                                <mdb-error class="mt-2" *ngIf="Nombres.errors.pattern ">Nombres invalido </mdb-error>
+                            </div>
+
+                        </div>
+
+
+                        <div class="md-form">
+
+                            <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.apellidos" [formControl]="Apellidos" required>
+                            <label>Apellidos</label>
+                            <div class="p-1" *ngIf="(Apellidos.errors && submitted ) ||((Apellidos.dirty || Apellidos.touched) && Apellidos.invalid)">
+
+                                <mdb-error class="mt-2" *ngIf="Apellidos.errors.required ">Correo is required</mdb-error>
+                                <mdb-error class="mt-2" *ngIf="Apellidos.errors.pattern ">Patron invalido </mdb-error>
+                            </div>
+                        </div>
+
+
+                        <div class="md-form">
+
+                            <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.dni" [formControl]="Dni" required>
+                            <label>DNI</label>
+                            <div class="p-1" *ngIf="(Dni.errors && submitted ) ||((Dni.dirty || Dni.touched) && Dni.invalid)">
+
+                                <mdb-error class="mt-2" *ngIf="Dni.errors.required ">Correo is required</mdb-error>
+                                <mdb-error class="mt-2" *ngIf="Dni.errors.pattern ">Patron invalido </mdb-error>
+                            </div>
+                        </div>
+
+                        <div class="md-form ">
+
+                            <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.telefono" [formControl]="Telef" required>
+                            <label>Telefono</label>
+                            <div class="p-1" *ngIf="(Telef.errors && submitted ) ||((Telef.dirty || Telef.touched) && Telef.invalid)">
+
+                                <mdb-error class="mt-2" *ngIf="Telef.errors.required ">Correo is required</mdb-error>
+                                <mdb-error class="mt-2" *ngIf="Telef.errors.pattern ">Patron invalido </mdb-error>
+                            </div>
+                        </div>
+
+                        <div class="md-form ">
+
+                            <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.direccion" [formControl]="Direc" required>
+                            <label>Dirección</label>
+                            <div class="p-1" *ngIf="(Direc.errors && submitted ) ||((Direc.dirty || Direc.touched) && Direc.invalid)">
+
+                                <mdb-error class="mt-2" *ngIf="Direc.errors.required ">Correo is required</mdb-error>
+                                <mdb-error class="mt-2" *ngIf="Direc.errors.pattern ">Patron invalido </mdb-error>
+                            </div>
+
+                        </div>
+
+                        <div class="md-form ">
+
+                            <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.correo" [formControl]="Correo" required>
+                            <label>Correo</label>
+                            <div class="p-1" *ngIf="(Correo.errors && submitted ) ||((Correo.dirty || Correo.touched) && Correo.invalid)">
+
+                                <mdb-error class="mt-2" *ngIf="Correo.errors.required ">Correo is required</mdb-error>
+                                <mdb-error class="mt-2" *ngIf="Correo.errors.pattern ">Patron invalido </mdb-error>
+                            </div>
+                        </div>
+
+                        <div class="md-form">
+
+                            <input type="date" class="form-control" id="form58" mdbInput mdbValidate [(ngModel)]="usuario.fechaNac" [formControl]="FechaNac" required>
+                            <label for="form58">Fecha Nacimiento</label>
+                        </div>
+
+                        <div class=" md-form">
+
+                            <select [ngClass]="{
+                                'is-invalid': IdUbi.invalid && (IdUbi.dirty || IdUbi.touched),
+                                'is-valid': IdUbi.valid && (IdUbi.dirty || IdUbi.touched)
+                              }" class="form-control" [(ngModel)]="usuario.ubigeo" [compareWith]="compareUbigeo" [formControl]="IdUbi" required>
+                                
+                                <option [ngValue]="null" selected>--- selecionar una región ---</option>
+                                    <option *ngFor="let region of ubigeo" [ngValue]="region" > {{ region.departamento  }} - {{ region.provincia  }} - {{ region.distrito  }}</option>
+                               
+                                </select>
+
+                            <div class="p-1">
+                                <mdb-error class="mt-2" *ngIf="(IdUbi.errors && submitted ) ||((IdUbi.dirty || IdUbi.touched) && IdUbi.invalid)">
+                                    Seleccione su ubicación
+                                </mdb-error>
+                            </div>
+
+                        </div>
+
+
+                    </fieldset>
+
+
+
+
+
+                    <div class="btn-group w-100 justify-content-center d-flex" role="group" aria-label="Basic example">
+
+                        <button type="button" mdbBtn color="secondary" class="waves-light" (click)="cerrarmodal()" mdbWavesEffect>Cancelar</button>
+                        <button type="submit" mdbBtn color="primary" class="waves-light" mdbWavesEffect>Registrar</button>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
         </div>
     </div>
 </div>

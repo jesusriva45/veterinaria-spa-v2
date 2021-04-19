@@ -150,7 +150,10 @@ export class CrudProductoComponent implements OnInit {
     this.Descripcion = new FormControl("", Validators.required);
     this.Indicaciones = new FormControl("", Validators.required);
     this.Marca = new FormControl("", Validators.required);
-    this.Precio = new FormControl("", Validators.required);
+    this.Precio = new FormControl("", [
+      Validators.required,
+      Validators.pattern("^([0-9]{1,4})?[.]?([0-9]{0,2})?$"),
+    ]);
     this.Serie = new FormControl("", Validators.required);
     this.Stock = new FormControl("", Validators.required);
     this.IdCategoria = new FormControl("", Validators.required);

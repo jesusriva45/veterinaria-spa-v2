@@ -71,8 +71,14 @@ export class UsuariosComponent implements OnInit {
   createForm() {
     this.myform = new FormGroup({
       // IdUsuario: new FormControl("", [Validators.nullValidator]),
-      Nombres: new FormControl("", [Validators.required]),
-      Apellidos: new FormControl("", [Validators.required]),
+      Nombres: new FormControl("", [
+        Validators.required,
+        Validators.pattern("^([a-zA-Z]{0,})[ ]?([a-zA-Z]{0,})?$"),
+      ]),
+      Apellidos: new FormControl("", [
+        Validators.required,
+        Validators.pattern("^([a-zA-Z]{0,})[ ]?([a-zA-Z]{0,})?$"),
+      ]),
       Dni: new FormControl("", [
         Validators.required,
         Validators.pattern("[0-9]{8}"),
