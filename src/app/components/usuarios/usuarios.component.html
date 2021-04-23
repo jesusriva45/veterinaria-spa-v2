@@ -1,8 +1,10 @@
+<!--app-modal-form *ngIf="usuarioSeleccionado" [usuario]="usuarioSeleccionado"></app-modal-form-->
+
 <div class="container-fluid p-5 ">
     <!--button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
     Agregar Usuario
   </button*-->
-    <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="openModalCrud('agregar')" mdbWavesEffect>AGREGAR USUARIO</button>
+    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" mdbBtn color="primary" class="relative waves-light" (click)="openModalCrud()" mdbWavesEffect>AGREGAR USUARIO</button>
 
 
     <!--Card image-->
@@ -31,31 +33,31 @@
                         <th scope="col">Provincia</th>
                         <th scope="col">Distrito</th>
                         <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                        <th scope="col" *ngIf="authService.hasRole('ROLE_ADMIN')"></th>
+                        <th scope="col" *ngIf="authService.hasRole('ROLE_ADMIN')"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr mdbTableCol *ngFor="let usuario of usuarios; let i = index">
-                        <th>{{ usuario.idusuario }}</th>
-                        <td>{{ usuario.nombres }}</td>
-                        <td>{{ usuario.apellidos }}</td>
-                        <td>{{ usuario.dni }}</td>
-                        <td>{{ usuario.telefono }}</td>
-                        <td>{{ usuario.correo }}</td>
-                        <td>{{ usuario.fechaNac }}</td>
-                        <td>{{ usuario.direccion }}</td>
-                        <td>{{ usuario.ubigeo.departamento }}</td>
-                        <td>{{ usuario.ubigeo.provincia }}</td>
-                        <td>{{ usuario.ubigeo.distrito }}</td>
-                        <td>
-                            <mdb-icon (click)="openModalCrud('detalle',usuario.idusuario)" type="button" size="3x" far icon="file-alt"></mdb-icon>
+                        <th class="align-middle">{{ usuario.idusuario }}</th>
+                        <td class="align-middle">{{ usuario.nombres }}</td>
+                        <td class="align-middle">{{ usuario.apellidos }}</td>
+                        <td class="align-middle">{{ usuario.dni }}</td>
+                        <td class="align-middle">{{ usuario.telefono }}</td>
+                        <td class="align-middle">{{ usuario.correo }}</td>
+                        <td class="align-middle">{{ usuario.fechaNac }}</td>
+                        <td class="align-middle">{{ usuario.direccion }}</td>
+                        <td class="align-middle">{{ usuario.ubigeo.departamento }}</td>
+                        <td class="align-middle">{{ usuario.ubigeo.provincia }}</td>
+                        <td class="align-middle">{{ usuario.ubigeo.distrito }}</td>
+                        <td class="align-middle">
+                            <mdb-icon type="button" size="2x" far icon="file-alt"></mdb-icon>
                         </td>
-                        <td>
-                            <mdb-icon (click)="openModalCrud('editar',usuario.idusuario)" type="button" fas size="3x" icon="edit"></mdb-icon>
+                        <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                            <mdb-icon (click)="openModalCrud(usuario)" type="button" fas size="2x" icon="edit"></mdb-icon>
                         </td>
-                        <td>
-                            <mdb-icon (click)="delete(usuario)" type="button" fas size="3x" icon="minus-circle"></mdb-icon>
+                        <td *ngIf="authService.hasRole('ROLE_ADMIN')">
+                            <mdb-icon (click)="delete(usuario)" type="button" fas size="2x" icon="minus-circle"></mdb-icon>
                         </td>
 
                     </tr>
@@ -63,9 +65,6 @@
                 </tbody>
             </table>
         </div>
-
-
-
     </div>
 </div>
 
@@ -75,7 +74,7 @@
 
 
 
-<div mdbModal #content="mdbModal" style="overflow-y: auto" [config]="{backdrop: 'static' , keyboard: false}" class="modal fade left" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--iv mdbModal #content="mdbModal" style="overflow-y: auto" [config]="{backdrop: 'static' , keyboard: false}" class="modal fade left" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-full-height modal-left modal" role="document">
         <div class="modal-content">
             <div class="modal-header bg-secondary">
@@ -209,4 +208,4 @@
             </div>
         </div>
     </div>
-</div>
+</div-->

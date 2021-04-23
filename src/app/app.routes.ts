@@ -13,6 +13,7 @@ import { ClientesComponent } from "./components/clientes/clientes.component";
 import { RegistroClienteComponent } from "./components/clientes/registro-cliente/registro-cliente.component";
 import { RegistroMascotaComponent } from "./components/mascotas/registro-mascota/registro-mascota.component";
 import { PedidosComponent } from "./components/pedidos/pedidos.component";
+import { LoginComponent } from "./components/login/login.component";
 
 export const ROUTES: Routes = [
   { path: "", pathMatch: "full", redirectTo: "inicio" },
@@ -31,6 +32,7 @@ export const ROUTES: Routes = [
   { path: "registro-cliente", component: RegistroClienteComponent },
   { path: "registro-mascota", component: RegistroMascotaComponent },
   { path: "pedidos", component: PedidosComponent },
+  { path: "login", component: LoginComponent },
 
   //{ path: 'usuarios/form',  component: FormComponent },
 ];

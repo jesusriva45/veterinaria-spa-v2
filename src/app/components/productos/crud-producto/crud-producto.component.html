@@ -3,7 +3,7 @@
     Agregar Usuario
   </button*-->
 
-    <button type="button" class="btn btn-primary crud" (click)="openModalCrud(mymodal,'agregar')">Agregar Producto</button>
+    <button type="button" class="btn btn-primary crud" (click)="openModalCrud('agregar')">Agregar Producto</button>
 
     <div class="card border-primary mb-5 container mt-5">
 
@@ -39,7 +39,7 @@
                         <th class="align-middle">{{ producto.marca.nombre }}</th>
 
                         <td class="align-middle"><button type="button" mdbBtn color="primary" mdbWavesEffect class="crud " data-mdb-toggle="modal" data-mdb-target="#staticBackdrop" (click)="modalDetalle(producto)">Detalle</button></td>
-                        <td class="align-middle"><button type="button" mdbBtn color="warning" mdbWavesEffect class="crud" value="Detalle" (click)="openModalCrud(mymodal,'editar',producto.idproducto)">Editar</button></td>
+                        <td class="align-middle"><button type="button" mdbBtn color="warning" mdbWavesEffect class="crud" value="Detalle" (click)="openModalCrud('editar',producto.idproducto)">Editar</button></td>
 
                         <td class="align-middle"><button type="button" mdbBtn color="danger" mdbWavesEffect class="btn btn-danger btn-sm px-3" value="Eliminar" (click)="delete(producto)">X</button></td>
                     </tr>
@@ -53,9 +53,6 @@
 
 
 
-<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
-    ...
-</div>
 
 
 

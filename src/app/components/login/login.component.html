@@ -1,0 +1,62 @@
+<div id="bg-login" class="row col-12">
+
+
+    <!-- Default form login -->
+    <div class="cont-form col-12">
+
+        <form class="text-white col-sm-12 col-md-8 col-lg-5 col-xl-3 col-xxl-3 ">
+
+            <h4 class="w-100 text-center">Iniciar de Sesión</h4>
+
+            <div class="md-form mb-5">
+                <mdb-icon fas icon="user envelope" class="prefix"></mdb-icon>
+                <input type="text" [(ngModel)]="usuario.username" class="text-white form-control " id="nomForm" name="username" placeholder="" mdbInput mdbValidate autofocus required>
+                <label class="text-white ">Username</label>
+
+
+            </div>
+            <div class="md-form mb-5 ">
+                <mdb-icon fas icon="unlock envelope " class="prefix "></mdb-icon>
+                <input type="password" [(ngModel)]="usuario.password" class="text-white form-control " placeholder="" name="password" mdbInput mdbValidate. required>
+                <label class="text-white ">Password</label>
+            </div>
+
+
+            <!-- Sign in button -->
+            <div class="d-flex">
+                <button mdbBtn color="info" (click)="login()" mdbWavesEffect block="true " class="my-2 ml-auto mr-auto" type="submit ">Sign in</button>
+            </div>
+
+            <div class="text-center">
+                <!-- Register -->
+                <p>No eres miembro de patazas?
+                    <a href=" ">Registrate</a>
+                </p>
+
+                <!-- Social login -->
+                <p>or sign in with:</p>
+
+                <a type="button " class="light-blue-text mx-2 ">
+                    <mdb-icon fab icon="facebook "></mdb-icon>
+                </a>
+                <a type="button " class="light-blue-text mx-2 ">
+                    <mdb-icon fab icon="twitter "></mdb-icon>
+                </a>
+                <a type="button " class="light-blue-text mx-2 ">
+                    <mdb-icon fab icon="linkedin "></mdb-icon>
+                </a>
+                <a type="button " class="light-blue-text mx-2 ">
+                    <mdb-icon fab icon="github "></mdb-icon>
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+    <!-- Default form login -->
+
+    <!-- Content -->
+
+    <!-- Card -->
+
+</div>

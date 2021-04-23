@@ -5,11 +5,17 @@
 
 // Font Awesome
 @import url(app/components/navbar/navbar.component.scss);
+@import url(app/components/usuarios/usuarios.component.scss);
+//@import url(app/components/header/header.component.scss);
+//@import url(app/components/login/login.component.scss);
+@import url(app/components/usuarios/modal-form/modal-form.component.scss);
 html {
     position: relative;
     min-height: 100%;
+    z-index: -1000;
 }
 
 body {
     margin-bottom: 200px;
+    z-index: -1000;
 }

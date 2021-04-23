@@ -11,4 +11,8 @@ export class Usuario {
   direccion: string;
   fechaNac: string;
   ubigeo: Ubigeo;
+  //---------------
+  username: string;
+  password: string;
+  roles: string[] = [];
 }

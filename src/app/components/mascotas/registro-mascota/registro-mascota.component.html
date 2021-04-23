@@ -1,38 +1,196 @@
-<section class="contenedor">
-    <h4 class="h4tit text-center registrateh4">
-        ¡Registra a tu mascota!
-    </h4>
-    <div class="row">
+<div class="container-fluid mt-5">
+    <!--button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Agregar Usuario
+  </button*-->
+    <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample" (click)="openModalCrud('agregar')" mdbWavesEffect>Agregar Mascota</button>
+    <!--input type="button" class="btn btn-primary crud" value="Agregar Mascota" (click)="openModalCrud(mymodal, 'agregar')" /-->
 
-        <div class="col-md-5 offset-2">
-
-            <br>
-            <p>
-                Ingrese los datos de la Mascota:
-            </p>
-            <form action="registraMascota">
-                <input class="form-control" type="text" name="nombreMas" id="idnombreMas" placeholder="Nombre de la mascota">
-                <input class="form-control" type="text" name="edad" id="idedad" placeholder="Ingrese la edad de la mascota">
-                <select id="inputState" class="form-control">
-                    <option selected>Sexo</option>
-                    <option>Macho</option>
-                    <option>Hembra</option>
-                </select>
-                <select id="inputState" class="form-control">
-                    <option selected>Tipo de Mascota</option>
-                    <option>Perro</option>
-                    <option>Gato</option>
-                    <option>Ave</option>
-                    <option>Roedor</option>
-                    <option>Dinosaurio</option>
-                    <option>Otros</option>
-                </select>
-                <textarea class="form-control" type="textarea" name="descripcion" id="iddescripcion" placeholder="Ingresa una breve descripción de su mascota"></textarea>
-            </form>
-
+    <div class="card border-primary mb-5 container-fluid mt-5">
+        <div class="card-header row text-primary">
+            <h2>Listado de Mascotas</h2>
         </div>
-        <div class="w-100 text-center">
-            <a href="#"><button type="button" class="btnRegistra ">Registrar</button></a>
+
+        <div class="card-body text-secondary table-responsive">
+            <table class="table table-responsive-md">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">NOMBRE</th>
+                        <th scope="col">RAZA</th>
+                        <th scope="col">FECHA DE NACIMIENTO</th>
+                        <th scope="col">SEXO</th>
+                        <th scope="col">TIPO DE MASCOTA</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let mascota of mascotas; let i = index">
+                        <th>{{ mascota.idmascota }}</th>
+                        <td>{{ mascota.nombre }}</td>
+                        <td>{{ mascota.raza }}</td>
+                        <td>{{ mascota.fecha_nacimiento }}</td>
+                        <td>{{ mascota.sexo }}</td>
+                        <td>{{ mascota.tipomascota.descripcion }}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary crud" value="Detalle" (click)="openModalCrud('detalle', mascota.idmascota)">
+                Detalle
+              </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-warning crud" value="Editar" (click)="openModalCrud('editar', mascota.idmascota)">
+                Editar
+              </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger crud" value="Eliminar" (click)="delete(mascota)">
+                Eliminar
+              </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</section>
+</div>
+
+<p>{{ clienteLog | json }}</p>
+
+
+
+
+<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cerrarmodal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body mx-3">
+
+                <form [formGroup]="myform" class="container me-auto ms-auto justify-content-center">
+                    <fieldset class="p-5" formGroupName="name">
+                        <div class="form-group ">
+                            <input type="text" class="form-input" [(ngModel)]="mascota.idmascota" formControlName="IdMascota" required hidden />
+                            <div class="form-control-feedback" *ngIf="
+                IdMascota.errors && (IdMascota.dirty || IdMascota.touched)
+              ">
+                                <p class="alert alert-danger" role="alert" *ngIf="IdMascota.errors.required">
+                                    Last Name is required
+                                </p>
+                            </div>
+                        </div>
+
+                        <h3 class="col-12 d-flex justify-content-start m-4">
+                            EDITAR INFORMACION
+                        </h3>
+
+                        <div class="form-group col-12">
+                            <label>Nombres</label>
+                            <input type="text" class="form-input form-control" id="nomForm" [(ngModel)]="mascota.nombre" formControlName="Nombres" required />
+
+                            <div class="form-control-feedback">
+                                <p class="alert alert-danger" *ngIf="
+                  (Nombres.errors?.required && submitted) ||
+                  ((Nombres.dirty || Nombres.touched) && Nombres.invalid)
+                ">
+                                    Nombres is required
+                                </p>
+                                <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12">
+                            <label>Raza</label>
+                            <input type="text" class="form-input form-control" [(ngModel)]="mascota.raza" formControlName="Raza" required />
+                            <div class="form-control-feedback">
+                                <p class="alert alert-danger" *ngIf="
+                  (Raza.errors?.required && submitted) ||
+                  ((Raza.dirty || Raza.touched) && Raza.invalid)
+                ">
+                                    Raza is required
+                                </p>
+                                <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12">
+                            <label>Fecha de Nacimiento</label>
+                            <input type="date" class="form-input form-control" [(ngModel)]="mascota.fecha_nacimiento" formControlName="FechaNacimiento" required />
+                            <div class="form-control-feedback">
+                                <p class="alert alert-danger" *ngIf="
+                  (FechaNacimiento.errors?.required && submitted) ||
+                  ((FechaNacimiento.dirty || FechaNacimiento.touched) && FechaNacimiento.invalid)
+                ">
+                                    FechaNacimiento is required
+                                </p>
+                                <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12">
+                            <label>Sexo</label>
+
+                            <input type="" class="form-input form-control" [(ngModel)]="mascota.sexo" formControlName="Sexo" required />
+                            <div class="form-control-feedback">
+                                <p class="alert alert-danger" *ngIf="
+                  (Sexo.errors?.required && submitted) ||
+                  ((Sexo.dirty || Sexo.touched) && Sexo.invalid)
+                ">
+                                    Sexo is required
+                                </p>
+                                <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12">
+                            <label>Tipo de Mascota</label>
+
+                            <select class="form-input form-control" [(ngModel)]="mascota.tipomascota" formControlName="TipoMascota" required>
+              <option [ngValue]="undefined" selected>
+                --- selecionar el Tipo ---
+              </option>
+              <option *ngFor="let tipo of tipomascota" [ngValue]="tipo">
+                {{ tipo.descripcion }}
+              </option>
+            </select>
+                            <div class="form-control-feedback">
+                                <p class="alert alert-danger" *ngIf="
+  (TipoMascota.errors?.required && submitted) ||
+  ((TipoMascota.dirty || TipoMascota.touched) && TipoMascota.invalid)
+">
+                                    Sexo is required
+                                </p>
+                                <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
+                            </div>
+                        </div>
+                        <input type="" class="" value="{{mascota.cliente | json}}" name="cliente" hidden>
+                    </fieldset>
+
+                    <!--div class="col-12 btn-submit">
+                        {{mascota.cliente | json}}
+                    </div-->
+                </form>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" id="Guerra" class="btn m-4" aria-label="Close" (click)="cerrarmodal()">
+                    Cancelar
+                  </button>
+
+                <button type="submit" id="Guerra" (click)="verificarDatos()" class="btn m-4" *ngIf="mascota.idmascota == 0; else elseBlock">
+                    Registrar
+                  </button>
+
+                <ng-template #elseBlock>
+                    <button type="" role="button" (click)="verificarDatos()" class="btn m-4" [disabled]="myform.invalid">
+                      Actualizar
+                    </button>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,18 +1,19 @@
-import { Injectable, Output } from "@angular/core";
-import { Usuario } from "../models/usuario";
-import { Observable, throwError } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { catchError, map } from "rxjs/operators";
-import { Ubigeo } from "../models/ubigeo";
+import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import swal from "sweetalert2";
+import { Observable, throwError } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+import { Cliente } from "../models/cliente";
+import { Mascota } from "../models/mascota";
+import { Tipomascota } from "../models/tipomascota";
 import { AuthService } from "./auth.service";
+import swal from "sweetalert2";
+import { Usuario } from "../models/usuario";
 @Injectable({
   providedIn: "root",
 })
-export class UsuarioService {
-  private urlEndPoint: string = "http://localhost:8090/api/usuarios";
-  //private urlEndPointUbigeo: string = "http://localhost:8090/api/ubigeo";
+export class MascotaService {
+  private urlEndPoint: string = "http://localhost:8090/api/mascotas";
 
   private httpHeaders = new HttpHeaders({
     "Content-Type": "application/json",
@@ -23,8 +24,6 @@ export class UsuarioService {
     private router: Router,
     private authService: AuthService
   ) {}
-
-  //@Output() error;
 
   private agregarAuthorizationHeader() {
     let token = this.authService.token;
@@ -56,31 +55,21 @@ export class UsuarioService {
     return false;
   }
 
-  /*private isNoAutorizado(e): boolean {
-    if (e.status == 401 || e.status == 403) {
-      this.error = e;
-      this.router.navigate(["/login"]);
-      return this.error;
-    }
-    return false;
-  }*/
-
-  getUsuarios(): Observable<Usuario[]> {
+  getMascotas(): Observable<Mascota[]> {
     //return of();
     //return this.http.get<Usuario[]>(this.urlEndPoint);
-
     return this.http
       .get(this.urlEndPoint, { headers: this.agregarAuthorizationHeader() })
-      .pipe(map((response) => response as Usuario[]));
+      .pipe(map((data) => data as Mascota[]));
   }
 
-  insert(usuario: Usuario): Observable<Usuario> {
+  insert(obj: Mascota): Observable<Mascota> {
     return this.http
-      .post<Usuario>(this.urlEndPoint, usuario, {
+      .post<Mascota>(this.urlEndPoint, obj, {
         headers: this.agregarAuthorizationHeader(),
       })
       .pipe(
-        map((resp: any) => resp.usuario as Usuario),
+        map((resp: any) => resp.mascota as Mascota),
         catchError((e) => {
           if (this.isNoAutorizado(e)) {
             return throwError(e);
@@ -89,9 +78,9 @@ export class UsuarioService {
       );
   }
 
-  getUsuario(usu: Usuario): Observable<Usuario> {
+  getMascota(id): Observable<Mascota> {
     return this.http
-      .get<Usuario>(`${this.urlEndPoint}/${usu.idusuario}`, {
+      .get<Mascota>(`${this.urlEndPoint}/${id}`, {
         headers: this.agregarAuthorizationHeader(),
       })
       .pipe(
@@ -103,9 +92,9 @@ export class UsuarioService {
       );
   }
 
-  update(usuario: Usuario): Observable<Usuario> {
+  update(obj: Mascota): Observable<Mascota> {
     return this.http
-      .put<Usuario>(`${this.urlEndPoint}/${usuario.idusuario}`, usuario, {
+      .put<Mascota>(`${this.urlEndPoint}/${obj.idmascota}`, obj, {
         headers: this.agregarAuthorizationHeader(),
       })
       .pipe(
@@ -120,9 +109,9 @@ export class UsuarioService {
       );
   }
 
-  delete(id: number): Observable<any> {
+  delete(id: number): Observable<Mascota> {
     return this.http
-      .delete<Usuario>(`${this.urlEndPoint}/${id}`, {
+      .delete<Mascota>(`${this.urlEndPoint}/${id}`, {
         headers: this.agregarAuthorizationHeader(),
       })
       .pipe(
@@ -137,15 +126,43 @@ export class UsuarioService {
       );
   }
 
-  getRegiones(): Observable<Ubigeo[]> {
+  getTipoMascota(): Observable<Tipomascota[]> {
     return this.http
-      .get<Ubigeo[]>(`${this.urlEndPoint}/ubigeo`, {
+      .get<Tipomascota[]>(`${this.urlEndPoint}/tipomascota`, {
         headers: this.agregarAuthorizationHeader(),
       })
       .pipe(
         catchError((e) => {
           this.isNoAutorizado(e);
           return throwError(e);
+        })
+      );
+  }
+
+  getClientes(): Observable<Cliente[]> {
+    return this.http
+      .get<Cliente[]>(`${this.urlEndPoint}/cliente`, {
+        headers: this.agregarAuthorizationHeader(),
+      })
+      .pipe(
+        catchError((e) => {
+          this.isNoAutorizado(e);
+          return throwError(e);
+        })
+      );
+  }
+
+  //-------------- OBTENER CLIENTE REGISTRADO AL SISTEMA POR MEDIO DE ID DE USUARIO
+  getCliente(usu: Usuario): Observable<Cliente> {
+    return this.http
+      .get<Cliente>(`${this.urlEndPoint}/cliente/${usu.idusuario}`, {
+        headers: this.agregarAuthorizationHeader(),
+      })
+      .pipe(
+        catchError((e) => {
+          if (this.isNoAutorizado(e)) {
+            return throwError(e);
+          }
         })
       );
   }

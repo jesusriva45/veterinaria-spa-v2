@@ -40,6 +40,7 @@ import { PedidosComponent } from "./components/pedidos/pedidos.component";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ModalFormComponent } from './components/usuarios/modal-form/modal-form.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { ModalFormComponent } from './components/usuarios/modal-form/modal-form.
     RegistroMascotaComponent,
     PedidosComponent,
     ModalFormComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

@@ -13,9 +13,10 @@
     <aside class="row col-4 d-flex m-4">
         <div class="col-12">
             <h2>{{ producto.nombre }}</h2>
+            <h2 [innerHTML]="nomMarca"></h2>
             <hr>
             <h3>Indicaciones</h3>
-            <h5>{{ producto.indicaciones}}</h5>
+            <div [innerHTML]="descripcion"></div>
         </div>
         <div class="col-12  ">
             <h2>Carrito</h2>

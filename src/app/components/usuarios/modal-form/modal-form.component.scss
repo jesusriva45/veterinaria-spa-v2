@@ -1,0 +1,13 @@
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat right center;
+    background-origin: content-box, border-box;
+}
+
+.scroll {
+    overflow-y: auto;
+}

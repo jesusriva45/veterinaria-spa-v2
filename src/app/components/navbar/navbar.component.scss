@@ -1,5 +1,5 @@
 .navbar {
-    z-index: 1000;
+    z-index: 100;
     width: 100%;
     position: relative;
     display: flex;
@@ -7,10 +7,12 @@
 
 .nav-item {
     width: auto;
+    display: flex;
 }
 
 .nav-item>a {
     width: auto;
+    margin: auto;
 }
 
 nav {
@@ -21,14 +23,9 @@ nav {
     min-width: 100%;
 }
 
-.has-danger {
-    border-bottom: 2px solid red;
-    box-shadow: 2px 2px 5px red;
-    width: 85%;
-}
-
-.has-success {
-    border-bottom: 2px solid #5cb85c;
-    box-shadow: 2px 2px 5px #5cb85c;
-    width: 85%;
+#sig-in[routerLink] {
+    outline: none;
+    text-decoration: none;
+    background-color: red;
+    cursor: pointer;
 }

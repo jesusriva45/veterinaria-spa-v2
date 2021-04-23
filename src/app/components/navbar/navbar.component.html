@@ -1,6 +1,6 @@
 <!--/.Navbar-->
 
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark cyan">
 
 
 
@@ -8,8 +8,13 @@
         <img src="../../../assets/img/Logo de patazas-02.png" alt="" width="60" height="60">
     </a>
 
+    <h5 class="m-auto">{{ authService.usuario.nombres }} {{ authService.usuario.apellidos }} </h5>
+
+
     <links class="pe-5">
-        <ul class="navbar-nav w-100 mb-2 mb-lg-0 ms-auto justify-content-end">
+        <ul class="navbar-nav w-100  justify-content-end ">
+
+
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link waves-light" routerLink="inicio">Inicio</a>
             </li>
@@ -50,6 +55,22 @@
                     <li><a class="dropdown-item waves-light" routerLink="crud-servicio">Servicios</a></li>
                 </div>
             </li>
+
+
+            <li class="nav-item" *ngIf="(!authService.isAuthenticated()) else elseBlock">
+                <a class="nav-link" routerLink="login" mdbWavesEffect>
+                    <mdb-icon id="sign-in" fas size="2x" fas icon="user-circle"></mdb-icon>
+                </a>
+
+            </li>
+
+            <ng-template #elseBlock>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="login" (click)="logout()" mdbWavesEffect>
+                        <mdb-icon fas icon="sign-in-alt"></mdb-icon>
+                    </a>
+                </li>
+            </ng-template>
 
         </ul>
     </links>

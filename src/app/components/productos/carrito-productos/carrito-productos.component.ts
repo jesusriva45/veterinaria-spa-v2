@@ -18,6 +18,9 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 export class CarritoProductosComponent implements OnInit {
   producto: Producto = new Producto();
 
+  descripcion: string;
+  nomMarca: string;
+
   constructor(
     private productoService: ProductoService,
     private router: Router,
@@ -34,6 +37,8 @@ export class CarritoProductosComponent implements OnInit {
       if (id) {
         this.productoService.getProducto(id).subscribe((producto) => {
           this.producto = producto;
+          this.descripcion = this.producto.descripcion;
+          this.nomMarca = this.producto.marca.nombre;
         });
       }
     });

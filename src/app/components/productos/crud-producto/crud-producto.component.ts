@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 
 import { Router } from "@angular/router";
 import { ProductoService } from "../../../services/producto.service";
@@ -6,6 +6,7 @@ import { ProductoService } from "../../../services/producto.service";
 import { Producto } from "../../../models/producto";
 
 //import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDirective } from "projects/angular-bootstrap-md/src/public_api";
 
 import swal from "sweetalert2";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
@@ -13,6 +14,7 @@ import { ProCategoria } from "src/app/models/pro-categoria";
 import { Proveedor } from "src/app/models/proveedor";
 import { Marca } from "src/app/models/marca";
 import { AngularEditorConfig } from "@kolkov/angular-editor";
+import { AuthService } from "src/app/services/auth.service";
 
 @Component({
   selector: "app-crud-producto",
@@ -63,7 +65,8 @@ export class CrudProductoComponent implements OnInit {
 
   constructor(
     private productoService: ProductoService,
-    private router: Router //private modalService: NgbModal
+    private router: Router,
+    public _authService: AuthService //private modalService: NgbModal
   ) {
     this.titulo;
   }
@@ -181,13 +184,21 @@ export class CrudProductoComponent implements OnInit {
 
   //------------------ RENDERIZADO DE MODAL PARA CRUD DE PRODUCTOS---------------------------------
 
-  modalAgre(producto: Producto) {
-    producto.idproducto = 0;
+  @ViewChild("contentModal", { static: true }) contentModal: ModalDirective;
+
+  cerrarmodal() {
+    this.submitted = false;
+    //this.modalService.dismissAll();
+    this.contentModal.hide();
+    this.myform.reset();
+    //this.usuarioService.getRegiones().subscribe((ubigeo) => (this.ubigeo = []));
   }
 
-  openModalCrud(targetModal, accion: string, idProducto?: number): void {
+  openModalCrud(accion: string, idProducto?: number): void {
     this.createFormControls();
     this.createForm();
+
+    this.contentModal.show();
 
     /*  this.modalService.open(targetModal, {
       centered: true,
@@ -227,13 +238,6 @@ export class CrudProductoComponent implements OnInit {
       //this.modalAgregar();
       //this.myform.clearValidators();
     }
-  }
-
-  cerrarmodal() {
-    this.submitted = false;
-    //this.modalService.dismissAll();
-    this.myform.reset();
-    //this.usuarioService.getRegiones().subscribe((ubigeo) => (this.ubigeo = []));
   }
 
   //---------*********************************************************------------
