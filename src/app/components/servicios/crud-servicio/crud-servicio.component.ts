@@ -1,13 +1,15 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 //import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDirective } from "projects/angular-bootstrap-md/src/public_api";
 import { SerCategoria } from "src/app/models/ser-categoria";
 import { Servicio } from "src/app/models/servicio";
 import { ServicioService } from "src/app/services/servicio.service";
 import swal from "sweetalert2";
 
 import { AngularEditorConfig } from "@kolkov/angular-editor";
+import { AuthService } from "src/app/services/auth.service";
 
 @Component({
   selector: "app-crud-servicio",
@@ -42,13 +44,16 @@ export class CrudServicioComponent implements OnInit {
 
   constructor(
     private servicioService: ServicioService,
-    private router: Router // private modalService: NgbModal
+    private router: Router,
+    public _authService: AuthService // private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     this.servicioService
       .getServicios()
       .subscribe((data) => (this.servicios = data));
+    this.createFormControls();
+    this.createForm();
   }
 
   //------------------------ EDITOR DE TEXTO - DESCRIPCION ----------------------
@@ -58,45 +63,55 @@ export class CrudServicioComponent implements OnInit {
 
   editorConfig: AngularEditorConfig = {
     editable: true,
-    spellcheck: true,
-    height: "auto",
-    minHeight: "0",
-    maxHeight: "auto",
-    width: "auto",
-    minWidth: "0",
-    translate: "yes",
-    enableToolbar: true,
-    showToolbar: true,
-    placeholder: "Enter text here...",
-    defaultParagraphSeparator: "",
-    defaultFontName: "",
-    defaultFontSize: "",
+    spellcheck: false,
+    height: "200px",
+    width: "100%",
+
     fonts: [
       { class: "arial", name: "Arial" },
       { class: "times-new-roman", name: "Times New Roman" },
       { class: "calibri", name: "Calibri" },
       { class: "comic-sans-ms", name: "Comic Sans MS" },
+      { class: "Algerian", name: "Algerian" },
+      { class: "MT Extra", name: "MT Extra" },
+      { class: "Cooper Black", name: "Cooper Black" },
     ],
-    customClasses: [
-      {
-        name: "quote",
-        class: "quote",
-      },
-      {
-        name: "redText",
-        class: "redText",
-      },
-      {
-        name: "titleText",
-        class: "titleText",
-        tag: "h1",
-      },
+
+    toolbarHiddenButtons: [
+      [
+        //'undo',
+        //'redo',
+        //'bold',
+        //'italic',
+        //'underline',
+        //'strikeThrough',
+        "subscript",
+        "superscript",
+        "justifyLeft",
+        "justifyCenter",
+        "justifyRight",
+        "justifyFull",
+        //'indent',
+        //'outdent',
+        //'insertUnorderedList',
+        //'insertOrderedList',
+        //'heading',
+        //'fontName',
+      ],
+      [
+        //'fontSize',
+        //'textColor',
+        "backgroundColor",
+        "customClasses",
+        //'link',
+        //'unlink',
+        "insertImage",
+        "insertVideo",
+        "insertHorizontalRule",
+        //'removeFormat',
+        //'toggleEditorMode',
+      ],
     ],
-    uploadUrl: "v1/image",
-    uploadWithCredentials: false,
-    sanitize: true,
-    toolbarPosition: "top",
-    toolbarHiddenButtons: [["bold", "italic"], ["fontSize"]],
   };
 
   //------------------------ VALIDACION DE FORMULARIO ---------------------------
@@ -125,13 +140,19 @@ export class CrudServicioComponent implements OnInit {
 
   //------------------ RENDERIZADO DE MODAL PARA CRUD DE SERVICIOS---------------------------------
 
-  openModalCrud(
-    targetModal: Component,
-    accion: string,
-    idServicio?: number
-  ): void {
+  @ViewChild("contentModal", { static: true }) contentModal: ModalDirective;
+
+  cerrarmodal() {
+    this.submitted = false;
+    this.contentModal.hide();
+    this.myform.reset();
+  }
+
+  openModalCrud(accion: string, idServicio?: number): void {
     this.createFormControls();
     this.createForm();
+
+    this.contentModal.show();
 
     /*this.modalService.open(targetModal, {
       centered: true,
@@ -165,12 +186,6 @@ export class CrudServicioComponent implements OnInit {
       //this.modalAgregar();
       //this.myform.clearValidators();
     }
-  }
-
-  cerrarmodal() {
-    this.submitted = false;
-    //this.modalService.dismissAll();
-    this.myform.reset();
   }
 
   compareCategoria(c1: SerCategoria, c2: SerCategoria): boolean {

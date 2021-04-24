@@ -76,19 +76,26 @@ export class CrudProductoComponent implements OnInit {
       .getProductos()
       .subscribe((productos) => (this.productos = productos));
     this.getMarca();
+    this.createFormControls();
+    this.createForm();
   }
 
-  //------------------------ EDITOR DE TEXTO - DESCRIPCION ----------------------
-
+  //--------------------------- MODAL DETALLE -----------
+  @ViewChild("modalDetail", { static: true }) modalDetail: ModalDirective;
   ProDescrip: string;
   ProNom: string;
   ProMarca: string;
   modalDetalle(producto: Producto) {
+    this.modalDetail.show();
     this.getProducto(producto.idproducto);
     this.ProDescrip = `${producto.descripcion}`;
     this.ProNom = `${producto.nombre}`;
     this.ProMarca = `${producto.marca.nombre}`;
   }
+
+  //--------------------------
+
+  //------------------------ EDITOR DE TEXTO - DESCRIPCION ----------------------
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -161,7 +168,7 @@ export class CrudProductoComponent implements OnInit {
     this.Stock = new FormControl("", Validators.required);
     this.IdCategoria = new FormControl("", Validators.required);
     this.IdProveedor = new FormControl("", Validators.required);
-    this.foto = new FormControl("", Validators.required);
+    this.foto = new FormControl("", Validators.nullValidator);
   }
 
   createForm() {

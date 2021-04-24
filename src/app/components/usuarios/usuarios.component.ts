@@ -36,8 +36,21 @@ export class UsuariosComponent implements OnInit {
   ) {}
 
   authService = this._authService;
-
+  box = document.getElementsByClassName("check");
+  Checked = null;
   ngOnInit(): void {
+    //The class name can vary
+
+    for (let index = 0; index < this.box.length; index++) {
+      this.box[index].addEventListener("click", () => {
+        if (this.Checked != null) {
+          this.Checked.checked = false;
+          this.Checked = this.box[index];
+        }
+        this.Checked = this.box[index];
+      });
+    }
+
     this.usuarioService
       .getUsuarios()
       .subscribe((usuarios) => (this.usuarios = usuarios));
@@ -57,9 +70,8 @@ export class UsuariosComponent implements OnInit {
       focus: true,
       show: true,
       ignoreBackdropClick: true,
-      class: "modal-lg modal-dialog modal-dialog-scrollable",
-      containerClass: "left scroll",
-      rol: "dialog",
+      class: "modal-lg modal-dialog-scrollable",
+      containerClass: "left",
       animated: true,
       data: { usuario: usu, usuarios: this.usuarios },
     });

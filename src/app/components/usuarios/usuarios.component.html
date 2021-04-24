@@ -59,8 +59,7 @@
                         <td *ngIf="authService.hasRole('ROLE_ADMIN')">
                             <mdb-icon (click)="delete(usuario)" type="button" fas size="2x" icon="minus-circle"></mdb-icon>
                         </td>
-
-                    </tr>
+                        <td>
 
                 </tbody>
             </table>
@@ -70,11 +69,16 @@
 
 
 
+<input type="checkbox" class="check">
+<input type="checkbox" class="check">
+<input type="checkbox" class="check">
+<input type="checkbox" class="check">
 
 
 
 
-<!--iv mdbModal #content="mdbModal" style="overflow-y: auto" [config]="{backdrop: 'static' , keyboard: false}" class="modal fade left" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<!--div mdbModal #content="mdbModal" style="overflow-y: auto" [config]="{backdrop: 'static' , keyboard: false}" class="modal fade left" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-full-height modal-left modal" role="document">
         <div class="modal-content">
             <div class="modal-header bg-secondary">

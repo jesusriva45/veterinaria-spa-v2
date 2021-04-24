@@ -3,51 +3,53 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark cyan">
 
 
-
-    <a class="navbar-brand" href="#">
-        <img src="../../../assets/img/Logo de patazas-02.png" alt="" width="60" height="60">
-    </a>
-
-    <h5 class="m-auto">{{ authService.usuario.nombres }} {{ authService.usuario.apellidos }} </h5>
+    <li class="nav-item" routerLinkActive="active">
+        <a class="navbar-brand" routerLink="inicio" href="#">
+            <img mdbWavesEffect src="../../../assets/img/Logo de patazas-02.png" alt="" width="50" height="50">
+        </a>
+    </li>
+    <li class="nav-item" routerLinkActive="active">
+        <h5 class="nav-link  m-auto  navbar-brand ">{{ authService.usuario.nombres }} {{ authService.usuario.apellidos }} </h5>
+    </li>
 
 
     <links class="pe-5">
         <ul class="navbar-nav w-100  justify-content-end ">
 
 
-            <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link waves-light" routerLink="inicio">Inicio</a>
-            </li>
+
+
+
 
             <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link waves-light" mdbWavesEffect routerLink="productos">Nuestros Productos</a>
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/productos">Nuestros Productos</a>
             </li>
 
-            <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link waves-light" mdbWavesEffect routerLink="pedidos">Pedidos Clientes</a>
+            <li class="nav-item" *ngIf="(authService.isAuthenticated())" routerLinkActive="active">
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/pedidos">Pedidos Clientes</a>
             </li>
 
-            <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link waves-light" mdbWavesEffect routerLink="usuarios"> Crud de Usuarios</a>
+            <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/usuarios"> Crud de Usuarios</a>
             </li>
 
-            <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link waves-light" mdbWavesEffect routerLink="historia-clinica"> Historial de Mascotas</a>
+            <li class="nav-item" *ngIf="(authService.isAuthenticated())" routerLinkActive="active">
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/historia-clinica"> Historial de Mascotas</a>
             </li>
 
-            <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link waves-light" mdbWavesEffect routerLink="crud-producto"> Crud de Productos</a>
+            <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_VENDEDOR')" routerLinkActive="active">
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/crud-producto"> Crud de Productos</a>
             </li>
 
-            <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link waves-light" mdbWavesEffect routerLink="registro-cliente"> Registrarse</a>
+            <li class="nav-item" *ngIf="(!authService.isAuthenticated())" routerLinkActive="active">
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/registro-cliente"> Registrarse</a>
             </li>
 
-            <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link " mdbWavesEffect routerLink="registro-mascota"> Registra a tu Mascota</a>
+            <li class="nav-item" *ngIf="(authService.isAuthenticated())" routerLinkActive="active">
+                <a class="nav-link " mdbWavesEffect routerLink="/registro-mascota"> Registra a tu Mascota</a>
             </li>
 
-            <li class="nav-item dropdown" dropdown>
+            <li class="nav-item dropdown" *ngIf="(authService.isAuthenticated())" dropdown>
                 <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
                         Basic dropdown<span class="caret"></span></a>
                 <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
@@ -58,7 +60,7 @@
 
 
             <li class="nav-item" *ngIf="(!authService.isAuthenticated()) else elseBlock">
-                <a class="nav-link" routerLink="login" mdbWavesEffect>
+                <a class="nav-link" routerLink="/login" mdbWavesEffect>
                     <mdb-icon id="sign-in" fas size="2x" fas icon="user-circle"></mdb-icon>
                 </a>
 
@@ -66,7 +68,7 @@
 
             <ng-template #elseBlock>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="login" (click)="logout()" mdbWavesEffect>
+                    <a class="nav-link" routerLink="/login" (click)="logout()" mdbWavesEffect>
                         <mdb-icon fas icon="sign-in-alt"></mdb-icon>
                     </a>
                 </li>

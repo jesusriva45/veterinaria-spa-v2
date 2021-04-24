@@ -39,8 +39,15 @@ import { RegistroMascotaComponent } from "./components/mascotas/registro-mascota
 import { PedidosComponent } from "./components/pedidos/pedidos.component";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ModalFormComponent } from './components/usuarios/modal-form/modal-form.component';
-import { LoginComponent } from './components/login/login.component';
+import { ModalFormComponent } from "./components/usuarios/modal-form/modal-form.component";
+import { LoginComponent } from "./components/login/login.component";
+
+//-------- AUTENTICACION DE USUARIO ------------
+
+import { AuthService } from "./services/auth.service";
+
+import { AuthGuard } from "./services/guards/auth.guard";
+import { RoleGuard } from "./services/guards/role.guard";
 
 @NgModule({
   declarations: [
@@ -78,7 +85,7 @@ import { LoginComponent } from './components/login/login.component';
     ScrollingModule,
     AngularEditorModule,
   ],
-  providers: [NgModule],
+  providers: [NgModule, AuthService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })

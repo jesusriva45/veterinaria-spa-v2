@@ -19,6 +19,7 @@ import { UsuarioService } from "src/app/services/usuario.service";
 
 import swal from "sweetalert2";
 import { Ubigeo } from "src/app/models/ubigeo";
+import { AuthService } from "src/app/services/auth.service";
 
 @Component({
   selector: "app-modal-form",
@@ -44,7 +45,8 @@ export class ModalFormComponent implements OnInit {
   constructor(
     public usuarioService: UsuarioService,
     public router: Router,
-    public modalRef: MDBModalRef
+    public modalRef: MDBModalRef,
+    private _authService: AuthService
   ) {}
   button = document.getElementsByClassName("crud");
   input = document.getElementsByClassName("form-input");
@@ -213,6 +215,7 @@ export class ModalFormComponent implements OnInit {
     this.submitted = false;
     this.modalRef.hide();
     this.myform.reset();
+    console.log("no cierra pero si ejecuta el metodo cerramodal");
     //this.usuarioService.getRegiones().subscribe((ubigeo) => (this.ubigeo = []));
   }
 

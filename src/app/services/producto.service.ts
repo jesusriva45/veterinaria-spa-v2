@@ -132,14 +132,20 @@ export class ProductoService {
   }
 
   getMarca(): Observable<Marca[]> {
-    return this.http.get<Marca[]>(`${this.urlEndPoint}/marca`);
+    return this.http.get<Marca[]>(`${this.urlEndPoint}/marca`, {
+      headers: this.agregarAuthorizationHeader(),
+    });
   }
 
   getProveedor(): Observable<Proveedor[]> {
-    return this.http.get<Proveedor[]>(`${this.urlEndPoint}/proveedor`);
+    return this.http.get<Proveedor[]>(`${this.urlEndPoint}/proveedor`, {
+      headers: this.agregarAuthorizationHeader(),
+    });
   }
 
   getCategoria(): Observable<ProCategoria[]> {
-    return this.http.get<ProCategoria[]>(`${this.urlEndPoint}/categoria`);
+    return this.http.get<ProCategoria[]>(`${this.urlEndPoint}/categoria`, {
+      headers: this.agregarAuthorizationHeader(),
+    });
   }
 }
