@@ -20,6 +20,8 @@ import { UsuarioService } from "src/app/services/usuario.service";
 import swal from "sweetalert2";
 import { Ubigeo } from "src/app/models/ubigeo";
 import { AuthService } from "src/app/services/auth.service";
+import { Rol } from "src/app/models/rol";
+import { I } from "projects/angular-bootstrap-md/src/lib/free/utils/keyboard-navigation";
 
 @Component({
   selector: "app-modal-form",
@@ -37,7 +39,10 @@ export class ModalFormComponent implements OnInit {
 
   //@Input() newUsuario?: Usuario = new Usuario();
   @Input()
-  ubigeo?: Ubigeo[];
+  ubigeo: Ubigeo[];
+
+  roles: Rol[];
+
   submitted: boolean = false;
   titulo: string;
   //@ViewChild("content", { static: true }) content: ModalDirective;
@@ -52,18 +57,59 @@ export class ModalFormComponent implements OnInit {
   input = document.getElementsByClassName("form-input");
   myform: FormGroup;
 
+  dniDiferentesAlActual = [];
+
+  dniDiferentesAlActual2 = [];
+
+  usernameDiferentesAlActual = [];
+
+  usernameDiferentesAlActual2 = [];
+
   ngOnInit(): void {
     // this.compareFn(this.usuario.ubigeo, this.usuario.ubigeo);
 
-    console.log(this.usuarios.map((e) => e.username));
+    //console.log(this.roles.map((e) => e.descripcion));
 
-    this.usuarios.forEach((i) => {
-      if (i.username.match("raul")) {
-        return console.log(i.username);
-      }
-    });
+    //console.log(this.getUbigeo());
 
     this.createForm();
+    this.accion();
+    this.getDni();
+    this.getUserName();
+  }
+
+  //---------------- FILTRADO DE DNI -----------------------------
+
+  getDni() {
+    this.usuarios.forEach((i) => {
+      this.dniDiferentesAlActual.push(i.dni);
+    });
+
+    console.log(this.dniDiferentesAlActual);
+
+    this.dniDiferentesAlActual2 = this.dniDiferentesAlActual.filter(
+      (dni) => dni != this.usuario.dni
+    );
+    console.log(this.dniDiferentesAlActual2);
+  }
+  //--------------------------------------------------------------
+  //---------------- FILTRADO DE USERNAME -----------------------------
+  getUserName() {
+    this.usuarios.forEach((i) => {
+      this.usernameDiferentesAlActual.push(i.username);
+    });
+
+    console.log(this.usernameDiferentesAlActual);
+
+    this.usernameDiferentesAlActual2 = this.usernameDiferentesAlActual.filter(
+      (username) => username != this.usuario.username
+    );
+    console.log(this.usernameDiferentesAlActual2);
+  }
+
+  //------------------------------------------
+
+  accion() {
     if (this.usuario != null) {
       this.titulo = "Actualizar Información";
       this.getUsuarioId(this.usuario);
@@ -72,29 +118,50 @@ export class ModalFormComponent implements OnInit {
       this.titulo = "Agregar Usuario";
       this.usuario = new Usuario();
       this.getUbigeo();
+      this.getRoles();
     }
   }
+  //------------------ FORM CONTROL USERNAME PERSONALIZADO -------------------------------
 
-  @HostListener("keyup")
-  targ(dni: string) {
-    this.usuarios.some((data) => {
-      if (data.dni == dni) {
+  isLegitimateStarkUsername(username: string): boolean {
+    return this.usernameDiferentesAlActual2.some((userActual) => {
+      if (userActual == username) {
         swal.fire(
-          "DNI Duplicado...!",
-          `El DNI ${this.Dni.value} ya existe`,
+          "Username Duplicado...!",
+          `El username ${this.UserName.value} ya existe`,
           "error"
         );
         //console.log(this.Dni.errors);
         // console.log(this.Dni.value);
         //this.submittedDni = true;
-        return data.dni;
+        return true;
+      } else {
+        return false;
       }
     });
   }
 
+  formControlPersonalizadoUsername(
+    control: AbstractControl
+  ): { [key: string]: any } {
+    // this.usuarios.map((data) => {
+    if (this.isLegitimateStarkUsername(control.value)) {
+      return { nick: true };
+
+      //console.log(data.idusuario);
+    } else {
+      return null;
+    }
+    //  });
+  }
+
+  //-------------------------------------------------------------------------------------------------
+
+  //------------------------------- FORM CONTROL PERSONALIZADO DNI----------------------
+
   isLegitimateStark(dni: string): boolean {
-    return this.usuarios.some((data) => {
-      if (data.dni == dni) {
+    return this.dniDiferentesAlActual2.some((dniActual) => {
+      if (dniActual == dni) {
         swal.fire(
           "DNI Duplicado...!",
           `El DNI ${this.Dni.value} ya existe`,
@@ -121,6 +188,7 @@ export class ModalFormComponent implements OnInit {
     }
     //  });
   }
+  //----------------------------------------------------------
 
   //------------------- VALIDACION DE FORMULARIO --------------------------------
 
@@ -147,7 +215,10 @@ export class ModalFormComponent implements OnInit {
       ]),
       FechaNac: new FormControl("", [Validators.required]),
       Password: new FormControl("", [Validators.required]),
-      UserName: new FormControl("", [Validators.required]),
+      UserName: new FormControl("", [
+        Validators.required,
+        this.formControlPersonalizadoUsername.bind(this),
+      ]),
     });
   }
 
@@ -249,6 +320,7 @@ if (o1 === undefined && o2 === undefined) {
 
 return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? false : o1.id_ubigeo === o2.id_ubigeo;
 }*/
+
   submittedDni: boolean = false;
   verificarDatos() {
     console.log("que pasas");
@@ -279,38 +351,14 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
           .then((result) => {
             if (this.usuario.idusuario == null) {
               if (result.isConfirmed) {
-                this.usuarios.some((e) => {
-                  /* this.usuarios.forEach((i) => {
-                    if (i.username.match("raul")) {
-                      return console.log(i.username);
-                    }
-                  });*/
-                  if (
-                    e.username.match(this.usuario.username) ||
-                    e.dni.match(this.usuario.dni)
-                  ) {
-                    this.submittedDni = true;
-                    swal.fire(
-                      "Username Duplicado...!",
-                      `El usuario ${this.usuario.username} ya existe`,
-                      "error"
-                    );
-
-                    console.log(this.submittedDni);
-                    return true;
-                    //this.insert();
-                    //this.modalRef.hide();
-                  } else {
-                    swal.fire(
-                      "Registro Exitoso...!",
-                      `${this.usuario.nombres} bienvenido a nuestra veterinaria`,
-                      "success"
-                    );
-                    console.log("sigue mal el insert");
-                    this.insert();
-                    this.modalRef.hide();
-                  }
-                });
+                swal.fire(
+                  "Registro Exitoso...!",
+                  `${this.usuario.nombres} bienvenido a nuestra veterinaria`,
+                  "success"
+                );
+                console.log("sigue mal el insert");
+                this.insert();
+                this.modalRef.hide();
               }
             } else if (
               this.usuario.idusuario != null &&
@@ -363,5 +411,9 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
     this.usuarioService
       .getRegiones()
       .subscribe((ubigeo) => (this.ubigeo = ubigeo));
+  }
+
+  getRoles() {
+    this.usuarioService.getRoles().subscribe((roles) => (this.roles = roles));
   }
 }

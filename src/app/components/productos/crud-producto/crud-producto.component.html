@@ -32,7 +32,7 @@
                 <tbody>
                     <tr *ngFor="let producto of productos">
                         <th class="align-middle">{{ producto.idproducto }}</th>
-                        <th class="align-middle"><img class="img-fluid me-auto ms-auto" src="../../../../assets/img/antipulgas.png" width="50px" height="50px"></th>
+                        <th class="align-middle"><img class="img-fluid me-auto ms-auto" [src]="producto.foto2" width="50px" height="50px"></th>
                         <th class="align-middle">{{ producto.nombre }}</th>
                         <th class="align-middle">{{ producto.precio }}</th>
                         <th class="align-middle">{{ producto.descripcion }}</th>
@@ -87,7 +87,7 @@
             </div>
             <div class="modal-body">
 
-                <form id="form-producto" [formGroup]="myform" (ngSubmit)="verificarDatos()" class="">
+                <form id="form-producto" [formGroup]="myform" (ngSubmit)="verificarDatos()" class="" enctype="multipart/form-data">
 
 
                     <fieldset class="row ml-auto mr-auto" formGroupName="name">
@@ -252,15 +252,24 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <img class="img-fluid me-auto ms-auto" src="../../../../assets/img/antipulgas.png" width="300px" height="500px">
-                            </div>
+
+
+
                             <div class="form-group col-12">
                                 <label>foto</label>
-                                <input type="file" [ngClass]="{
+
+
+                                <div class="col-12">
+                                    <img id="imgFoto" [src]="producto.foto2" class="img-fluid me-auto ms-auto" width="600px" height="300px">
+                                </div>
+
+
+
+
+                                <input type="file" id="file-id" (change)="showPreviewImage($event)" formControlName="foto" required [ngClass]="{
                                     'is-invalid': (foto.errors?.required && submitted) || ((foto.dirty || foto.touched) && foto.invalid ),
                                     'is-valid': foto.valid && (foto.dirty || foto.touched)
-                                  }" class="form-control" formControlName="foto" required>
+                                  }" class="form-control">
 
                                 <div class="m-0">
                                     <p class="alert-danger" *ngIf=" (foto.errors?.required && submitted) || ((foto.dirty || foto.touched) && foto.invalid )">Stock is required</p>

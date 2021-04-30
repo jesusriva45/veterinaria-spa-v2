@@ -1,4 +1,5 @@
 <div class="modal-content">
+
     <div class="modal-header bg-secondary text-white">
 
         <h4 class="" id="myModalLabel">{{ titulo }}</h4>
@@ -43,7 +44,7 @@
 
                     <div class="p-1" *ngIf="(Dni.errors && submitted ) || ((Dni.dirty || Dni.touched) && Dni.invalid)">
 
-                        <mdb-error class="mt-2" *ngIf="Dni.errors.required ">Correo is required</mdb-error>
+                        <mdb-error class="mt-2" *ngIf="Dni.errors.required ">DNI is required</mdb-error>
                         <mdb-error class="mt-2" *ngIf="Dni.errors.pattern ">Patron invalido </mdb-error>
                         <mdb-error class="mt-2" *ngIf="Dni.errors.stark">EL DNI YA ESTA REGISTRADO </mdb-error>
 
@@ -110,9 +111,18 @@
                     </div>
 
                 </div>
-                <input type="text" class="form-control" [(ngModel)]="usuario.password" [formControl]="Password" required>
-                <input type="text" class="form-control" [(ngModel)]="usuario.username" [formControl]="UserName" required>
 
+                <input type="text" class="form-control" [(ngModel)]="usuario.password" [formControl]="Password" required>
+                <div class=" md-form">
+                    <input type="text" class="form-control" [(ngModel)]="usuario.username" [formControl]="UserName" required>
+                    <div class="p-1" *ngIf="(UserName.errors && submitted ) || ((UserName.dirty || UserName.touched) && UserName.invalid)">
+
+                        <mdb-error class="mt-2" *ngIf="UserName.errors.required ">DNI is required</mdb-error>
+                        <mdb-error class="mt-2" *ngIf="UserName.errors.pattern ">Patron invalido </mdb-error>
+                        <mdb-error class="mt-2" *ngIf="UserName.errors.nick">EL USERNAME YA ESTA REGISTRADO </mdb-error>
+
+                    </div>
+                </div>
             </fieldset>
 
 
@@ -126,9 +136,14 @@
             </div>
 
         </form>
+
     </div>
     <div class="modal-footer btn-group w-100 justify-content-center d-flex">
+
         <button type="button" mdbBtn color="secondary" class="waves-light" (click)="cerrarmodal()" mdbWavesEffect>Cancelar</button>
         <button type="submit" mdbBtn color="primary" class="waves-light" (click)="verificarDatos()" mdbWavesEffect>Registrar</button>
     </div>
+
+
+
 </div>

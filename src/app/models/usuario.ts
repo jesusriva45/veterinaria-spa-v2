@@ -11,6 +11,8 @@ export class Usuario {
   direccion: string;
   fechaNac: string;
   ubigeo: Ubigeo;
+  //estado agregado
+  //estado: boolean;
   //---------------
   username: string;
   password: string;

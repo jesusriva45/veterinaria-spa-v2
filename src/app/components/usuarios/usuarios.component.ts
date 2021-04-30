@@ -13,6 +13,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Ubigeo } from "../../models/ubigeo";
 import { ModalDirective } from "projects/angular-bootstrap-md/src/public_api";
 import { AuthService } from "src/app/services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-usuarios",
@@ -32,6 +33,7 @@ export class UsuariosComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     private modalService: MDBModalService,
+    public router: Router,
     private _authService: AuthService //private modalService: NgbModal
   ) {}
 
@@ -77,6 +79,41 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
+  //--------------------- ACTUALIZAR ESTADO DE USUARIO --------------------------
+  /*
+  updateEstado(usuario: Usuario): void {
+    swal
+      .fire({
+        title: `Seguro desea actualizar el estado de ${usuario.nombres} ${usuario.apellidos}...`,
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, actualizar",
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.usuarioService.updateEstado(usuario).subscribe((response) => {
+            //usuario.estado = true;
+            //this.usuario.estado = false;
+            let currentUrl = this.router.url;
+            this.router
+              .navigateByUrl("/", { skipLocationChange: true })
+              .then(() => {
+                this.router.navigate([currentUrl]);
+              });
+            swal.fire(
+              `Se actualizó el estado de ${this.usuario.nombres}...!`,
+              "success"
+            );
+            // this.router.navigate([window.location.reload()]);
+          });
+        }
+      });
+  }
+*/
   //------------------ ELIMINAR USUARIO ---------------------------
 
   delete(usuario: Usuario): void {
