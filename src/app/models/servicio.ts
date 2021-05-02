@@ -1,7 +1,9 @@
-import { SerCategoria } from './ser-categoria';
+import { SerCategoria } from "./ser-categoria";
 
 export class Servicio {
   idservicio: number;
+  foto1: string;
+  foto2: string;
   nombre: string;
   precio: number;
   descripcion: string;

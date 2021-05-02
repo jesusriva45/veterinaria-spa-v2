@@ -380,8 +380,8 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
   }
 
   //------------------ CRUD DE USUARIOS ---------------------------
-
-  insert(): void {
+  errores: string[];
+  /*insert(): void {
     this.usuarioService.insert(this.usuario).subscribe((response) => {
       let currentUrl = this.router.url;
       this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
@@ -389,6 +389,24 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
       });
       // this.router.navigate([window.location.reload()]);
     });
+  }*/
+
+  insert(): void {
+    this.usuarioService.insert(this.usuario).subscribe(
+      (usuario) => {
+        let currentUrl = this.router.url;
+        this.router
+          .navigateByUrl("/", { skipLocationChange: true })
+          .then(() => {
+            this.router.navigate([currentUrl]);
+          });
+      },
+      (err) => {
+        this.errores = err.error.errors as string[];
+        console.error("Código del error desde el backend: " + err.status);
+        console.error(err.error.errors);
+      }
+    );
   }
 
   getUsuarioId(usu: Usuario) {

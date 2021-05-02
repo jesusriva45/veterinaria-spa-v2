@@ -42,11 +42,15 @@ export class CrudServicioComponent implements OnInit {
 
   //------------------------------------------------------
 
+  myImgUrl: string;
+
   constructor(
     private servicioService: ServicioService,
     private router: Router,
     public _authService: AuthService // private modalService: NgbModal
-  ) {}
+  ) {
+    this.myImgUrl = "../../../../assets/img/no-image.png";
+  }
 
   ngOnInit(): void {
     this.servicioService
@@ -119,7 +123,10 @@ export class CrudServicioComponent implements OnInit {
   createFormControls() {
     this.IdServicio = new FormControl("", Validators.nullValidator);
     this.Nombre = new FormControl("", Validators.required);
-    this.Precio = new FormControl("", Validators.required);
+    this.Precio = new FormControl("", [
+      Validators.required,
+      Validators.pattern("[0-9]+([.][0-9]{2})?"),
+    ]);
     this.Descripcion = new FormControl("", Validators.required);
     //this.FechaAten = new FormControl('', Validators.required);
     this.IdCategoria = new FormControl("", Validators.required);
@@ -137,7 +144,56 @@ export class CrudServicioComponent implements OnInit {
       }),
     });
   }
+  //----------------- CAPTURAR FILE FOTOS -----------------------------
 
+  localUrl: any[];
+
+  showPreviewImage1(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.localUrl = event.target.result;
+        //console.log(this.localUrl);
+        this.servicio.foto1 = this.localUrl.toString();
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+  showPreviewImage2(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.localUrl = event.target.result;
+        //console.log(this.localUrl);
+        this.servicio.foto2 = this.localUrl.toString();
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
+  //-----------------------------------------------------------------
+
+  //---------------------------- DETALLE DE SERVICIO -------------------------------------
+  @ViewChild("modalDetail", { static: true }) modalDetail: ModalDirective;
+  SerDescrip: string;
+  SerNom: string;
+  SerCategoria: string;
+  modalDetalle(servicio: Servicio) {
+    this.modalDetail.show();
+    this.getServicio(servicio.idservicio);
+    this.SerDescrip = `${servicio.descripcion}`;
+    this.SerNom = `${servicio.nombre}`;
+    this.SerCategoria = `${servicio.serCategoria.descripcion}`;
+  }
+
+  cerrarmodalDetalle() {
+    this.submitted = false;
+    //this.modalService.dismissAll();
+
+    this.modalDetail.hide();
+    this.myform.reset();
+    //this.usuarioService.getRegiones().subscribe((ubigeo) => (this.ubigeo = []));
+  }
   //------------------ RENDERIZADO DE MODAL PARA CRUD DE SERVICIOS---------------------------------
 
   @ViewChild("contentModal", { static: true }) contentModal: ModalDirective;
@@ -148,7 +204,7 @@ export class CrudServicioComponent implements OnInit {
     this.myform.reset();
   }
 
-  openModalCrud(accion: string, idServicio?: number): void {
+  openModalCrud(accion: string, servicio?: Servicio): void {
     this.createFormControls();
     this.createForm();
 
@@ -162,27 +218,17 @@ export class CrudServicioComponent implements OnInit {
       keyboard: false,
     });*/
 
-    if (accion == "detalle") {
-      //this.titulo = "Detalles de Usuario"
-
-      console.log(this.servicio.idservicio);
-      this.getServicio(idServicio);
-
-      this.getCategoria();
-
-      for (let j = 0; j < this.input.length; j++) {
-        this.input[j].setAttribute("disabled", "");
-      }
-    } else if (accion == "editar") {
+    if (accion == "editar") {
       //this.titulo = 'Actualizar Información';
 
-      this.getServicio(idServicio);
+      this.getServicio(servicio.idservicio);
 
       this.getCategoria();
     } else if (accion == "agregar") {
+      this.myform.reset();
       this.getCategoria();
       this.servicio.idservicio = 0;
-      this.titulo = "Registro de Servicio";
+      this.titulo = "REGISTRAR SERVICIO";
       //this.modalAgregar();
       //this.myform.clearValidators();
     }
@@ -244,6 +290,7 @@ export class CrudServicioComponent implements OnInit {
                   "success"
                 );
                 this.insert();
+                this.contentModal.hide();
                 //this.modalService.dismissAll();
               }
             } else if (
@@ -257,6 +304,7 @@ export class CrudServicioComponent implements OnInit {
                   "success"
                 );
                 this.update();
+                this.contentModal.hide();
                 //this.modalService.dismissAll();
               }
             }

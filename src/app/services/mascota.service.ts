@@ -63,6 +63,27 @@ export class MascotaService {
       .pipe(map((data) => data as Mascota[]));
   }
 
+  //------------------------ LISTAR MASCOTAS DEL CLIENTE LOGUEADO ------------
+
+  getMascotasDelCliente(id_cliente): Observable<Mascota[]> {
+    return this.http
+      .get<Mascota[]>(
+        `${this.urlEndPoint}/mascotas-del-cliente/${id_cliente}`,
+        {
+          headers: this.agregarAuthorizationHeader(),
+        }
+      )
+      .pipe(
+        catchError((e) => {
+          if (this.isNoAutorizado(e)) {
+            return throwError(e);
+          }
+        })
+      );
+  }
+
+  //--------------------------------------------------------------------------
+
   insert(obj: Mascota): Observable<Mascota> {
     return this.http
       .post<Mascota>(this.urlEndPoint, obj, {
@@ -139,23 +160,10 @@ export class MascotaService {
       );
   }
 
-  getClientes(): Observable<Cliente[]> {
+  //-------------- OBTENER CLIENTE REGISTRADO AL SISTEMA POR MEDIO DE ID DE USUARIO ----------
+  getCliente(usu: Usuario): Observable<Usuario> {
     return this.http
-      .get<Cliente[]>(`${this.urlEndPoint}/cliente`, {
-        headers: this.agregarAuthorizationHeader(),
-      })
-      .pipe(
-        catchError((e) => {
-          this.isNoAutorizado(e);
-          return throwError(e);
-        })
-      );
-  }
-
-  //-------------- OBTENER CLIENTE REGISTRADO AL SISTEMA POR MEDIO DE ID DE USUARIO
-  getCliente(usu: Usuario): Observable<Cliente> {
-    return this.http
-      .get<Cliente>(`${this.urlEndPoint}/cliente/${usu.idusuario}`, {
+      .get<Usuario>(`${this.urlEndPoint}/cliente/${usu.idusuario}`, {
         headers: this.agregarAuthorizationHeader(),
       })
       .pipe(

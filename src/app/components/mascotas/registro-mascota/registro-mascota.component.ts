@@ -14,16 +14,16 @@ import { Usuario } from "src/app/models/usuario";
 @Component({
   selector: "app-registro-mascota",
   templateUrl: "./registro-mascota.component.html",
-  styleUrls: ["./registro-mascota.component.css"],
+  styleUrls: ["./registro-mascota.component.scss"],
 })
 export class RegistroMascotaComponent implements OnInit {
   mascotas: Mascota[] = [];
 
+  mascotasDeCliente: Mascota[] = [];
+
   mascota: Mascota = new Mascota();
 
   tipomascota: Tipomascota[] = [];
-
-  cliente: Cliente[] = [];
 
   titulo: string = "Agregar Mascota";
   /*** */
@@ -36,27 +36,45 @@ export class RegistroMascotaComponent implements OnInit {
   IdMascota: FormControl;
   Nombres: FormControl;
   Raza: FormControl;
+  Estado: FormControl;
   FechaNacimiento: FormControl;
   Sexo: FormControl;
   TipoMascota: FormControl;
   Cliente: FormControl;
-  clienteLog: Cliente;
+  clienteLog: Usuario;
+  myImgUrl: string;
+  sexo = [
+    { value: "MACHO", descripcion: "MACHO" },
+    { value: "HEMBRA", descripcion: "HEMBRA" },
+    { value: "Otros", descripcion: "Otros..." },
+  ];
+
+  status = [
+    { value: 1, descripcion: "ACTIVO" },
+    { value: 0, descripcion: "INACTIVO" },
+  ];
+
   constructor(
     private mascotasService: MascotaService,
     private router: Router,
     public _authService: AuthService //private modalService: NgbModal
-  ) {}
+  ) {
+    this.myImgUrl = "../../../../assets/img/no-image.png";
+  }
 
   authService = this._authService;
 
   ngOnInit(): void {
-    this.getClienteIdUsuario(this.authService.usuario);
+    this.getMascotas();
+
+    //------------- CLIENTE LOGUEADO AL SISTEMA
+    this.getMascotasDeCliente(this._authService.usuario.idusuario);
+
+    //------------- USUARIO LOGUEADO AL SISTEMA
+    this.getClienteIdUsuario(this._authService.usuario);
 
     // console.log(this.getClienteIdUsuario(this.authService.usuario));
 
-    this.mascotasService
-      .getMascotas()
-      .subscribe((data) => (this.mascotas = data));
     this.createFormControls();
     this.createForm();
   }
@@ -70,6 +88,7 @@ export class RegistroMascotaComponent implements OnInit {
     this.FechaNacimiento = new FormControl("", [Validators.required]);
     this.Sexo = new FormControl("", [Validators.required]);
     this.TipoMascota = new FormControl("", [Validators.required]);
+    this.Estado = new FormControl("", [Validators.required]);
     //this.Cliente = new FormControl("", [Validators.required]);
   }
 
@@ -79,6 +98,7 @@ export class RegistroMascotaComponent implements OnInit {
         IdMascota: this.IdMascota,
         Nombres: this.Nombres,
         Raza: this.Raza,
+        Estado: this.Estado,
         FechaNacimiento: this.FechaNacimiento,
         Sexo: this.Sexo,
         TipoMascota: this.TipoMascota,
@@ -102,26 +122,18 @@ export class RegistroMascotaComponent implements OnInit {
 
     this.basicModal.show();
 
-    if (accion == "detalle") {
-      //this.titulo = "Detalles de Usuario"
-
-      console.log(this.mascota.idmascota);
-      this.getMascota(idMascota);
-      this.getTipoMascota();
-      for (let j = 0; j < this.input.length; j++) {
-        this.input[j].setAttribute("disabled", "");
-      }
-    } else if (accion == "editar") {
+    if (accion == "editar") {
       this.titulo = "Actualizar Información";
       this.mascota.idmascota = idMascota;
       this.getMascota(idMascota);
       this.getTipoMascota();
       console.log(this.mascota.idmascota);
     } else if (accion == "agregar") {
-      this.mascota.cliente = this.clienteLog;
+      this.mascota.usuario = this.clienteLog;
       this.getTipoMascota();
       this.mascota.idmascota = 0;
       this.titulo = "Registro de Mascota";
+      this.myform.reset();
       //this.modalAgregar();
       //this.myform.clearValidators();
     }
@@ -185,7 +197,66 @@ export class RegistroMascotaComponent implements OnInit {
     }
   }
 
-  //----------------------------------- CURD MASCOTA  ---------
+  //--------------------------------------------------------------------
+
+  //----------------------- MODAL DETALLE MASCOTA -------------------------
+
+  @ViewChild("modalDetalle", { static: true })
+  modalDetalle: ModalDirective;
+
+  cerrarmodalDetalle() {
+    //this.submitted = false;
+    //this.modalService.dismissAll();
+    this.modalDetalle.hide();
+    this.myform.reset();
+    //this.usuarioService.getRegiones().subscribe((ubigeo) => (this.ubigeo = []));
+  }
+
+  modalDetail(mascota: Mascota) {
+    this.modalDetalle.show();
+    this.getMascota(mascota.idmascota);
+    console.log();
+    this.getTipoMascota();
+  }
+
+  //------------------------ COMBO TIPO MASCOTA -----------------------
+
+  compareTipomascota(p1: Tipomascota, p2: Tipomascota): boolean {
+    //console.log(t1.id_ubigeo + t2.id_ubigeo);
+
+    if (
+      (p1 === null && p2 === null) ||
+      (p1 === undefined && p2 === undefined)
+    ) {
+      return true;
+    } else if (
+      p1 === null ||
+      p2 === null ||
+      p1 === undefined ||
+      p2 === undefined
+    ) {
+      return false;
+    } else {
+      return p1.idtipomascota === p2.idtipomascota;
+    }
+  }
+  //--------------- FOTO DE MASCOTA -----------------------------
+  localUrl: any[];
+  showPreviewImage1(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.localUrl = event.target.result;
+        console.log(this.localUrl);
+        this.mascota.foto = this.localUrl.toString();
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
+  //------------------------------------------------------------------------
+
+  //----------------------------------- CURD MASCOTA  -----------------------
 
   insert(): void {
     this.mascotasService.insert(this.mascota).subscribe((response) => {
@@ -224,7 +295,10 @@ export class RegistroMascotaComponent implements OnInit {
           this.mascotasService
             .delete(mascota.idmascota)
             .subscribe((response) => {
-              this.mascotas = this.mascotas.filter((mas) => mas != mascota);
+              this.mascotas = this.mascotas.filter((mas) => {
+                mas != mascota;
+              });
+
               swal.fire(`Su mascota ha sido eliminada...!`, "success");
             });
         }
@@ -251,9 +325,15 @@ export class RegistroMascotaComponent implements OnInit {
       .subscribe((data) => (this.tipomascota = data));
   }
 
-  getClientes() {
+  getMascotas() {
     this.mascotasService
-      .getClientes()
-      .subscribe((data) => (this.cliente = data));
+      .getMascotas()
+      .subscribe((data) => (this.mascotas = data));
+  }
+
+  getMascotasDeCliente(id_cliente) {
+    this.mascotasService
+      .getMascotasDelCliente(id_cliente)
+      .subscribe((data) => (this.mascotasDeCliente = data));
   }
 }

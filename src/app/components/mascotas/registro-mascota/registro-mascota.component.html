@@ -12,9 +12,10 @@
 
         <div class="card-body text-secondary table-responsive">
             <table class="table table-responsive-md">
-                <thead>
+                <thead class="text-center">
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">FOTO</th>
                         <th scope="col">NOMBRE</th>
                         <th scope="col">RAZA</th>
                         <th scope="col">FECHA DE NACIMIENTO</th>
@@ -25,28 +26,46 @@
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_VENDEDOR')">
                     <tr *ngFor="let mascota of mascotas; let i = index">
                         <th>{{ mascota.idmascota }}</th>
+                        <th><img class="photo" (click)="modalDetail(mascota)" [src]="mascota.foto != null ? mascota.foto : myImgUrl" width="50px" height="50px"></th>
                         <td>{{ mascota.nombre }}</td>
                         <td>{{ mascota.raza }}</td>
                         <td>{{ mascota.fecha_nacimiento }}</td>
                         <td>{{ mascota.sexo }}</td>
                         <td>{{ mascota.tipomascota.descripcion }}</td>
-                        <td>
-                            <button type="button" class="btn btn-primary crud" value="Detalle" (click)="openModalCrud('detalle', mascota.idmascota)">
-                Detalle
-              </button>
+                        <td class="text-center">
+                            <mdb-icon (click)="openModalCrud('editar', mascota.idmascota)" type="button" fas size="2x" icon="edit"></mdb-icon>
+
+                            <p>Editar</p>
+
                         </td>
-                        <td>
-                            <button type="button" class="btn btn-warning crud" value="Editar" (click)="openModalCrud('editar', mascota.idmascota)">
-                Editar
-              </button>
+                        <td class="text-center">
+                            <mdb-icon (click)="delete(mascota)" type="button" fas size="2x" icon="user-alt"></mdb-icon>
+                            <p>Estado</p>
                         </td>
-                        <td>
-                            <button type="button" class="btn btn-danger crud" value="Eliminar" (click)="delete(mascota)">
-                Eliminar
-              </button>
+                    </tr>
+                </tbody>
+
+                <tbody class="text-center" *ngIf="authService.hasRole('ROLE_CLIENTE')">
+                    <tr *ngFor="let mascota of mascotasDeCliente; let i = index">
+                        <th>{{ mascota.idmascota }}</th>
+                        <th><img class="photo" (click)="modalDetail(mascota)" [src]="mascota.foto != null ? mascota.foto : myImgUrl" width="50px" height="50px"></th>
+                        <td>{{ mascota.nombre }}</td>
+                        <td>{{ mascota.raza }}</td>
+                        <td>{{ mascota.fecha_nacimiento }}</td>
+                        <td>{{ mascota.sexo }}</td>
+                        <td>{{ mascota.tipomascota.descripcion }}</td>
+                        <td class="text-center">
+                            <mdb-icon (click)="openModalCrud('editar', mascota.idmascota)" type="button" fas size="2x" icon="edit"></mdb-icon>
+
+                            <p>Editar</p>
+
+                        </td>
+                        <td class="text-center">
+                            <mdb-icon (click)="delete(mascota)" type="button" fas size="2x" icon="user-alt"></mdb-icon>
+                            <p>Estado</p>
                         </td>
                     </tr>
                 </tbody>
@@ -61,13 +80,11 @@
 
 
 <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cerrarmodal">
-          <span aria-hidden="true">&times;</span>
-        </button>
+            <div class="modal-header text-center cyan">
+                <h4 class="modal-title w-100 font-weight-bold text-white">{{titulo}}</h4>
+
             </div>
             <div class="modal-body mx-3">
 
@@ -84,9 +101,17 @@
                             </div>
                         </div>
 
-                        <h3 class="col-12 d-flex justify-content-start m-4">
-                            EDITAR INFORMACION
-                        </h3>
+
+                        <div class="form-group d-flex justify-content-center mb-5">
+
+                            <label for="photo" class="photo">        
+                                <img class="foto" [src]="mascota.foto != null ? mascota.foto : myImgUrl"></label>
+
+
+                            <input type="file" id="photo" (change)="showPreviewImage1($event)" name="foto" required class="form-control" hidden>
+
+                        </div>
+
 
                         <div class="form-group col-12">
                             <label>Nombres</label>
@@ -134,7 +159,17 @@
                         <div class="form-group col-12">
                             <label>Sexo</label>
 
-                            <input type="" class="form-input form-control" [(ngModel)]="mascota.sexo" formControlName="Sexo" required />
+
+
+                            <select id="select-option" class="form-control pl-3 pr-3" [(ngModel)]="mascota.sexo" formControlName="Sexo" required>                         
+                                <option  [ngValue]="null" selected>--- selecionar un sexo ---</option>
+                                    <option *ngFor="let est of sexo"  [ngValue]="est.value">{{est.descripcion}} </option>
+                                   
+                               
+                        |</select>
+
+
+
                             <div class="form-control-feedback">
                                 <p class="alert alert-danger" *ngIf="
                   (Sexo.errors?.required && submitted) ||
@@ -146,11 +181,45 @@
                             </div>
                         </div>
 
+
+                        <div class="form-group col-12">
+                            <label>Estado</label>
+
+
+
+                            <select id="select-option" class="form-control pl-3 pr-3" [(ngModel)]="mascota.estado" formControlName="Estado" required>                         
+                                <option  [ngValue]="null" selected>--- seleciona el de tu mascota estado ---</option>
+                                    <option *ngFor="let est of status"  [ngValue]="est.value">{{est.descripcion}} </option>
+                                   
+                               
+                        |</select>
+
+
+
+                            <div class="form-control-feedback">
+                                <p class="alert alert-danger" *ngIf="
+                  (Estado.errors?.required && submitted) ||
+                  ((Estado.dirty || Estado.touched) && Estado.invalid)
+                ">
+                                    Estado is required
+                                </p>
+                                <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
                         <div class="form-group col-12">
                             <label>Tipo de Mascota</label>
 
-                            <select class="form-input form-control" [(ngModel)]="mascota.tipomascota" formControlName="TipoMascota" required>
-              <option [ngValue]="undefined" selected>
+                            <select class="form-control" [(ngModel)]="mascota.tipomascota" [compareWith]="compareTipomascota" formControlName="TipoMascota" required>
+              <option [ngValue]=null selected>
                 --- selecionar el Tipo ---
               </option>
               <option *ngFor="let tipo of tipomascota" [ngValue]="tipo">
@@ -162,12 +231,12 @@
   (TipoMascota.errors?.required && submitted) ||
   ((TipoMascota.dirty || TipoMascota.touched) && TipoMascota.invalid)
 ">
-                                    Sexo is required
+                                    Tipo is required
                                 </p>
                                 <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
                             </div>
                         </div>
-                        <input type="" class="" value="{{mascota.cliente | json}}" name="cliente" hidden>
+                        <input type="" class="" value="{{mascota.usuario | json}}" name="usuario" hidden>
                     </fieldset>
 
                     <!--div class="col-12 btn-submit">
@@ -177,19 +246,59 @@
 
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button type="button" id="Guerra" class="btn m-4" aria-label="Close" (click)="cerrarmodal()">
+                <button type="button" color="secondary" mdbBtn mdbWavesEffect class="waves-light" aria-label="Close" (click)="cerrarmodal()">
                     Cancelar
                   </button>
 
-                <button type="submit" id="Guerra" (click)="verificarDatos()" class="btn m-4" *ngIf="mascota.idmascota == 0; else elseBlock">
+                <button type="submit" color="secondary" mdbBtn mdbWavesEffect class="waves-light" (click)="verificarDatos()" *ngIf="mascota.idmascota == 0; else elseBlock">
                     Registrar
                   </button>
 
                 <ng-template #elseBlock>
-                    <button type="" role="button" (click)="verificarDatos()" class="btn m-4" [disabled]="myform.invalid">
+                    <button type="" role="button" color="secondary" mdbBtn mdbWavesEffect class="waves-light" (click)="verificarDatos()" class="btn m-4" [disabled]="myform.invalid">
                       Actualizar
                     </button>
                 </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div mdbModal #modalDetalle="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header cyan text-white text-center">
+                <h4 class="modal-title w-100 font-weight-bold">DETALLE MASCOTA</h4>
+
+            </div>
+            <div class="modal-body">
+
+                <div class="row col-12 mb-auto mt-auto">
+
+
+                    <div class="col-6">
+                        <h1 [innerHTML]="mascota.nombre"></h1>
+
+                        <h4>Raza: {{ mascota.raza }}</h4>
+
+                    </div>
+
+
+                    <div class="col-6 text-center">
+                        <label class="photo">        
+                        <img class="foto" [src]="mascota.foto != null ? mascota.foto : myImgUrl"></label>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer  d-flex justify-content-center">
+                <button type="button" mdbBtn color="secondary" class="waves-light" (click)="cerrarmodalDetalle()" mdbWavesEffect>Cerrar</button>
+
             </div>
         </div>
     </div>

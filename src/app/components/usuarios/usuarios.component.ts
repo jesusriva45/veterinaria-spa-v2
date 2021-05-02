@@ -14,6 +14,8 @@ import { Ubigeo } from "../../models/ubigeo";
 import { ModalDirective } from "projects/angular-bootstrap-md/src/public_api";
 import { AuthService } from "src/app/services/auth.service";
 import { Router } from "@angular/router";
+import { Rol } from "src/app/models/rol";
+import { AccesoRol } from "src/app/models/acceso-rol";
 
 @Component({
   selector: "app-usuarios",
@@ -26,6 +28,12 @@ export class UsuariosComponent implements OnInit {
   @Output() usuario: Usuario = new Usuario();
 
   @Output() ubigeo: Ubigeo[];
+
+  rol: Rol;
+
+  roles: Rol[];
+
+  acceso_rol: AccesoRol = new AccesoRol();
 
   button = document.getElementsByClassName("crud");
   input = document.getElementsByClassName("form-input");
@@ -40,8 +48,22 @@ export class UsuariosComponent implements OnInit {
   authService = this._authService;
   box = document.getElementsByClassName("check");
   Checked = null;
+
+  //estado = new Array(true, false);
+
+  status = [
+    { estado: true, descripcion: "Activo" },
+    { estado: false, descripcion: "Inactivo" },
+  ];
+
   ngOnInit(): void {
     //The class name can vary
+
+    for (let index = 0; index < this.status.length; index++) {
+      let element = this.status[index];
+      console.log(this.status[index].estado);
+      console.log(this.status[index].descripcion);
+    }
 
     for (let index = 0; index < this.box.length; index++) {
       this.box[index].addEventListener("click", () => {
@@ -56,6 +78,8 @@ export class UsuariosComponent implements OnInit {
     this.usuarioService
       .getUsuarios()
       .subscribe((usuarios) => (this.usuarios = usuarios));
+
+    this.getRoles();
   }
 
   ngOnDestroy() {}
@@ -79,41 +103,187 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  //--------------------- ACTUALIZAR ESTADO DE USUARIO --------------------------
-  /*
-  updateEstado(usuario: Usuario): void {
+  //----------------------- FORM PARA ACTUALIZAR ESTADO ------------------------------
+
+  myform: FormGroup;
+  IdProducto: FormControl;
+
+  updateEstadoForm() {
+    console.log("que pasas");
+
+    //this.click = false;
     swal
       .fire({
-        title: `Seguro desea actualizar el estado de ${usuario.nombres} ${usuario.apellidos}...`,
+        title: "Verificar los datos antes de continuar...",
         text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonText: "Cancelar",
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Si, actualizar",
+        confirmButtonText: "Si, registrarse",
       })
       .then((result) => {
-        if (result.isConfirmed) {
-          this.usuarioService.updateEstado(usuario).subscribe((response) => {
-            //usuario.estado = true;
-            //this.usuario.estado = false;
-            let currentUrl = this.router.url;
-            this.router
-              .navigateByUrl("/", { skipLocationChange: true })
-              .then(() => {
-                this.router.navigate([currentUrl]);
-              });
+        if (this.usuario.idusuario == null) {
+          if (result.isConfirmed) {
             swal.fire(
-              `Se actualizó el estado de ${this.usuario.nombres}...!`,
+              "Actualizacion Fallida...!",
+              `El usuario no existe ${this.usuario.nombres}`,
+              "error"
+            );
+            console.log("sigue mal el insert");
+
+            // this.modalRef.hide();
+            console.log(this.usuario.idusuario);
+          }
+        } else if (this.usuario.idusuario > 0) {
+          if (result.isConfirmed) {
+            swal.fire(
+              "Update Exitoso...!",
+              `${this.usuario.nombres} tus datos se actualizaron correctamente`,
               "success"
             );
-            // this.router.navigate([window.location.reload()]);
-          });
+            this.updateEstado();
+            this.modalUpdateEstado.hide();
+          }
         }
       });
   }
-*/
+
+  //---------------------------------------------------------------------------------
+
+  //----------------------- MODAL ACTUALIZAR ESTADO -------------------------
+
+  @ViewChild("modalUpdateEstado", { static: true })
+  modalUpdateEstado: ModalDirective;
+
+  cerrarmodal() {
+    //this.submitted = false;
+    //this.modalService.dismissAll();
+    this.modalUpdateEstado.hide();
+    //this.myform.reset();
+    //this.usuarioService.getRegiones().subscribe((ubigeo) => (this.ubigeo = []));
+  }
+
+  modalEstado(usuario: Usuario) {
+    this.modalUpdateEstado.show();
+    this.getRoles();
+    this.getUsuarioId(usuario);
+  }
+
+  //--------------------- ACTUALIZAR ESTADO DE USUARIO --------------------------
+
+  updateEstado(): void {
+    this.usuarioService.updateEstado(this.usuario).subscribe((response) => {
+      let currentUrl = this.router.url;
+      this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
+        this.router.navigate([currentUrl]);
+      });
+      // this.router.navigate([window.location.reload()]);
+    });
+  }
+  //-----------------------------------------------------------------------------
+
+  //----------------------- MODAL ASIGNAR ROL -------------------------
+
+  @ViewChild("modalUpdateRol", { static: true })
+  modalUpdateRol: ModalDirective;
+
+  cerrarmodalRol() {
+    //this.submitted = false;
+    //this.modalService.dismissAll();
+    this.modalUpdateRol.hide();
+    //this.myform.reset();
+    //this.usuarioService.getRegiones().subscribe((ubigeo) => (this.ubigeo = []));
+  }
+
+  modalRol(usuario: Usuario) {
+    console.log(usuario.idusuario);
+    this.modalUpdateRol.show();
+    this.getRolUsuarioId(usuario);
+    usuario.idusuario = this.acceso_rol.idusuario;
+    console.log();
+    this.getRoles();
+  }
+
+  compareRol(c1: Rol, c2: Rol): boolean {
+    //console.log(t1.id_ubigeo + t2.id_ubigeo);
+
+    if (
+      (c1 === null && c2 === null) ||
+      (c1 === undefined && c2 === undefined)
+    ) {
+      return true;
+    } else if (
+      c1 === null ||
+      c2 === null ||
+      c1 === undefined ||
+      c2 === undefined
+    )
+      return false;
+    else {
+      return c1.idrol === c2.idrol;
+    }
+  }
+
+  //------------------ FORM ASIGNAR ROL ---------------------------------
+
+  formRol: FormGroup;
+
+  updateRolForm() {
+    console.log("que pasas");
+
+    //this.click = false;
+    swal
+      .fire({
+        title: "Verificar los datos antes de continuar...",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, registrarse",
+      })
+      .then((result) => {
+        if (this.acceso_rol.idusuario == null) {
+          if (result.isConfirmed) {
+            swal.fire(
+              "Actualizacion Fallida...!",
+              `El usuario no existe ${this.usuario.nombres}`,
+              "error"
+            );
+            console.log("sigue mal el insert");
+
+            // this.modalRef.hide();
+            console.log(this.usuario.idusuario);
+          }
+        } else if (this.acceso_rol.idusuario > 0) {
+          if (result.isConfirmed) {
+            swal.fire(
+              "Update Exitoso...!",
+              `${this.usuario.nombres} tus datos se actualizaron correctamente`,
+              "success"
+            );
+            this.updateRol();
+            this.modalUpdateRol.hide();
+          }
+        }
+      });
+  }
+
+  updateRol(): void {
+    this.usuarioService.asignarRol(this.acceso_rol).subscribe((response) => {
+      let currentUrl = this.router.url;
+      this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
+        this.router.navigate([currentUrl]);
+      });
+      // this.router.navigate([window.location.reload()]);
+    });
+  }
+
+  //-----------------------------------------------------------------------------
+
   //------------------ ELIMINAR USUARIO ---------------------------
 
   delete(usuario: Usuario): void {
@@ -141,5 +311,25 @@ export class UsuariosComponent implements OnInit {
             });
         }
       });
+  }
+
+  //--------------- BUSCAR USUARIO POR ID ----------------
+
+  getUsuarioId(usu: Usuario) {
+    this.usuarioService
+      .getUsuario(usu)
+      .subscribe((usuario) => (this.usuario = usuario));
+  }
+
+  //----------- BUSCAR USUARIO POR ID PARA OBTENER SU ROL
+
+  getRolUsuarioId(usu: Usuario) {
+    this.usuarioService
+      .getRolUsuarioPorId(usu.idusuario)
+      .subscribe((acceso_rol) => (this.acceso_rol = acceso_rol));
+  }
+
+  getRoles() {
+    this.usuarioService.getRoles().subscribe((roles) => (this.roles = roles));
   }
 }

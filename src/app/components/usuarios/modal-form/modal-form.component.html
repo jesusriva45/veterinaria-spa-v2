@@ -12,7 +12,7 @@
 
 
                 <div class="md-form ">
-                    <mdb-icon fas icon="user envelope" class="prefix"></mdb-icon>
+
                     <input type="text" class="form-input form-control" id="nomForm" mdbInput mdbValidate [(ngModel)]="usuario.nombres" [formControl]="Nombres" required>
                     <label>Nombres</label>
                     <div class="p-1" *ngIf="(Nombres.errors && submitted ) ||((Nombres.dirty || Nombres.touched) && Nombres.invalid)">
@@ -112,17 +112,33 @@
 
                 </div>
 
-                <input type="text" class="form-control" [(ngModel)]="usuario.password" [formControl]="Password" required>
+
                 <div class=" md-form">
-                    <input type="text" class="form-control" [(ngModel)]="usuario.username" [formControl]="UserName" required>
+                    <mdb-icon fas icon="user envelope" class="prefix"></mdb-icon>
+                    <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.username" [formControl]="UserName" required>
+                    <label>Username</label>
                     <div class="p-1" *ngIf="(UserName.errors && submitted ) || ((UserName.dirty || UserName.touched) && UserName.invalid)">
 
-                        <mdb-error class="mt-2" *ngIf="UserName.errors.required ">DNI is required</mdb-error>
+                        <mdb-error class="mt-2" *ngIf="UserName.errors.required ">Username is required</mdb-error>
                         <mdb-error class="mt-2" *ngIf="UserName.errors.pattern ">Patron invalido </mdb-error>
                         <mdb-error class="mt-2" *ngIf="UserName.errors.nick">EL USERNAME YA ESTA REGISTRADO </mdb-error>
 
                     </div>
                 </div>
+                <div class=" md-form">
+                    <mdb-icon fas icon="unlock envelope" class="prefix"></mdb-icon>
+                    <input type="password" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.password" [formControl]="Password" required>
+                    <label>Password</label>
+                    <div class="p-1" *ngIf="(Password.errors && submitted ) || ((Password.dirty || Password.touched) && Password.invalid)">
+
+                        <mdb-error class="mt-2" *ngIf="Password.errors.required ">Password is required</mdb-error>
+                        <mdb-error class="mt-2" *ngIf="Password.errors.pattern ">Patron invalido </mdb-error>
+                        <mdb-error class="mt-2" *ngIf="Password.errors.nick">EL PASSWORD YA ESTA REGISTRADO </mdb-error>
+
+                    </div>
+                </div>
+
+
             </fieldset>
 
 
@@ -133,6 +149,9 @@
 
 
 
+            </div>
+            <div *ngFor="let rol of roles">
+                {{rol.descripcion}}
             </div>
 
         </form>

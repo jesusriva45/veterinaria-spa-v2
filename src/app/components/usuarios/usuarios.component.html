@@ -53,13 +53,18 @@
                         <td class="align-middle">
                             <mdb-icon type="button" size="2x" far icon="file-alt"></mdb-icon>
                         </td>
-                        <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-                            <mdb-icon (click)="openModalCrud(usuario)" type="button" fas size="2x" icon="edit"></mdb-icon>
+                        <td class="align-middle" *ngIf="authService.hasRole('ROLE_ADMIN')">
+                            <mdb-icon (click)="openModalCrud(usuario)" type="button" fas size="2x" icon="edit">Estado</mdb-icon>
                         </td>
-                        <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-                            <mdb-icon type="button" fas size="2x" icon="minus-circle"></mdb-icon>
+                        <td class="align-middle" *ngIf="authService.hasRole('ROLE_ADMIN')">
+                            <mdb-icon (click)="modalEstado(usuario)" type="button" fas size="2x" icon="user-alt"></mdb-icon>
+
                         </td>
-                        <td>
+                        <td class="align-middle" *ngIf="authService.hasRole('ROLE_ADMIN')">
+                            <mdb-icon (click)="modalRol(usuario)" type="button" fas size="2x" icon="users"></mdb-icon>
+                        </td>
+
+
 
                 </tbody>
             </table>
@@ -74,6 +79,77 @@
 <input type="checkbox" class="check">
 <input type="checkbox" class="check">
 
+
+
+
+<div mdbModal #modalUpdateEstado="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-fluid" role="document">
+        <div class="modal-content p-5">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">ESTADO DE USUARIO</h4>
+
+            </div>
+            <div class="modal-body">
+
+                <form id="form-producto" class="" enctype="multipart/form-data">
+                    <div class=" md-form">
+
+                        <select id="select-option" class="form-control pl-3 pr-3" [(ngModel)]="usuario.estado" name="estado">                        
+                                <option  [ngValue]=undefined selected>--- selecionar un estado ---</option>
+                                    <option *ngFor="let est of status"  [ngValue]="est.estado">{{est.descripcion}} </option>
+                                   
+                               
+                        |</select>
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" mdbBtn color="secondary" class="waves-light" (click)="cerrarmodal()" mdbWavesEffect>Cancelar</button>
+                <button type="submit" mdbBtn color="primary" class="waves-light" (click)="updateEstadoForm()" mdbWavesEffect>Actualizar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div mdbModal #modalUpdateRol="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-fluid" role="document">
+        <div class="modal-content p-5">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">ASIGNAR ROL DE USUARIO</h4>
+
+            </div>
+            <div class="modal-body">
+
+                <form id="form-rol" class="" enctype="multipart/form-data">
+
+
+
+
+                    <div class=" md-form">
+
+                        <select id="select-option" [(ngModel)]="acceso_rol.rol" [compareWith]="compareRol" class="form-control pl-3 pr-3" name="rol">                        
+                                <option  [ngValue]="undefined" selected>--- selecionar un rol ---</option>
+                                    <option *ngFor="let rol of roles"  [ngValue]="rol">{{rol.descripcion}} </option>                                  
+                               
+                        |</select>
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" mdbBtn color="secondary" class="waves-light" (click)="cerrarmodalRol()" mdbWavesEffect>Cancelar</button>
+                <button type="submit" mdbBtn color="primary" class="waves-light" (click)="updateRolForm()" mdbWavesEffect>Actualizar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

@@ -45,7 +45,9 @@ export class CrudProductoComponent implements OnInit {
   IdProducto: FormControl;
   Nombre: FormControl;
   Descripcion: FormControl;
-  foto: FormControl;
+  foto1: FormControl;
+  foto2: FormControl;
+  foto3: FormControl;
   Indicaciones: FormControl;
   Marca: FormControl;
   Precio: FormControl;
@@ -62,13 +64,35 @@ export class CrudProductoComponent implements OnInit {
   //------------------- UPLOAD FOTO - CIFRADO A BASE64---------------------------------------
   localUrl: any[];
 
-  showPreviewImage(event: any) {
+  showPreviewImage1(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.localUrl = event.target.result;
+        console.log(this.localUrl);
+        this.producto.foto1 = this.localUrl.toString();
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+  showPreviewImage2(event: any) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
       reader.onload = (event: any) => {
         this.localUrl = event.target.result;
         console.log(this.localUrl);
         this.producto.foto2 = this.localUrl.toString();
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+  showPreviewImage3(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.localUrl = event.target.result;
+        console.log(this.localUrl);
+        this.producto.foto3 = this.localUrl.toString();
       };
       reader.readAsDataURL(event.target.files[0]);
     }
@@ -93,16 +117,27 @@ export class CrudProductoComponent implements OnInit {
   }
 
   //--------------------------- MODAL DETALLE -----------
+
   @ViewChild("modalDetail", { static: true }) modalDetail: ModalDirective;
   ProDescrip: string;
   ProNom: string;
   ProMarca: string;
   modalDetalle(producto: Producto) {
+    console.log(producto.idproducto);
     this.modalDetail.show();
     this.getProducto(producto.idproducto);
     this.ProDescrip = `${producto.descripcion}`;
     this.ProNom = `${producto.nombre}`;
     this.ProMarca = `${producto.marca.nombre}`;
+  }
+
+  cerrarmodalDetalle() {
+    this.submitted = false;
+    //this.modalService.dismissAll();
+
+    this.modalDetail.hide();
+    this.myform.reset();
+    //this.usuarioService.getRegiones().subscribe((ubigeo) => (this.ubigeo = []));
   }
 
   //--------------------------
@@ -174,13 +209,18 @@ export class CrudProductoComponent implements OnInit {
     this.Marca = new FormControl("", Validators.required);
     this.Precio = new FormControl("", [
       Validators.required,
-      Validators.pattern("^([0-9]{1,4})?[.]?([0-9]{0,2})?$"),
+      Validators.pattern("[0-9]+([.][0-9]{2})?"),
     ]);
     this.Serie = new FormControl("", Validators.required);
-    this.Stock = new FormControl("", Validators.required);
+    this.Stock = new FormControl("", [
+      Validators.required,
+      Validators.pattern("[0-9]{1,}"),
+    ]);
     this.IdCategoria = new FormControl("", Validators.required);
     this.IdProveedor = new FormControl("", Validators.required);
-    this.foto = new FormControl("", Validators.nullValidator);
+    //this.foto1 = new FormControl("", Validators.nullValidator);
+    //this.foto2 = new FormControl("", Validators.nullValidator);
+    //this.foto3 = new FormControl("", Validators.nullValidator);
   }
 
   createForm() {
@@ -196,7 +236,9 @@ export class CrudProductoComponent implements OnInit {
         Stock: this.Stock,
         IdCategoria: this.IdCategoria,
         IdProveedor: this.IdProveedor,
-        foto: this.foto,
+        // foto1: this.foto1,
+        //foto2: this.foto2,
+        //foto3: this.foto3,
       }),
     });
   }
@@ -208,15 +250,15 @@ export class CrudProductoComponent implements OnInit {
   cerrarmodal() {
     this.submitted = false;
     //this.modalService.dismissAll();
+
     this.contentModal.hide();
     this.myform.reset();
     //this.usuarioService.getRegiones().subscribe((ubigeo) => (this.ubigeo = []));
   }
 
-  openModalCrud(accion: string, idProducto?: number): void {
+  openModalCrud(accion: string, producto?: Producto): void {
     this.createFormControls();
     this.createForm();
-
     this.contentModal.show();
 
     /*  this.modalService.open(targetModal, {
@@ -227,32 +269,33 @@ export class CrudProductoComponent implements OnInit {
       size: "xl",
       keyboard: false,
     });*/
-
-    if (accion == "detalle") {
-      //this.titulo = "Detalles de Usuario"
-
-      console.log(this.producto.idproducto);
-      this.getProducto(idProducto);
-      this.getMarca();
-      this.getCategoria();
-      this.getProveedor();
-      for (let j = 0; j < this.input.length; j++) {
-        this.input[j].setAttribute("disabled", "");
-      }
-    } else if (accion == "editar") {
+    if (accion == "editar") {
       this.titulo = "Actualizar Información";
 
-      this.getProducto(idProducto);
+      /* if (producto.foto1 == null) {
+        this.producto.foto1 = "../../../../assets/img/no-image.png";
+        console.log(producto.foto1);
+      } else if (producto.foto2 == null) {
+        this.producto.foto2 = "../../../../assets/img/no-image.png";
+      } else if (producto.foto3 == null) {
+        this.producto.foto3 = "../../../../assets/img/no-image.png";
+      }*/
+
+      this.getProducto(producto.idproducto);
       this.getMarca();
       this.getCategoria();
       this.getProveedor();
 
-      console.log(this.producto.idproducto);
+      console.log(producto.idproducto);
     } else if (accion == "agregar") {
+      this.myform.reset();
       this.getMarca();
       this.getCategoria();
       this.getProveedor();
-      document.getElementById("imgFoto").setAttribute("src", "");
+      this.producto.foto1 = "../../../../assets/img/no-image.png";
+      this.producto.foto2 = "../../../../assets/img/no-image.png";
+      this.producto.foto3 = "../../../../assets/img/no-image.png";
+      //document.getElementById("imgFoto").setAttribute("src", "");
       this.producto.idproducto = 0;
       this.titulo = "Registro de Producto";
       //this.modalAgregar();
@@ -363,7 +406,7 @@ export class CrudProductoComponent implements OnInit {
                   "success"
                 );
                 this.insert();
-                //this.modalService.dismissAll();
+                this.contentModal.hide();
               }
             } else if (
               this.producto.idproducto != 0 &&
@@ -376,7 +419,7 @@ export class CrudProductoComponent implements OnInit {
                   "success"
                 );
                 this.update();
-                //this.modalService.dismissAll();
+                this.contentModal.hide();
               }
             }
           });
