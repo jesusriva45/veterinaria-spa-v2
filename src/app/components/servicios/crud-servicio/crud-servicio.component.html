@@ -1,11 +1,11 @@
-<div class="container mt-5">
+<div class="container-fluid mt-5">
     <!--button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
     Agregar Usuario
   </button*-->
 
     <button type="button" class="btn btn-primary crud" (click)="openModalCrud('agregar')">Agregar Servicio</button>
 
-    <div class="card border-primary mb-5 container mt-5">
+    <div class="card border-primary mb-5 container-fluid mt-5">
 
         <div class="card-header row text-primary">
             <h2>Listado de Servicio</h2>
@@ -84,7 +84,7 @@
                         <div class="mb-3">
                             <h3>Precio:</h3>
 
-                            <h5>S/. {{servicio.precio | number : '1.2-2'}}</h5>
+                            <h5>S/. {{servicio.precio }}</h5>
                         </div>
 
                     </div>
@@ -163,7 +163,7 @@
                                 <input type="text" [ngClass]="{
                                     'is-invalid': (Precio.errors?.required && submitted) || ((Precio.dirty || Precio.touched) && Precio.invalid ),
                                     'is-valid': Precio.valid && (Precio.dirty || Precio.touched)
-                                  }" class="form-control" [ngModel]="servicio.precio | number : '1.2-2'" step="0.01" formControlName="Precio" required>
+                                  }" class="form-control" [(ngModel)]="servicio.precio" formControlName="Precio" required>
 
 
                                 <div class="form-control-feedback" *ngIf="(Precio.errors && submitted) || (Precio.dirty || Precio.touched) && Precio.invalid">
@@ -178,7 +178,7 @@
                             <div class="form-group col-12">
                                 <label>Categoria</label>
 
-                                <select class="w-100 " [(ngModel)]="servicio.serCategoria" [compareWith]="compareCategoria" formControlName="IdCategoria" required>
+                                <select class="w-100 form-control" [(ngModel)]="servicio.serCategoria" [compareWith]="compareCategoria" formControlName="IdCategoria" required>
                                        
                                         <option class="form-control" [ngValue]=null aria-hidden="aria-hidden" selected>--- selecionar una marca ---</option>
 

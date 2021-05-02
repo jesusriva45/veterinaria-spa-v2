@@ -120,15 +120,17 @@ export class CrudProductoComponent implements OnInit {
 
   @ViewChild("modalDetail", { static: true }) modalDetail: ModalDirective;
   ProDescrip: string;
-  ProNom: string;
+
   ProMarca: string;
+  ProCategoria: string;
   modalDetalle(producto: Producto) {
-    console.log(producto.idproducto);
+    console.log(producto.nombre);
     this.modalDetail.show();
     this.getProducto(producto.idproducto);
     this.ProDescrip = `${producto.descripcion}`;
-    this.ProNom = `${producto.nombre}`;
+
     this.ProMarca = `${producto.marca.nombre}`;
+    this.ProCategoria = `${producto.categoria.descripcion}`;
   }
 
   cerrarmodalDetalle() {
@@ -209,7 +211,7 @@ export class CrudProductoComponent implements OnInit {
     this.Marca = new FormControl("", Validators.required);
     this.Precio = new FormControl("", [
       Validators.required,
-      Validators.pattern("[0-9]+([.][0-9]{2})?"),
+      Validators.pattern("[0-9]+([.][0-9]{1,2})?"),
     ]);
     this.Serie = new FormControl("", Validators.required);
     this.Stock = new FormControl("", [

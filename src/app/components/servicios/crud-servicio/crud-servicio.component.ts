@@ -125,7 +125,7 @@ export class CrudServicioComponent implements OnInit {
     this.Nombre = new FormControl("", Validators.required);
     this.Precio = new FormControl("", [
       Validators.required,
-      Validators.pattern("[0-9]+([.][0-9]{2})?"),
+      Validators.pattern("[0-9]+([.][0-9]{1,2})?"),
     ]);
     this.Descripcion = new FormControl("", Validators.required);
     //this.FechaAten = new FormControl('', Validators.required);

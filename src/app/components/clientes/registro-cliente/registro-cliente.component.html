@@ -24,7 +24,7 @@
                 <label>Apellidos</label>
                 <div class="p-1" *ngIf="(Apellidos.errors && submitted ) ||((Apellidos.dirty || Apellidos.touched) && Apellidos.invalid)">
 
-                    <mdb-error class="mt-2" *ngIf="Apellidos.errors.required ">Correo is required</mdb-error>
+                    <mdb-error class="mt-2" *ngIf="Apellidos.errors.required ">Apellido is required</mdb-error>
                     <mdb-error class="mt-2" *ngIf="Apellidos.errors.pattern ">Patron invalido </mdb-error>
                 </div>
             </div>
@@ -50,10 +50,10 @@
             <div class="md-form ">
 
                 <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.telefono" [formControl]="Telef" required>
-                <label>Telefono</label>
+                <label>Teléfono</label>
                 <div class="p-1" *ngIf="(Telef.errors && submitted ) ||((Telef.dirty || Telef.touched) && Telef.invalid)">
 
-                    <mdb-error class="mt-2" *ngIf="Telef.errors.required ">Correo is required</mdb-error>
+                    <mdb-error class="mt-2" *ngIf="Telef.errors.required ">Teléfono is required</mdb-error>
                     <mdb-error class="mt-2" *ngIf="Telef.errors.pattern ">Patron invalido </mdb-error>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                 <label>Dirección</label>
                 <div class="p-1" *ngIf="(Direc.errors && submitted ) ||((Direc.dirty || Direc.touched) && Direc.invalid)">
 
-                    <mdb-error class="mt-2" *ngIf="Direc.errors.required ">Correo is required</mdb-error>
+                    <mdb-error class="mt-2" *ngIf="Direc.errors.required ">Dirección is required</mdb-error>
                     <mdb-error class="mt-2" *ngIf="Direc.errors.pattern ">Patron invalido </mdb-error>
                 </div>
 
@@ -85,6 +85,11 @@
 
                 <input type="date" class="form-control" id="form58" mdbInput mdbValidate [(ngModel)]="usuario.fechaNac" [formControl]="FechaNac" required>
                 <label for="form58">Fecha Nacimiento</label>
+                <div class="p-1">
+                    <mdb-error class="mt-2" *ngIf="(FechaNac.errors && submitted ) ||((FechaNac.dirty || FechaNac.touched) && FechaNac.invalid)">
+                        Seleccione su fecha de nacimiento
+                    </mdb-error>
+                </div>
             </div>
 
             <div class=" md-form">
@@ -107,7 +112,8 @@
             </div>
 
             <div class=" md-form">
-                <input type="text" class="form-control" [(ngModel)]="usuario.username" [formControl]="UserName" required>
+                <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.username" [formControl]="UserName" required>
+                <label>Username</label>
                 <div class="p-1" *ngIf="(UserName.errors && submitted ) || ((UserName.dirty || UserName.touched) && UserName.invalid)">
 
                     <mdb-error class="mt-2" *ngIf="UserName.errors.required ">Username is required</mdb-error>
@@ -118,13 +124,14 @@
             </div>
 
             <div class=" md-form">
-                <input type="text" class="form-control" [(ngModel)]="usuario.password" [formControl]="Password" required>
 
+                <input type="password" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.password" [formControl]="Password" required>
+                <label>Password</label>
                 <div class="p-1" *ngIf="(Password.errors && submitted ) || ((Password.dirty || Password.touched) && Password.invalid)">
 
                     <mdb-error class="mt-2" *ngIf="Password.errors.required ">Password is required</mdb-error>
                     <mdb-error class="mt-2" *ngIf="Password.errors.pattern ">Pass invalido </mdb-error>
-                    <mdb-error class="mt-2" *ngIf="Password.errors.nick"></mdb-error>
+
 
                 </div>
             </div>

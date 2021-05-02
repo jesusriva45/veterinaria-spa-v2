@@ -129,6 +129,7 @@ export class RegistroMascotaComponent implements OnInit {
       this.getTipoMascota();
       console.log(this.mascota.idmascota);
     } else if (accion == "agregar") {
+      this.mascota.foto = this.myImgUrl;
       this.mascota.usuario = this.clienteLog;
       this.getTipoMascota();
       this.mascota.idmascota = 0;
@@ -247,7 +248,7 @@ export class RegistroMascotaComponent implements OnInit {
       var reader = new FileReader();
       reader.onload = (event: any) => {
         this.localUrl = event.target.result;
-        console.log(this.localUrl);
+        // console.log(this.localUrl);
         this.mascota.foto = this.localUrl.toString();
       };
       reader.readAsDataURL(event.target.files[0]);

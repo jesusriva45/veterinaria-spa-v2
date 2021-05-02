@@ -1,11 +1,11 @@
-<div class="container mt-5">
+<div class="container-fluid mt-5">
     <!--button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
     Agregar Usuario
   </button*-->
 
     <button type="button" class="btn btn-primary crud" (click)="openModalCrud('agregar')">Agregar Producto</button>
 
-    <div class="card border-primary mb-5 container mt-5">
+    <div class="card border-primary mb-5 container-fluid mt-5">
 
         <div class="card-header row text-primary">
             <h2>Listado de Productos</h2>
@@ -54,17 +54,42 @@
 <div mdbModal #modalDetail="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">DETALLE DEL PRODUCTO</h4>
+            <div class="modal-header text-center text-white cyan">
+                <h4 class="modal-title w-100 font-weight-bold">{{producto.nombre}}</h4>
 
             </div>
             <div class="modal-body mx-3">
+                <div class="row col-12 mb-auto mt-auto">
 
-                <div [innerHTML]="ProDescrip"></div>
-                <div [innerHTML]="ProNom"></div>
-                <div [innerHTML]="ProMarca"></div>
+                    <div class="col-6">
 
 
+                        <div class="mb-3">
+                            <h3>Descripción:</h3>
+                            <h5 [innerHTML]="ProDescrip"></h5>
+                        </div>
+                        <div class="mb-3">
+                            <h3>Categoria:</h3>
+                            <h5 [innerHTML]="ProCategoria"></h5>
+                        </div>
+
+                        <div class="mb-3">
+                            <h3>Marca:</h3>
+                            <h5 [innerHTML]="ProMarca"></h5>
+                        </div>
+
+                        <div class="mb-3">
+                            <h3>Precio:</h3>
+
+                            <h5>S/. {{producto.precio}}</h5>
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button mdbBtn color="default" class="waves-light" (click)="cerrarmodalDetalle()" mdbWavesEffect>Cerrar</button>
@@ -79,7 +104,7 @@
         <div class="modal-content">
             <div class="modal-header bg-secondary text-white text-center">
 
-                <h4 class="" id="myModalLabel">ACTUALIZAR PRODUCTO</h4>
+                <h4 class="" id="myModalLabel">REGISTRO PRODUCTO</h4>
             </div>
 
             <div class="modal-body">
@@ -171,7 +196,10 @@
                             <div class="form-group col-12">
                                 <label>Marca</label>
 
-                                <select class="w-100 " [(ngModel)]="producto.marca" [compareWith]="compareMarca" formControlName="Marca" required>
+                                <select class="w-100 form-control" [ngClass]="{
+                                    'is-invalid': (Marca.errors?.required && submitted) || ((Marca.dirty || Marca.touched) && Marca.invalid ),
+                                    'is-valid': Marca.valid && (Marca.dirty || Marca.touched)
+                                  }" [(ngModel)]="producto.marca" [compareWith]="compareMarca" formControlName="Marca" required>
                                        
                                         <option class="" [ngValue]="undefined" aria-hidden="aria-hidden" selected>--- selecionar una marca ---</option>
 
@@ -195,7 +223,10 @@
                             <div class="form-group col-12">
                                 <label>Proveedor</label>
 
-                                <select class="w-100" [(ngModel)]="producto.proveedor" [compareWith]="compareProveedor" formControlName="IdProveedor" required>
+                                <select [ngClass]="{
+                                    'is-invalid': (IdProveedor.errors?.required && submitted) || ((IdProveedor.dirty || IdProveedor.touched) && IdProveedor.invalid ),
+                                    'is-valid': IdProveedor.valid && (IdProveedor.dirty || IdProveedor.touched)
+                                  }" class="w-100 form-control" [(ngModel)]="producto.proveedor" [compareWith]="compareProveedor" formControlName="IdProveedor" required>
                                         <option [ngValue]=null selected>--- selecionar un proveedor ---</option>
                                         <option *ngFor="let prov of proveedor" [ngValue]="prov" > {{ prov.razon_social  }}</option>
                                 </select>
@@ -210,7 +241,10 @@
                             <div class="form-group col-12">
                                 <label>Categoria</label>
 
-                                <select class="w-100" [(ngModel)]="producto.categoria" [compareWith]="compareCategoria" formControlName="IdCategoria" required>
+                                <select [ngClass]="{
+                                    'is-invalid': (IdCategoria.errors?.required && submitted) || ((IdCategoria.dirty || IdCategoria.touched) && IdCategoria.invalid ),
+                                    'is-valid': IdCategoria.valid && (IdCategoria.dirty || IdCategoria.touched)
+                                  }" class="w-100 form-control" [(ngModel)]="producto.categoria" [compareWith]="compareCategoria" formControlName="IdCategoria" required>
                                         
                                         <option [ngValue]=null selected>--- selecionar una categoria ---</option>
                                         <option *ngFor="let cate of categoria" [ngValue]="cate" > {{ cate.descripcion  }}</option>
