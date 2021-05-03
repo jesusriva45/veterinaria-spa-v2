@@ -1,13 +1,13 @@
-import { ProCategoria } from './pro-categoria';
-import { Marca } from './marca';
-import { Proveedor } from './proveedor';
+import { ProCategoria } from "./pro-categoria";
+import { Marca } from "./marca";
+import { Proveedor } from "./proveedor";
 
 export class Producto {
   idproducto: number;
   nombre: string;
   precio: number;
   stock: number;
-  serie: number;
+  serie: string;
   descripcion: string;
   indicaciones: string;
   foto1: string;

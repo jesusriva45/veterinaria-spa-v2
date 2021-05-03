@@ -146,7 +146,7 @@ export class CrudServicioComponent implements OnInit {
   }
   //----------------- CAPTURAR FILE FOTOS -----------------------------
 
-  localUrl: any[];
+  localUrl: ArrayBuffer[];
 
   showPreviewImage1(event: any) {
     if (event.target.files && event.target.files[0]) {

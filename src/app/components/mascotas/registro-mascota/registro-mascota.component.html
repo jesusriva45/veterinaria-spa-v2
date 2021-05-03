@@ -105,7 +105,7 @@
                         <div class="form-group d-flex justify-content-center mb-5">
 
                             <label for="photo" class="photo">        
-                                <img class="foto" [src]="mascota.foto != null ? mascota.foto : myImgUrl"></label>
+                                <img class="foto" [src]="mascota.foto"></label>
 
 
                             <input type="file" id="photo" (change)="showPreviewImage1($event)" name="foto" required class="form-control" hidden>
