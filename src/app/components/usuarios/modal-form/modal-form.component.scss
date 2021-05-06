@@ -8,6 +8,11 @@ select {
     background-origin: content-box, border-box;
 }
 
-.scroll {
-    overflow-y: auto;
+.collapsible {
+    overflow: hidden;
+}
+
+hr {
+    height: 2px;
+    background-color: gray;
 }

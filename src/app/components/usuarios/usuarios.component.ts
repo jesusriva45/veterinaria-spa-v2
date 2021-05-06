@@ -16,9 +16,22 @@ import { AuthService } from "src/app/services/auth.service";
 import { Router } from "@angular/router";
 import { Rol } from "src/app/models/rol";
 import { AccesoRol } from "src/app/models/acceso-rol";
+import { animate, style, transition, trigger } from "@angular/animations";
 
 @Component({
   selector: "app-usuarios",
+  animations: [
+    trigger("enterAnimation", [
+      transition(":enter", [
+        style({ transform: "translateY(100%)", opacity: 0 }),
+        animate("300ms", style({ transform: "translateY(y)", opacity: 1 })),
+      ]),
+      transition(":leave", [
+        style({ transform: "translateY(0)", opacity: 1 }),
+        animate("300ms", style({ transform: "translateY(100%)", opacity: 0 })),
+      ]),
+    ]),
+  ],
   templateUrl: "./usuarios.component.html",
   styleUrls: ["./usuarios.component.scss"],
 })
@@ -96,7 +109,7 @@ export class UsuariosComponent implements OnInit {
       focus: true,
       show: true,
       ignoreBackdropClick: true,
-      class: "modal-lg modal-dialog-scrollable",
+      class: "modal-fluid modal-dialog-scrollable",
       containerClass: "left",
       animated: true,
       data: { usuario: usu, usuarios: this.usuarios },
@@ -201,7 +214,7 @@ export class UsuariosComponent implements OnInit {
     console.log(usuario.idusuario);
     this.modalUpdateRol.show();
     this.getRolUsuarioId(usuario);
-    usuario.idusuario = this.acceso_rol.idusuario;
+    this.acceso_rol.idusuario = usuario.idusuario;
     console.log();
     this.getRoles();
   }
@@ -332,4 +345,6 @@ export class UsuariosComponent implements OnInit {
   getRoles() {
     this.usuarioService.getRoles().subscribe((roles) => (this.roles = roles));
   }
+
+  habil: boolean = true;
 }

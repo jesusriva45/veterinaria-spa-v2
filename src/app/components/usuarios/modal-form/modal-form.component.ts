@@ -21,10 +21,27 @@ import swal from "sweetalert2";
 import { Ubigeo } from "src/app/models/ubigeo";
 import { AuthService } from "src/app/services/auth.service";
 import { Rol } from "src/app/models/rol";
-import { I } from "projects/angular-bootstrap-md/src/lib/free/utils/keyboard-navigation";
+import {
+  animate,
+  AUTO_STYLE,
+  state,
+  style,
+  transition,
+  trigger,
+} from "@angular/animations";
+import { UbigeoService } from "src/app/services/ubigeo.service";
+import { pairwise } from "rxjs/operators";
 
 @Component({
   selector: "app-modal-form",
+  animations: [
+    trigger("enterAnimation", [
+      state("false", style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
+      state("true", style({ height: "0", visibility: "hidden" })),
+      transition("false => true", animate("500ms ease-in")),
+      transition("true => false", animate("500ms ease-out")),
+    ]),
+  ],
   templateUrl: "./modal-form.component.html",
   styleUrls: ["./modal-form.component.scss"],
 })
@@ -39,9 +56,18 @@ export class ModalFormComponent implements OnInit {
 
   //@Input() newUsuario?: Usuario = new Usuario();
   @Input()
-  ubigeo: Ubigeo[];
+  ubigeo?: Ubigeo[];
 
   roles: Rol[];
+
+  //------------- NUEVO UBIGEO ------------
+
+  departamentos: String[];
+  provincias: String[];
+  @Input() distritos?: Ubigeo[];
+
+  departamentChange: string;
+  //--------------------------------------
 
   submitted: boolean = false;
   titulo: string;
@@ -51,11 +77,14 @@ export class ModalFormComponent implements OnInit {
     public usuarioService: UsuarioService,
     public router: Router,
     public modalRef: MDBModalRef,
-    private _authService: AuthService
+    public ubigeoService: UbigeoService
   ) {}
   button = document.getElementsByClassName("crud");
   input = document.getElementsByClassName("form-input");
+  //-------- FORMULARIOS -----------------
   myform: FormGroup;
+  myformPassword: FormGroup;
+  //-----------------------------------------
 
   dniDiferentesAlActual = [];
 
@@ -66,12 +95,13 @@ export class ModalFormComponent implements OnInit {
   usernameDiferentesAlActual2 = [];
 
   ngOnInit(): void {
-    // this.compareFn(this.usuario.ubigeo, this.usuario.ubigeo);
+    //----- -almacenar el ubigeo del usuario actual----
+    this.usuUbig = this.usuario?.ubigeo;
+    this.de = this.usuario?.ubigeo?.departamento;
+    this.pr = this.usuario?.ubigeo?.provincia;
 
-    //console.log(this.roles.map((e) => e.descripcion));
-
-    //console.log(this.getUbigeo());
-
+    this.getDepartamentos();
+    this.createFormPassword();
     this.createForm();
     this.accion();
     this.getDni();
@@ -113,9 +143,11 @@ export class ModalFormComponent implements OnInit {
     if (this.usuario != null) {
       this.titulo = "Actualizar Información";
       this.getUsuarioId(this.usuario);
+      this.getUbigeoActual();
       this.getUbigeo();
     } else if (this.usuario == null) {
       this.titulo = "Agregar Usuario";
+
       this.usuario = new Usuario();
       this.getUbigeo();
       this.getRoles();
@@ -123,7 +155,7 @@ export class ModalFormComponent implements OnInit {
   }
   //------------------ FORM CONTROL USERNAME PERSONALIZADO -------------------------------
 
-  isLegitimateStarkUsername(username: string): boolean {
+  /*isLegitimateStarkUsername(username: string): boolean {
     return this.usernameDiferentesAlActual2.some((userActual) => {
       if (userActual == username) {
         swal.fire(
@@ -153,7 +185,7 @@ export class ModalFormComponent implements OnInit {
       return null;
     }
     //  });
-  }
+  }*/
 
   //-------------------------------------------------------------------------------------------------
 
@@ -203,6 +235,14 @@ export class ModalFormComponent implements OnInit {
       ]),
       Telef: new FormControl("", [Validators.required]),
       Direc: new FormControl("", [Validators.required]),
+      Depart: new FormControl(undefined, [
+        Validators.nullValidator,
+        Validators.required,
+      ]),
+      Prov: new FormControl(undefined, [
+        Validators.nullValidator,
+        Validators.required,
+      ]),
       IdUbi: new FormControl(undefined, [
         Validators.nullValidator,
         Validators.required,
@@ -214,11 +254,7 @@ export class ModalFormComponent implements OnInit {
         ),
       ]),
       FechaNac: new FormControl("", [Validators.required]),
-      Password: new FormControl("", [Validators.required]),
-      UserName: new FormControl("", [
-        Validators.required,
-        this.formControlPersonalizadoUsername.bind(this),
-      ]),
+      // Password: new FormControl("", [Validators.required]),
     });
   }
 
@@ -260,16 +296,24 @@ export class ModalFormComponent implements OnInit {
     return this.myform.get("IdUbi");
   }
 
+  get Depart() {
+    return this.myform.get("Depart");
+  }
+  get Prov() {
+    return this.myform.get("Prov");
+  }
+
+  //-------------------- VALIDACION FORM UPDATE PASSWORD------------
+
+  createFormPassword() {
+    this.myformPassword = new FormGroup({
+      Password: new FormControl("", [Validators.required]),
+    });
+  }
+
   get Password() {
-    return this.myform.get("Password");
+    return this.myformPassword.get("Password");
   }
-
-  get UserName() {
-    return this.myform.get("UserName");
-  }
-
-  //-------------------- DATEPICKER------------
-
   //--------------------- RENDERIZADO DE MODAL PARA CRUD DE USUARIOS --------------------------
 
   //---------- sin uso ----- NgbModal keyboard ------------
@@ -313,6 +357,50 @@ export class ModalFormComponent implements OnInit {
       return c1.idubigeo === c2.idubigeo;
     }
   }
+
+  //------------------ DEPARTAMENT -----------------
+  compareUbigeoDepart(c1: any, c2: any): boolean {
+    //console.log(t1.id_ubigeo + t2.id_ubigeo);
+
+    if (
+      (c1 === null && c2 === null) ||
+      (c1 === undefined && c2 === undefined)
+    ) {
+      return true;
+    } else if (
+      c1 === null ||
+      c2 === null ||
+      c1 === undefined ||
+      c2 === undefined
+    )
+      return false;
+    else {
+      return c1 === c2;
+    }
+  }
+
+  //---------------- PROVINCIA -----------------------
+
+  compareUbigeoProv(c1: any, c2: any): boolean {
+    //console.log(t1.id_ubigeo + t2.id_ubigeo);
+
+    if (
+      (c1 === null && c2 === null) ||
+      (c1 === undefined && c2 === undefined)
+    ) {
+      return true;
+    } else if (
+      c1 === null ||
+      c2 === null ||
+      c1 === undefined ||
+      c2 === undefined
+    )
+      return false;
+    else {
+      return c1 === c2;
+    }
+  }
+
   /*compareFn(o1: Ubigeo, o2: Ubigeo): boolean {
 if (o1 === undefined && o2 === undefined) {
   return true;
@@ -434,4 +522,84 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
   getRoles() {
     this.usuarioService.getRoles().subscribe((roles) => (this.roles = roles));
   }
+
+  //------- VISIBILIDAD DEL ACORDION -----------
+  registro: boolean = true;
+
+  password: boolean = true;
+
+  //--------------------------------------------
+
+  //----------- UBIGEO -------------------
+
+  usuUbig: Ubigeo;
+
+  de: string;
+
+  pr: string;
+
+  getDepartamentos() {
+    this.ubigeoService
+      .getDepartamentos()
+      .subscribe((depart) => (this.departamentos = depart));
+  }
+
+  onChangeDepart(depart) {
+    this.de = depart;
+
+    if (depart == null || depart == undefined) {
+      this.getProvincias(null);
+      this.departamentChange = depart;
+
+      // this.myform.controls["Prov"].setErrors({ incorrect: true });
+      // this.myform.controls["IdUbi"].setErrors({ incorrect: true });
+      this.myform.controls["Prov"].setValue(undefined);
+      this.myform.controls["IdUbi"].setValue(undefined);
+    } else {
+      this.departamentChange = depart;
+      this.myform.controls["Prov"].setValue(undefined);
+      this.myform.controls["IdUbi"].setValue(undefined);
+
+      this.getProvincias(depart);
+    }
+  }
+
+  getProvincias(depart: string) {
+    this.ubigeoService
+      .getProvincias(depart)
+      .subscribe((prov) => (this.provincias = prov));
+  }
+
+  onChangeProv(prov) {
+    console.log(prov);
+
+    if (prov == null || prov == undefined) {
+      this.getDistritos(null, null);
+      this.myform.controls["IdUbi"].setValue(undefined);
+    } else {
+      this.myform.controls["IdUbi"].setValue(undefined);
+      this.getDistritos(this.de, prov);
+      this.getDistritos(this.departamentChange, prov);
+      // this.myform.controls["IdUbi"].setErrors({ incorrect: true });
+    }
+  }
+
+  getDistritos(d: string, p: string) {
+    this.ubigeoService
+      .getDistritos(d, p)
+      .subscribe((dist) => (this.distritos = dist));
+  }
+
+  getUbigeoActual() {
+    this.getDepartamentos();
+    //operador de elvis ?
+    this.pr = this.usuario?.ubigeo?.provincia;
+    this.de = this.usuario?.ubigeo?.departamento;
+    this.getDistritos(
+      this.usuario?.ubigeo?.departamento,
+      this.usuario?.ubigeo?.provincia
+    );
+  }
+
+  //-------------------------------------------
 }

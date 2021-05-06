@@ -1,6 +1,48 @@
 <app-header></app-header>
 
 
+
+
+
+<div class="container p-5">
+
+    <div class=" md-form col-12">
+
+        <select id="select-option" (ngModelChange)="onChangeDepart($event)" class="form-control pl-3 pr-3" [ngModel]="departamentos" required>                        
+            <option [ngValue]=undefined selected>--- selecionar una región ---</option>
+                <option *ngFor="let depart of departamentos" [ngValue]="depart" > {{ depart  }} </option>
+           
+            </select>
+
+        <select id="select-option" (ngModelChange)="onChangeProv($event)" class="form-control pl-3 pr-3" [ngModel]="provincias" required>                        
+                <option [ngValue]=undefined selected>--- selecionar una provincia ---</option>
+                    <option *ngFor="let prov of provincias" [ngValue]="prov" > {{ prov  }} </option>
+               
+                </select>
+
+
+
+
+        <!--div class=" md-form col-12">
+
+            <select id="select-option" class="form-control pl-3 pr-3" [(ngModel)]="ubigeo">                        
+                                <option [ngValue]=undefined selected>--- selecionar una región ---</option>
+                                    <option *ngFor="let region of distritos" [ngValue]="region" > {{ region.distrito  }}</option>
+                               
+                                </select>
+
+
+
+        </div-->
+
+
+    </div>
+
+</div>
+
+
+
+
 <div class="down-banner position-relative container-fluid row row-cols-1 row-cols-md-3 g-4 p-5">
     <div class="col" *ngFor="let servicio of listaServicios">
         <div class="card h-100">

@@ -94,7 +94,7 @@
                 <form id="form-producto" class="" enctype="multipart/form-data">
                     <div class=" md-form">
 
-                        <select id="select-option" class="form-control pl-3 pr-3" [(ngModel)]="usuario.estado" name="estado">                        
+                        <select class="form-control pl-3 pr-3" [(ngModel)]="usuario.estado" name="estado">                        
                                 <option  [ngValue]=undefined selected>--- selecionar un estado ---</option>
                                     <option *ngFor="let est of status"  [ngValue]="est.estado">{{est.descripcion}} </option>
                                    
@@ -132,7 +132,7 @@
 
                     <div class=" md-form">
 
-                        <select id="select-option" [(ngModel)]="acceso_rol.rol" [compareWith]="compareRol" class="form-control pl-3 pr-3" name="rol">                        
+                        <select [(ngModel)]="acceso_rol.rol" [compareWith]="compareRol" class="form-control pl-3 pr-3" name="rol">                        
                                 <option  [ngValue]="undefined" selected>--- selecionar un rol ---</option>
                                     <option *ngFor="let rol of roles"  [ngValue]="rol">{{rol.descripcion}} </option>                                  
                                

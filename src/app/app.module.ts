@@ -84,6 +84,7 @@ import { RoleGuard } from "./services/guards/role.guard";
     CommonModule,
     ScrollingModule,
     AngularEditorModule,
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: "never" }),
   ],
   providers: [NgModule, AuthService],
   bootstrap: [AppComponent],
