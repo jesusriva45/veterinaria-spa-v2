@@ -69,7 +69,7 @@ export class CrudProductoComponent implements OnInit {
       var reader = new FileReader();
       reader.onload = (event: any) => {
         this.localUrl = event.target.result;
-        console.log(this.localUrl);
+
         this.producto.foto1 = this.localUrl.toString();
       };
       reader.readAsDataURL(event.target.files[0]);
@@ -80,7 +80,7 @@ export class CrudProductoComponent implements OnInit {
       var reader = new FileReader();
       reader.onload = (event: any) => {
         this.localUrl = event.target.result;
-        console.log(this.localUrl);
+
         this.producto.foto2 = this.localUrl.toString();
       };
       reader.readAsDataURL(event.target.files[0]);
@@ -91,7 +91,7 @@ export class CrudProductoComponent implements OnInit {
       var reader = new FileReader();
       reader.onload = (event: any) => {
         this.localUrl = event.target.result;
-        console.log(this.localUrl);
+
         this.producto.foto3 = this.localUrl.toString();
       };
       reader.readAsDataURL(event.target.files[0]);
@@ -108,9 +108,7 @@ export class CrudProductoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productoService
-      .getProductos()
-      .subscribe((productos) => (this.productos = productos));
+    this.listarProductos();
     this.getMarca();
     this.createFormControls();
     this.createForm();
@@ -172,10 +170,10 @@ export class CrudProductoComponent implements OnInit {
         //'strikeThrough',
         "subscript",
         "superscript",
-        "justifyLeft",
-        "justifyCenter",
-        "justifyRight",
-        "justifyFull",
+        //"justifyLeft",
+        //"justifyCenter",
+        //"justifyRight",
+        //"justifyFull",
         //'indent',
         //'outdent',
         //'insertUnorderedList',
@@ -187,14 +185,14 @@ export class CrudProductoComponent implements OnInit {
         //'fontSize',
         //'textColor',
         "backgroundColor",
-        "customClasses",
+        //"customClasses",
         //'link',
         //'unlink',
         "insertImage",
         "insertVideo",
         "insertHorizontalRule",
         //'removeFormat',
-        //'toggleEditorMode',
+        "toggleEditorMode",
       ],
     ],
   };
@@ -263,27 +261,19 @@ export class CrudProductoComponent implements OnInit {
     this.createForm();
     this.contentModal.show();
 
-    /*  this.modalService.open(targetModal, {
-      centered: true,
-      animation: true,
-      backdropClass: "modal-backdrop",
-      ariaLabelledBy: "modal-basic-title",
-      size: "xl",
-      keyboard: false,
-    });*/
     if (accion == "editar") {
-      this.titulo = "Actualizar Información";
+      this.titulo = "ACTUALIZAR PRODUCTO";
 
-      /* if (producto.foto1 == null) {
-        this.producto.foto1 = "../../../../assets/img/no-image.png";
-        console.log(producto.foto1);
-      } else if (producto.foto2 == null) {
-        this.producto.foto2 = "../../../../assets/img/no-image.png";
-      } else if (producto.foto3 == null) {
-        this.producto.foto3 = "../../../../assets/img/no-image.png";
-      }*/
+      this.IdProducto.setValue(this.producto.idproducto);
+      this.Nombre.setValue(this.producto.nombre);
+      this.Precio.setValue(this.producto.precio);
+      this.Stock.setValue(this.producto.stock);
+      this.Descripcion.setValue(this.producto.descripcion);
+      this.Indicaciones.setValue(this.producto.indicaciones);
+      this.Serie.setValue(this.producto.serie);
 
       this.getProducto(producto.idproducto);
+
       this.getMarca();
       this.getCategoria();
       this.getProveedor();
@@ -294,12 +284,14 @@ export class CrudProductoComponent implements OnInit {
       this.getMarca();
       this.getCategoria();
       this.getProveedor();
+
       this.producto.foto1 = "../../../../assets/img/no-image.png";
       this.producto.foto2 = "../../../../assets/img/no-image.png";
       this.producto.foto3 = "../../../../assets/img/no-image.png";
       //document.getElementById("imgFoto").setAttribute("src", "");
       this.producto.idproducto = 0;
-      this.titulo = "Registro de Producto";
+      console.log(this.producto.idproducto);
+      this.titulo = "REGISTRAR PRODUCTO";
       //this.modalAgregar();
       //this.myform.clearValidators();
     }
@@ -407,6 +399,7 @@ export class CrudProductoComponent implements OnInit {
                   `${this.producto.nombre} producto agregado correctamente`,
                   "success"
                 );
+
                 this.insert();
                 this.contentModal.hide();
               }
@@ -433,9 +426,11 @@ export class CrudProductoComponent implements OnInit {
   insert(): void {
     this.productoService.insert(this.producto).subscribe((response) => {
       let currentUrl = this.router.url;
-      this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
+      /*this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
         this.router.navigate([currentUrl]);
-      });
+      });*/
+      this.listarProductos();
+      //this.ngOnInit();
       // this.router.navigate([window.location.reload()]);
     });
   }
@@ -443,9 +438,12 @@ export class CrudProductoComponent implements OnInit {
   update(): void {
     this.productoService.update(this.producto).subscribe((response) => {
       let currentUrl = this.router.url;
-      this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
+      /* this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
         this.router.navigate([currentUrl]);
-      });
+      });*/
+      this.listarProductos();
+      /// this.productoService.getProductos();
+      //this.ngOnInit();
       // this.router.navigate([window.location.reload()]);
     });
   }
@@ -480,9 +478,9 @@ export class CrudProductoComponent implements OnInit {
   }
 
   getProducto(idProducto) {
-    this.productoService
-      .getProducto(idProducto)
-      .subscribe((producto) => (this.producto = producto));
+    this.productoService.getProducto(idProducto).subscribe((producto) => {
+      this.producto = producto;
+    });
   }
 
   getMarca() {
@@ -500,5 +498,11 @@ export class CrudProductoComponent implements OnInit {
       .getProveedor()
       .subscribe((proveedor) => (this.proveedor = proveedor));
   }
-  //--------------
+  //----------------------------------------------------------
+
+  listarProductos() {
+    this.productoService
+      .getProductos()
+      .subscribe((productos) => (this.productos = productos));
+  }
 }

@@ -50,7 +50,7 @@
 
                         <div class=" md-form col-4">
                             <select [ngClass]="{
-                                'is-invalid': (Prov.invalid || Depart.invalid) && (Prov.dirty || Prov.touched),
+                                'is-invalid': (Prov.invalid ) && (Prov.dirty || Prov.touched),
                                 'is-valid': Prov.valid && (Prov.dirty || Prov.touched)
                               }" (ngModelChange)="onChangeProv($event)" [compareWith]="compareUbigeoProv" class="form-control pl-3 pr-3" [ngModel]="pr" [formControl]="Prov" required>                        
                                             <option [ngValue]=undefined selected>--- selecionar una provincia ---</option>
@@ -67,7 +67,7 @@
                         <div class=" md-form col-4">
 
                             <select [ngClass]="{
-                                'is-invalid': (IdUbi.invalid || (Prov.invalid && Depart.invalid) || Prov.invalid || Depart.invalid) && (IdUbi.dirty || IdUbi.touched),
+                                'is-invalid': (IdUbi.invalid ) && (IdUbi.dirty || IdUbi.touched),
                                 'is-valid': (IdUbi.valid ) && (IdUbi.dirty || IdUbi.touched)
                               }" class="form-control pl-3 pr-3" [ngModel]="usuUbig" name="usuario.ubigeo" [compareWith]="compareUbigeo" [formControl]="IdUbi" required>                        
                                 <option [ngValue]=undefined selected>--- selecionar una región ---</option>

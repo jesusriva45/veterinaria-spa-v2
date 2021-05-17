@@ -31,31 +31,24 @@ import {
 } from "@angular/animations";
 import { UbigeoService } from "src/app/services/ubigeo.service";
 import { pairwise } from "rxjs/operators";
+import { Acordion } from "../../../animations/animaciones";
 
 @Component({
   selector: "app-modal-form",
-  animations: [
-    trigger("enterAnimation", [
-      state("false", style({ height: AUTO_STYLE, visibility: AUTO_STYLE })),
-      state("true", style({ height: "0", visibility: "hidden" })),
-      transition("false => true", animate("500ms ease-in")),
-      transition("true => false", animate("500ms ease-out")),
-    ]),
-  ],
+  animations: [Acordion("enterAnimation")],
   templateUrl: "./modal-form.component.html",
   styleUrls: ["./modal-form.component.scss"],
 })
 export class ModalFormComponent implements OnInit {
-  @Input() usuario?: Usuario;
+  usuario?: Usuario;
 
-  @Input() usuarios?: Usuario[];
+  usuarios?: Usuario[];
 
   @Directive({
     selector: "[stark][ngModel],[stark][formControl],[stark][formControlName]",
   })
 
   //@Input() newUsuario?: Usuario = new Usuario();
-  @Input()
   ubigeo?: Ubigeo[];
 
   roles: Rol[];
@@ -64,9 +57,8 @@ export class ModalFormComponent implements OnInit {
 
   departamentos: String[];
   provincias: String[];
-  @Input() distritos?: Ubigeo[];
+  distritos?: Ubigeo[];
 
-  departamentChange: string;
   //--------------------------------------
 
   submitted: boolean = false;
@@ -99,7 +91,7 @@ export class ModalFormComponent implements OnInit {
     this.usuUbig = this.usuario?.ubigeo;
     this.de = this.usuario?.ubigeo?.departamento;
     this.pr = this.usuario?.ubigeo?.provincia;
-
+    //------------------------------------------------------------
     this.getDepartamentos();
     this.createFormPassword();
     this.createForm();
@@ -143,7 +135,7 @@ export class ModalFormComponent implements OnInit {
     if (this.usuario != null) {
       this.titulo = "Actualizar Información";
       this.getUsuarioId(this.usuario);
-      this.getUbigeoActual();
+      // this.getUbigeoActual();
       this.getUbigeo();
     } else if (this.usuario == null) {
       this.titulo = "Agregar Usuario";
@@ -530,7 +522,7 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
 
   //--------------------------------------------
 
-  //----------- UBIGEO -------------------
+  //-------------- --- UBIGEO -------------------
 
   usuUbig: Ubigeo;
 
@@ -545,18 +537,16 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
   }
 
   onChangeDepart(depart) {
-    this.de = depart;
-
     if (depart == null || depart == undefined) {
       this.getProvincias(null);
-      this.departamentChange = depart;
+      this.de = depart;
 
       // this.myform.controls["Prov"].setErrors({ incorrect: true });
       // this.myform.controls["IdUbi"].setErrors({ incorrect: true });
       this.myform.controls["Prov"].setValue(undefined);
       this.myform.controls["IdUbi"].setValue(undefined);
     } else {
-      this.departamentChange = depart;
+      this.de = depart;
       this.myform.controls["Prov"].setValue(undefined);
       this.myform.controls["IdUbi"].setValue(undefined);
 
@@ -579,7 +569,6 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
     } else {
       this.myform.controls["IdUbi"].setValue(undefined);
       this.getDistritos(this.de, prov);
-      this.getDistritos(this.departamentChange, prov);
       // this.myform.controls["IdUbi"].setErrors({ incorrect: true });
     }
   }
@@ -590,16 +579,16 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
       .subscribe((dist) => (this.distritos = dist));
   }
 
-  getUbigeoActual() {
+  /*getUbigeoActual() {
     this.getDepartamentos();
     //operador de elvis ?
-    this.pr = this.usuario?.ubigeo?.provincia;
-    this.de = this.usuario?.ubigeo?.departamento;
+    //this.pr = this.usuario?.ubigeo?.provincia;
+    //this.de = this.usuario?.ubigeo?.departamento;
     this.getDistritos(
       this.usuario?.ubigeo?.departamento,
       this.usuario?.ubigeo?.provincia
     );
-  }
+  }*/
 
   //-------------------------------------------
 }

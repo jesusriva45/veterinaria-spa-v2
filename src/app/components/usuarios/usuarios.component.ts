@@ -36,11 +36,11 @@ import { animate, style, transition, trigger } from "@angular/animations";
   styleUrls: ["./usuarios.component.scss"],
 })
 export class UsuariosComponent implements OnInit {
-  @Output() usuarios: Usuario[] = [];
+  usuarios: Usuario[] = [];
 
-  @Output() usuario: Usuario = new Usuario();
+  usuario: Usuario = new Usuario();
 
-  @Output() ubigeo: Ubigeo[];
+  ubigeo: Ubigeo[];
 
   rol: Rol;
 
@@ -70,6 +70,7 @@ export class UsuariosComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.listarUsuarios();
     //The class name can vary
 
     for (let index = 0; index < this.status.length; index++) {
@@ -87,10 +88,6 @@ export class UsuariosComponent implements OnInit {
         this.Checked = this.box[index];
       });
     }
-
-    this.usuarioService
-      .getUsuarios()
-      .subscribe((usuarios) => (this.usuarios = usuarios));
 
     this.getRoles();
   }
@@ -346,5 +343,11 @@ export class UsuariosComponent implements OnInit {
     this.usuarioService.getRoles().subscribe((roles) => (this.roles = roles));
   }
 
-  habil: boolean = true;
+  //habil: boolean = true;
+
+  listarUsuarios() {
+    this.usuarioService
+      .getUsuarios()
+      .subscribe((usuarios) => (this.usuarios = usuarios));
+  }
 }
