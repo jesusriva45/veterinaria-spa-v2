@@ -98,13 +98,15 @@ export class CrudProductoComponent implements OnInit {
     }
   }
   //---------------------------------------------------------
+  myImgUrl: string;
 
+  //---------------------------------------------------------
   constructor(
     private productoService: ProductoService,
     private router: Router,
     public _authService: AuthService //private modalService: NgbModal
   ) {
-    this.titulo;
+    this.myImgUrl = "../../../../assets/img/no-image.png";
   }
 
   ngOnInit(): void {
@@ -250,7 +252,6 @@ export class CrudProductoComponent implements OnInit {
   cerrarmodal() {
     this.submitted = false;
     //this.modalService.dismissAll();
-
     this.contentModal.hide();
     this.myform.reset();
     //this.usuarioService.getRegiones().subscribe((ubigeo) => (this.ubigeo = []));
@@ -273,25 +274,22 @@ export class CrudProductoComponent implements OnInit {
       this.Serie.setValue(this.producto.serie);
 
       this.getProducto(producto.idproducto);
-
       this.getMarca();
       this.getCategoria();
       this.getProveedor();
 
       console.log(producto.idproducto);
     } else if (accion == "agregar") {
-      this.myform.reset();
+      this.titulo = "REGISTRAR PRODUCTO";
+      this.producto.idproducto = 0;
+      this.producto.foto1 = null;
+      this.producto.foto2 = null;
+      this.producto.foto3 = null;
       this.getMarca();
       this.getCategoria();
       this.getProveedor();
-
-      this.producto.foto1 = "../../../../assets/img/no-image.png";
-      this.producto.foto2 = "../../../../assets/img/no-image.png";
-      this.producto.foto3 = "../../../../assets/img/no-image.png";
       //document.getElementById("imgFoto").setAttribute("src", "");
-      this.producto.idproducto = 0;
       console.log(this.producto.idproducto);
-      this.titulo = "REGISTRAR PRODUCTO";
       //this.modalAgregar();
       //this.myform.clearValidators();
     }

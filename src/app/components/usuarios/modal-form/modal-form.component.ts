@@ -71,8 +71,7 @@ export class ModalFormComponent implements OnInit {
     public modalRef: MDBModalRef,
     public ubigeoService: UbigeoService
   ) {}
-  button = document.getElementsByClassName("crud");
-  input = document.getElementsByClassName("form-input");
+
   //-------- FORMULARIOS -----------------
   myform: FormGroup;
   myformPassword: FormGroup;
@@ -87,8 +86,8 @@ export class ModalFormComponent implements OnInit {
   usernameDiferentesAlActual2 = [];
 
   ngOnInit(): void {
+    console.log(this.usuarios);
     //----- -almacenar el ubigeo del usuario actual----
-    this.usuUbig = this.usuario?.ubigeo;
     this.de = this.usuario?.ubigeo?.departamento;
     this.pr = this.usuario?.ubigeo?.provincia;
     //------------------------------------------------------------
@@ -131,15 +130,18 @@ export class ModalFormComponent implements OnInit {
 
   //------------------------------------------
 
+  opcion: string;
+
   accion() {
     if (this.usuario != null) {
       this.titulo = "Actualizar Información";
+      this.opcion = "Actualizar Información";
       this.getUsuarioId(this.usuario);
       // this.getUbigeoActual();
       this.getUbigeo();
     } else if (this.usuario == null) {
       this.titulo = "Agregar Usuario";
-
+      this.opcion = "Agregar Usuario";
       this.usuario = new Usuario();
       this.getUbigeo();
       this.getRoles();
@@ -401,63 +403,124 @@ if (o1 === undefined && o2 === undefined) {
 return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? false : o1.id_ubigeo === o2.id_ubigeo;
 }*/
 
-  submittedDni: boolean = false;
+  //submittedDni: boolean = false;
   verificarDatos() {
     console.log("que pasas");
-    for (let j = 0; j < this.input.length; j++) {
-      if (this.myform.invalid) {
-        swal.fire({
-          icon: "error",
-          title: "Cuidado...! Aun te faltan datos por completar. ",
-          // text: 'Oops...'
-        });
-        this.submitted = true;
-        console.log(this.submitted);
-        //this.myform.invalid;
-      }
-      if (this.myform.valid) {
-        //this.click = false;
-        swal
-          .fire({
-            title: "Verificar tus datos antes de continuar...",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            cancelButtonText: "Cancelar",
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Si, registrarse",
-          })
-          .then((result) => {
-            if (this.usuario.idusuario == null) {
-              if (result.isConfirmed) {
-                swal.fire(
-                  "Registro Exitoso...!",
-                  `${this.usuario.nombres} bienvenido a nuestra veterinaria`,
-                  "success"
-                );
-                console.log("sigue mal el insert");
-                this.insert();
-                this.modalRef.hide();
-              }
-            } else if (
-              this.usuario.idusuario != null &&
-              this.usuario.idusuario > 0
-            ) {
-              if (result.isConfirmed) {
-                swal.fire(
-                  "Update Exitoso...!",
-                  `${this.usuario.nombres} tus datos se actualizaron correctamente`,
-                  "success"
-                );
-                this.update();
-                this.modalRef.hide();
-              }
+
+    if (this.myform.invalid) {
+      swal.fire({
+        icon: "error",
+        title: "Cuidado...! Aun te faltan datos por completar. ",
+        // text: 'Oops...'
+      });
+      this.submitted = true;
+      console.log(this.submitted);
+      //this.myform.invalid;
+    }
+    if (this.myform.valid) {
+      //this.click = false;
+      swal
+        .fire({
+          title: "Verificar tus datos antes de continuar...",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          cancelButtonText: "Cancelar",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si, registrarse",
+        })
+        .then((result) => {
+          if (this.usuario.idusuario == null) {
+            if (result.isConfirmed) {
+              swal.fire(
+                "Registro Exitoso...!",
+                `${this.usuario.nombres} bienvenido a nuestra veterinaria`,
+                "success"
+              );
+              console.log("sigue mal el insert");
+              this.insert();
+              this.modalRef.hide();
             }
-          });
-      }
+          } else if (
+            this.usuario.idusuario != null &&
+            this.usuario.idusuario > 0
+          ) {
+            if (result.isConfirmed) {
+              swal.fire(
+                "Update Exitoso...!",
+                `${this.usuario.nombres} tus datos se actualizaron correctamente`,
+                "success"
+              );
+              this.update();
+              this.modalRef.hide();
+            }
+          }
+        });
     }
   }
+
+  //---------------------------- ACTUALIZAR CONTRASEÑA ------------------------------
+
+  submittedPass: boolean = false;
+
+  formUpdatePass() {
+    console.log("que pasas");
+
+    if (this.myformPassword.invalid) {
+      swal.fire({
+        icon: "error",
+        title: "Cuidado...! Aun te faltan datos por completar. ",
+        // text: 'Oops...'
+      });
+      this.submittedPass = true;
+      console.log(this.submittedPass);
+      //this.myform.invalid;
+    }
+    if (this.myform.valid) {
+      //this.click = false;
+      swal
+        .fire({
+          title: "Verificar tus datos antes de continuar...",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          cancelButtonText: "Cancelar",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si, actualizar contraseña",
+        })
+        .then((result) => {
+          /*if (this.usuario.idusuario == null) {
+            if (result.isConfirmed) {
+              swal.fire(
+                "Registro Exitoso...!",
+                `${this.usuario.nombres} bienvenido a nuestra veterinaria`,
+                "success"
+              );
+              console.log("sigue mal el insert");
+              this.insert();
+              this.modalRef.hide();
+            }
+          } else*/ if (
+            this.usuario.idusuario != null &&
+            this.usuario.idusuario > 0
+          ) {
+            if (result.isConfirmed) {
+              swal.fire(
+                "Update Exitoso...!",
+                `${this.usuario.nombres} tu contraseña se actualizó correctamente`,
+                "success"
+              );
+              this.updatePassword();
+              this.modalRef.hide();
+            }
+          }
+        });
+    }
+  }
+
+  //-----------------------
 
   //------------------ CRUD DE USUARIOS ---------------------------
   errores: string[];
@@ -505,6 +568,16 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
     });
   }
 
+  updatePassword(): void {
+    this.usuarioService.updatePassword(this.usuario).subscribe((response) => {
+      let currentUrl = this.router.url;
+      this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
+        this.router.navigate([currentUrl]);
+      });
+      // this.router.navigate([window.location.reload()]);
+    });
+  }
+
   getUbigeo() {
     this.usuarioService
       .getRegiones()
@@ -524,8 +597,6 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
 
   //-------------- --- UBIGEO -------------------
 
-  usuUbig: Ubigeo;
-
   de: string;
 
   pr: string;
@@ -538,11 +609,11 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
 
   onChangeDepart(depart) {
     if (depart == null || depart == undefined) {
-      this.getProvincias(null);
+      this.getProvincias(undefined);
       this.de = depart;
 
-      // this.myform.controls["Prov"].setErrors({ incorrect: true });
-      // this.myform.controls["IdUbi"].setErrors({ incorrect: true });
+      //this.myform.controls["Prov"].setErrors({ incorrect: true });
+      //this.myform.controls["IdUbi"].setErrors({ incorrect: true });
       this.myform.controls["Prov"].setValue(undefined);
       this.myform.controls["IdUbi"].setValue(undefined);
     } else {

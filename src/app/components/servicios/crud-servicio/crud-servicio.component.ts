@@ -43,7 +43,7 @@ export class CrudServicioComponent implements OnInit {
   //------------------------------------------------------
 
   myImgUrl: string;
-
+  //---------------------------------------------------------
   constructor(
     private servicioService: ServicioService,
     private router: Router,
@@ -53,9 +53,8 @@ export class CrudServicioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.servicioService
-      .getServicios()
-      .subscribe((data) => (this.servicios = data));
+    this.listarServicios();
+
     this.createFormControls();
     this.createForm();
   }
@@ -113,7 +112,7 @@ export class CrudServicioComponent implements OnInit {
         "insertVideo",
         "insertHorizontalRule",
         //'removeFormat',
-        //'toggleEditorMode',
+        "toggleEditorMode",
       ],
     ],
   };
@@ -219,16 +218,22 @@ export class CrudServicioComponent implements OnInit {
     });*/
 
     if (accion == "editar") {
-      //this.titulo = 'Actualizar Información';
+      this.titulo = "ACTUALIZAR SERVICIO";
 
       this.getServicio(servicio.idservicio);
+      this.IdServicio.setValue(this.servicio.idservicio);
+      this.Nombre.setValue(this.servicio.nombre);
+      this.Precio.setValue(this.servicio.precio);
+      this.Descripcion.setValue(this.servicio.descripcion);
 
       this.getCategoria();
     } else if (accion == "agregar") {
-      this.myform.reset();
-      this.getCategoria();
-      this.servicio.idservicio = 0;
+      //this.myform.reset();
       this.titulo = "REGISTRAR SERVICIO";
+      this.servicio.idservicio = 0;
+      this.servicio.foto1 = null;
+      this.servicio.foto2 = null;
+      this.getCategoria();
       //this.modalAgregar();
       //this.myform.clearValidators();
     }
@@ -316,20 +321,22 @@ export class CrudServicioComponent implements OnInit {
   //----------------------- CRUD DE SERVICIOS ---------------------------
   insert(): void {
     this.servicioService.insert(this.servicio).subscribe((response) => {
-      let currentUrl = this.router.url;
+      /* let currentUrl = this.router.url;
       this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
         this.router.navigate([currentUrl]);
-      });
+      });*/
+      this.listarServicios();
       // this.router.navigate([window.location.reload()]);
     });
   }
 
   update(): void {
     this.servicioService.update(this.servicio).subscribe((response) => {
-      let currentUrl = this.router.url;
+      /* let currentUrl = this.router.url;
       this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
         this.router.navigate([currentUrl]);
-      });
+      });*/
+      this.listarServicios();
       // this.router.navigate([window.location.reload()]);
     });
   }
@@ -373,5 +380,11 @@ export class CrudServicioComponent implements OnInit {
     this.servicioService
       .getCategoria()
       .subscribe((data) => (this.categoria = data));
+  }
+
+  listarServicios() {
+    this.servicioService
+      .getServicios()
+      .subscribe((data) => (this.servicios = data));
   }
 }

@@ -104,7 +104,7 @@
         <div class="modal-content">
             <div class="modal-header bg-secondary text-white text-center">
 
-                <h4 class="" id="myModalLabel">{{titulo}}</h4>
+                <h4 class="modal-title w-100 font-weight-bold" id="myModalLabel">{{titulo}}</h4>
             </div>
 
             <div class="modal-body">
@@ -296,13 +296,13 @@
                                 <div class="mr-auto ml-auto col-6">
                                     <mdb-carousel [animation]="'slide'">
                                         <mdb-carousel-item>
-                                            <img class="d-block w-100" [attr.src]="producto.foto1" height="400px" alt="First slide">
+                                            <img class="d-block w-100" [attr.src]="(producto.foto1 != null || producto.foto1 != undefined) ? producto.foto1 : myImgUrl" height="400px" alt="First slide">
                                         </mdb-carousel-item>
                                         <mdb-carousel-item>
-                                            <img class="d-block w-100" [attr.src]="producto.foto2" height="400px" alt="Second slide">
+                                            <img class="d-block w-100" [attr.src]="(producto.foto2 != null || producto.foto2 != undefined) ? producto.foto2 : myImgUrl" height="400px" alt="Second slide">
                                         </mdb-carousel-item>
                                         <mdb-carousel-item>
-                                            <img class="d-block w-100" [attr.src]="producto.foto3" height="400px" alt="Third slide">
+                                            <img class="d-block w-100" [attr.src]="(producto.foto3 != null || producto.foto3 != undefined) ? producto.foto3 : myImgUrl" height="400px" alt="Third slide">
                                         </mdb-carousel-item>
                                     </mdb-carousel>
                                 </div>

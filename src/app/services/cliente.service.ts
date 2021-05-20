@@ -11,7 +11,8 @@ import { AuthService } from "./auth.service";
   providedIn: "root",
 })
 export class ClienteService {
-  private urlEndPoint: string = "http://localhost:8090/api/usuarios";
+  private urlEndPoint: string = "http://localhost:8090/api/cliente";
+  private urlEndPointUser: string = "http://localhost:8090/api/usuarios";
 
   private httpHeaders = new HttpHeaders({
     "Content-Type": "application/json",
@@ -56,7 +57,7 @@ export class ClienteService {
 
   insert(usuario: Usuario): Observable<Usuario> {
     return this.http
-      .post(`${this.urlEndPoint}/clientes`, usuario, {
+      .post(`${this.urlEndPoint}`, usuario, {
         headers: this.agregarAuthorizationHeader(),
       })
       .pipe(
@@ -90,9 +91,9 @@ export class ClienteService {
       );
   }
 
-  getUsuario(usu: Usuario): Observable<Usuario> {
+  getUsuario(idusuario: number): Observable<Usuario> {
     return this.http
-      .get<Usuario>(`${this.urlEndPoint}/${usu.idusuario}`, {
+      .get<Usuario>(`${this.urlEndPointUser}/${idusuario}`, {
         headers: this.agregarAuthorizationHeader(),
       })
       .pipe(

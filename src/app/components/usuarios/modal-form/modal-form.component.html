@@ -9,22 +9,12 @@
 
         <div class="col-md-12 p-3">
             <div (click)="registro = (registro == true)? false:true" class="col-12 acordion form-control d-flex bg-light">
-                <h5>Registrar Usuario</h5>
+                <h5>{{opcion}}</h5>
                 <mdb-icon class="float-right align-middle ml-auto  mb-auto mt-auto" fas icon="angle-down"></mdb-icon>
             </div>
             <div class="collapsible" [@enterAnimation]="registro">
 
-
-
-
-
-
-
-
-
-
-
-                <form [formGroup]="myform" class=" row container mr-auto ml-auto justify-content-center">
+                <form [formGroup]="myform" (ngSubmit)="verificarDatos()" class=" row container mr-auto ml-auto justify-content-center">
 
 
                     <fieldset class="row col-12">
@@ -58,7 +48,7 @@
                                            
                             </select>
                             <div class="pl-3">
-                                <mdb-error class="pl-3 mt-2" *ngIf="(Prov.errors && submitted ) ||((Prov.dirty || Prov.touched) && Prov.invalid)">
+                                <mdb-error class="pl-3 mt-2" *ngIf="(Prov.errors && submitted ) || ((Prov.dirty || Prov.touched) && Prov.invalid)">
                                     Seleccione su provincia
                                 </mdb-error>
                             </div>
@@ -67,9 +57,9 @@
                         <div class=" md-form col-4">
 
                             <select [ngClass]="{
-                                'is-invalid': (IdUbi.invalid ) && (IdUbi.dirty || IdUbi.touched),
+                                'is-invalid':  ((IdUbi.invalid ) && (IdUbi.dirty || IdUbi.touched)),
                                 'is-valid': (IdUbi.valid ) && (IdUbi.dirty || IdUbi.touched)
-                              }" class="form-control pl-3 pr-3" [ngModel]="usuUbig" name="usuario.ubigeo" [compareWith]="compareUbigeo" [formControl]="IdUbi" required>                        
+                              }" class="form-control pl-3 pr-3" [(ngModel)]="usuario.ubigeo" [compareWith]="compareUbigeo" [formControl]="IdUbi" required>                        
                                 <option [ngValue]=undefined selected>--- selecionar una región ---</option>
                                     <option *ngFor="let region of distritos" [ngValue]="region" > {{ region.distrito  }}</option>
                                
@@ -174,10 +164,10 @@
 
 
                     </fieldset>
-                    <div class="btn-group w-100 justify-content-center d-flex" role="group" aria-label="Basic example">
-                        <button type="submit" mdbBtn color="primary" class="waves-light" (click)="verificarDatos()" mdbWavesEffect>Registrar</button>
-                    </div>
 
+                    <div class="btn-group w-100 justify-content-center d-flex" role="group" aria-label="Basic example">
+                        <button type="submit" mdbBtn color="primary" class="waves-light" mdbWavesEffect>Registrar</button>
+                    </div>
 
                 </form>
             </div>
@@ -191,11 +181,11 @@
 
         <div class="col-md-12 p-3">
             <div (click)="password = (password == true)? false:true" class="col-12 acordion form-control d-flex bg-light">
-                <h5>Actualizar Contraseña</h5>
+                <h5>Reiniciar Contraseña</h5>
                 <mdb-icon class="float-right align-middle ml-auto  mb-auto mt-auto" fas icon="angle-down"></mdb-icon>
             </div>
             <div class="collapsible" [@enterAnimation]="password">
-                <form [formGroup]="myformPassword" class=" row container me-auto ms-auto justify-content-center">
+                <form [formGroup]="myformPassword" (ngSubmit)="formUpdatePass()" class=" row container mr-auto ml-auto justify-content-center">
 
 
                     <fieldset class="row col-12">
@@ -203,15 +193,14 @@
 
 
 
-                        <div class=" md-form">
+                        <div class=" md-form ml-auto mr-auto">
                             <mdb-icon fas icon="unlock envelope" class="prefix"></mdb-icon>
                             <input type="password" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.password" [formControl]="Password" required>
                             <label>Password</label>
-                            <div class="p-1" *ngIf="(Password.errors && submitted ) || ((Password.dirty || Password.touched) && Password.invalid)">
+                            <div class="p-1" *ngIf="(Password.errors && submittedPass ) || ((Password.dirty || Password.touched) && Password.invalid)">
 
                                 <mdb-error class="mt-2" *ngIf="Password.errors.required ">Password is required</mdb-error>
                                 <mdb-error class="mt-2" *ngIf="Password.errors.pattern ">Patron invalido </mdb-error>
-                                <mdb-error class="mt-2" *ngIf="Password.errors.nick">EL PASSWORD YA ESTA REGISTRADO </mdb-error>
 
                             </div>
                         </div>
@@ -222,7 +211,7 @@
 
                     <div class="btn-group w-100 justify-content-center d-flex" role="group" aria-label="Basic example">
 
-
+                        <button type="submit" mdbBtn color="primary" class="waves-light" mdbWavesEffect>REINICIAR</button>
 
                     </div>
 
