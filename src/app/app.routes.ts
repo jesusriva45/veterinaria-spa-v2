@@ -15,6 +15,7 @@ import { RegistroClienteComponent } from "./components/clientes/registro-cliente
 import { RegistroMascotaComponent } from "./components/mascotas/registro-mascota/registro-mascota.component";
 import { PedidosComponent } from "./components/pedidos/pedidos.component";
 import { LoginComponent } from "./components/login/login.component";
+import { DatosPersonalesComponent } from "./components/datos-personales/datos-personales.component";
 import { AuthGuard } from "./services/guards/auth.guard";
 import { ClienteService } from "./services/cliente.service";
 
@@ -22,6 +23,11 @@ export const ROUTES: Routes = [
   { path: "", pathMatch: "full", redirectTo: "inicio" },
   { path: "usuarios", component: UsuariosComponent, canActivate: [AuthGuard] },
   { path: "cliente", component: ClientesComponent, canActivate: [AuthGuard] },
+  {
+    path: "datos-personales",
+    component: DatosPersonalesComponent,
+    canActivate: [AuthGuard],
+  },
   { path: "inicio", component: InicioComponent },
   { path: "productos", component: ProductosComponent },
   {

@@ -8,7 +8,7 @@ import { MDBBootstrapModule } from "angular-bootstrap-md";
 
 import { AngularEditorModule } from "@kolkov/angular-editor";
 
-import { ScrollingModule } from "@angular/cdk/scrolling";
+//import { ScrollingModule } from "@angular/cdk/scrolling";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -42,6 +42,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ModalFormComponent } from "./components/usuarios/modal-form/modal-form.component";
 import { LoginComponent } from "./components/login/login.component";
 
+import { DatosPersonalesComponent } from "./components/datos-personales/datos-personales.component";
+
 //-------- AUTENTICACION DE USUARIO ------------
 
 import { AuthService } from "./services/auth.service";
@@ -70,6 +72,7 @@ import { RoleGuard } from "./services/guards/role.guard";
     PedidosComponent,
     ModalFormComponent,
     LoginComponent,
+    DatosPersonalesComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,7 +85,7 @@ import { RoleGuard } from "./services/guards/role.guard";
     RouterModule.forRoot(ROUTES, { onSameUrlNavigation: "reload" }),
     BrowserAnimationsModule,
     CommonModule,
-    ScrollingModule,
+    //ScrollingModule,
     AngularEditorModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: "never" }),
   ],

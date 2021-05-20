@@ -31,18 +31,19 @@ import {
 } from "@angular/animations";
 import { UbigeoService } from "src/app/services/ubigeo.service";
 import { pairwise } from "rxjs/operators";
-import { Acordion } from "../../../animations/animaciones";
+import { Acordion } from "../../animations/animaciones";
+import { ClienteService } from "src/app/services/cliente.service";
 
 @Component({
-  selector: "app-modal-form",
+  selector: "app-datos-personales",
   animations: [Acordion("enterAnimation")],
-  templateUrl: "./modal-form.component.html",
-  styleUrls: ["./modal-form.component.scss"],
+  templateUrl: "./datos-personales.component.html",
+  styleUrls: ["./datos-personales.component.scss"],
 })
-export class ModalFormComponent implements OnInit {
+export class DatosPersonalesComponent implements OnInit {
   usuario?: Usuario;
 
-  usuarios?: Usuario[];
+  usuarios: Usuario[];
 
   @Directive({
     selector: "[stark][ngModel],[stark][formControl],[stark][formControlName]",
@@ -59,18 +60,19 @@ export class ModalFormComponent implements OnInit {
   provincias: String[];
   distritos?: Ubigeo[];
 
-  //--------------------------------------
-
+  //--------------------- SUBMITED ------------------
   submitted: boolean = false;
-  titulo: string;
-  //@ViewChild("content", { static: true }) content: ModalDirective;
-  as = document.getElementById("DNI");
+  //--------------------------------------------
+
   constructor(
     public usuarioService: UsuarioService,
     public router: Router,
-    public modalRef: MDBModalRef,
-    public ubigeoService: UbigeoService
-  ) {}
+    public ubigeoService: UbigeoService,
+    public clienteService: ClienteService,
+    public authService: AuthService
+  ) {
+    this.usuarios = this.usuarios;
+  }
 
   //-------- FORMULARIOS -----------------
   myform: FormGroup;
@@ -86,102 +88,22 @@ export class ModalFormComponent implements OnInit {
   usernameDiferentesAlActual2 = [];
 
   ngOnInit(): void {
-    console.log(this.usuarios);
-    //----- -almacenar el ubigeo del usuario actual----
-    this.de = this.usuario?.ubigeo?.departamento;
-    this.pr = this.usuario?.ubigeo?.provincia;
+    //this.usuario.idusuario = this.authService.usuario.idusuario;
+
+    this.usuario = this.authService.usuario;
+
+    console.log(this.authService.usuario.idusuario);
+
+    this.getUsuarioId(this.usuario.idusuario);
+
     //------------------------------------------------------------
     this.getDepartamentos();
     this.createFormPassword();
     this.createForm();
-    this.accion();
-    this.getDni();
-    this.getUserName();
+    this.getValidarUserNameDni();
   }
 
-  //---------------- FILTRADO DE DNI -----------------------------
-
-  getDni() {
-    this.usuarios.forEach((i) => {
-      this.dniDiferentesAlActual.push(i.dni);
-    });
-
-    console.log(this.dniDiferentesAlActual);
-
-    this.dniDiferentesAlActual2 = this.dniDiferentesAlActual.filter(
-      (dni) => dni != this.usuario.dni
-    );
-    console.log(this.dniDiferentesAlActual2);
-  }
   //--------------------------------------------------------------
-  //---------------- FILTRADO DE USERNAME -----------------------------
-  getUserName() {
-    this.usuarios.forEach((i) => {
-      this.usernameDiferentesAlActual.push(i.username);
-    });
-
-    console.log(this.usernameDiferentesAlActual);
-
-    this.usernameDiferentesAlActual2 = this.usernameDiferentesAlActual.filter(
-      (username) => username != this.usuario.username
-    );
-    console.log(this.usernameDiferentesAlActual2);
-  }
-
-  //------------------------------------------
-
-  opcion: string;
-
-  accion() {
-    if (this.usuario != null) {
-      this.titulo = "Actualizar Información";
-      this.opcion = "Actualizar Información";
-      this.getUsuarioId(this.usuario);
-      // this.getUbigeoActual();
-      this.getUbigeo();
-    } else if (this.usuario == null) {
-      this.titulo = "Agregar Usuario";
-      this.opcion = "Agregar Usuario";
-      this.usuario = new Usuario();
-      this.getUbigeo();
-      this.getRoles();
-    }
-  }
-  //------------------ FORM CONTROL USERNAME PERSONALIZADO -------------------------------
-
-  /*isLegitimateStarkUsername(username: string): boolean {
-    return this.usernameDiferentesAlActual2.some((userActual) => {
-      if (userActual == username) {
-        swal.fire(
-          "Username Duplicado...!",
-          `El username ${this.UserName.value} ya existe`,
-          "error"
-        );
-        //console.log(this.Dni.errors);
-        // console.log(this.Dni.value);
-        //this.submittedDni = true;
-        return true;
-      } else {
-        return false;
-      }
-    });
-  }
-
-  formControlPersonalizadoUsername(
-    control: AbstractControl
-  ): { [key: string]: any } {
-    // this.usuarios.map((data) => {
-    if (this.isLegitimateStarkUsername(control.value)) {
-      return { nick: true };
-
-      //console.log(data.idusuario);
-    } else {
-      return null;
-    }
-    //  });
-  }*/
-
-  //-------------------------------------------------------------------------------------------------
 
   //------------------------------- FORM CONTROL PERSONALIZADO DNI----------------------
 
@@ -215,6 +137,36 @@ export class ModalFormComponent implements OnInit {
     //  });
   }
   //----------------------------------------------------------
+  //------------------------ VALIDAR DNI Y USERNAME ------------------
+  getValidarUserNameDni() {
+    this.usuarioService.getUsuarios().subscribe((usuarios) => {
+      this.usuarios = usuarios;
+      this.usuarios.forEach((i) => {
+        this.dniDiferentesAlActual.push(i.dni);
+      });
+
+      //console.log(this.dniDiferentesAlActual);
+
+      this.dniDiferentesAlActual2 = this.dniDiferentesAlActual.filter(
+        (dni) => dni != this.usuario.dni
+      );
+      //console.log(this.dniDiferentesAlActual2);
+      //console.log(this.usuarios);
+
+      this.usuarios.forEach((i) => {
+        this.usernameDiferentesAlActual.push(i.username);
+      });
+
+      //console.log(this.usernameDiferentesAlActual);
+
+      this.usernameDiferentesAlActual2 = this.usernameDiferentesAlActual.filter(
+        (username) => username != this.usuario.username
+      );
+      //console.log(this.usernameDiferentesAlActual2);
+    });
+  }
+
+  //------------------------------------------------------
 
   //------------------- VALIDACION DE FORMULARIO --------------------------------
 
@@ -308,30 +260,8 @@ export class ModalFormComponent implements OnInit {
   get Password() {
     return this.myformPassword.get("Password");
   }
-  //--------------------- RENDERIZADO DE MODAL PARA CRUD DE USUARIOS --------------------------
 
-  //---------- sin uso ----- NgbModal keyboard ------------
-
-  /*compareFn(o1: Ubigeo, o2: Ubigeo): boolean {
-  if (o1 === undefined && o2 === undefined) {
-    return true;
-  }
-
-  return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? false : o1.id_ubigeo === o2.id_ubigeo;
-}*/
-
-  cerrarmodal() {
-    this.submitted = false;
-    this.modalRef.hide();
-    this.myform.reset();
-    console.log("no cierra pero si ejecuta el metodo cerramodal");
-    //this.usuarioService.getRegiones().subscribe((ubigeo) => (this.ubigeo = []));
-  }
-
-  compareFn(c1: Ubigeo, c2: Ubigeo): boolean {
-    return c1 && c2 ? c1.idubigeo === c2.idubigeo : c1 === c2;
-  }
-
+  //-------------- COMPARE UBIGEO ----------------------
   compareUbigeo(c1: Ubigeo, c2: Ubigeo): boolean {
     //console.log(t1.id_ubigeo + t2.id_ubigeo);
 
@@ -395,15 +325,68 @@ export class ModalFormComponent implements OnInit {
     }
   }
 
-  /*compareFn(o1: Ubigeo, o2: Ubigeo): boolean {
-if (o1 === undefined && o2 === undefined) {
-  return true;
-}
+  //---------------------------------------------------
+  //---------------------------- ACTUALIZAR CONTRASEÑA ------------------------------
 
-return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? false : o1.id_ubigeo === o2.id_ubigeo;
-}*/
+  submittedPass: boolean = false;
 
-  //submittedDni: boolean = false;
+  formUpdatePass() {
+    console.log("que pasas");
+
+    if (this.myformPassword.invalid) {
+      swal.fire({
+        icon: "error",
+        title: "Cuidado...! Aun te faltan datos por completar. ",
+        // text: 'Oops...'
+      });
+      this.submittedPass = true;
+      console.log(this.submittedPass);
+      //this.myform.invalid;
+    }
+    if (this.myform.valid) {
+      //this.click = false;
+      swal
+        .fire({
+          title: "Verificar tus datos antes de continuar...",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          cancelButtonText: "Cancelar",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si, actualizar contraseña",
+        })
+        .then((result) => {
+          /*if (this.usuario.idusuario == null) {
+              if (result.isConfirmed) {
+                swal.fire(
+                  "Registro Exitoso...!",
+                  `${this.usuario.nombres} bienvenido a nuestra veterinaria`,
+                  "success"
+                );
+                console.log("sigue mal el insert");
+                this.insert();
+                this.modalRef.hide();
+              }
+            } else*/ if (
+            this.usuario.idusuario != null &&
+            this.usuario.idusuario > 0
+          ) {
+            if (result.isConfirmed) {
+              swal.fire(
+                "Update Exitoso...!",
+                `${this.usuario.nombres} tu contraseña se actualizó correctamente`,
+                "success"
+              );
+              this.updatePassword();
+            }
+          }
+        });
+    }
+  }
+
+  ///---------------------------------- VERIFICAR DATOS ----------------
+
   verificarDatos() {
     console.log("que pasas");
 
@@ -439,8 +422,7 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
                 "success"
               );
               console.log("sigue mal el insert");
-              this.insert();
-              this.modalRef.hide();
+              //this.insert();
             }
           } else if (
             this.usuario.idusuario != null &&
@@ -453,153 +435,46 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
                 "success"
               );
               this.update();
-              this.modalRef.hide();
             }
           }
         });
     }
   }
 
-  //---------------------------- ACTUALIZAR CONTRASEÑA ------------------------------
-
-  submittedPass: boolean = false;
-
-  formUpdatePass() {
-    console.log("que pasas");
-
-    if (this.myformPassword.invalid) {
-      swal.fire({
-        icon: "error",
-        title: "Cuidado...! Aun te faltan datos por completar. ",
-        // text: 'Oops...'
-      });
-      this.submittedPass = true;
-      console.log(this.submittedPass);
-      //this.myform.invalid;
-    }
-    if (this.myform.valid) {
-      //this.click = false;
-      swal
-        .fire({
-          title: "Verificar tus datos antes de continuar...",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          cancelButtonText: "Cancelar",
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Si, actualizar contraseña",
-        })
-        .then((result) => {
-          /*if (this.usuario.idusuario == null) {
-            if (result.isConfirmed) {
-              swal.fire(
-                "Registro Exitoso...!",
-                `${this.usuario.nombres} bienvenido a nuestra veterinaria`,
-                "success"
-              );
-              console.log("sigue mal el insert");
-              this.insert();
-              this.modalRef.hide();
-            }
-          } else*/ if (
-            this.usuario.idusuario != null &&
-            this.usuario.idusuario > 0
-          ) {
-            if (result.isConfirmed) {
-              swal.fire(
-                "Update Exitoso...!",
-                `${this.usuario.nombres} tu contraseña se actualizó correctamente`,
-                "success"
-              );
-              this.resetPassword();
-              this.modalRef.hide();
-            }
-          }
-        });
-    }
-  }
-
-  //-----------------------
-
-  //------------------ CRUD DE USUARIOS ---------------------------
-  errores: string[];
-  /*insert(): void {
-    this.usuarioService.insert(this.usuario).subscribe((response) => {
-      let currentUrl = this.router.url;
+  //------------ UPDATE PASSWORD --------------------
+  updatePassword(): void {
+    this.usuarioService.updatePassword(this.usuario).subscribe((response) => {
+      /* let currentUrl = this.router.url;
       this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
         this.router.navigate([currentUrl]);
-      });
+      });*/
       // this.router.navigate([window.location.reload()]);
     });
-  }*/
-
-  insert(): void {
-    this.usuarioService.insert(this.usuario).subscribe(
-      (usuario) => {
-        let currentUrl = this.router.url;
-        this.router
-          .navigateByUrl("/", { skipLocationChange: true })
-          .then(() => {
-            this.router.navigate([currentUrl]);
-          });
-      },
-      (err) => {
-        this.errores = err.error.errors as string[];
-        console.error("Código del error desde el backend: " + err.status);
-        console.error(err.error.errors);
-      }
-    );
   }
 
-  getUsuarioId(usu: Usuario) {
-    this.usuarioService
-      .getUsuario(usu)
-      .subscribe((usuario) => (this.usuario = usuario));
-  }
+  //------------------------ UPDATE ---------------------------------------------
 
   update(): void {
+    this.usuario.ubigeo = this.IdUbi.value;
     this.usuarioService.update(this.usuario).subscribe((response) => {
-      let currentUrl = this.router.url;
+      /*let currentUrl = this.router.url;
       this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
         this.router.navigate([currentUrl]);
-      });
+      });*/
       // this.router.navigate([window.location.reload()]);
     });
   }
-
-  resetPassword(): void {
-    this.usuarioService.resetPassword(this.usuario).subscribe((response) => {
-      let currentUrl = this.router.url;
-      this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
-        this.router.navigate([currentUrl]);
-      });
-      // this.router.navigate([window.location.reload()]);
-    });
-  }
-
-  getUbigeo() {
-    this.usuarioService
-      .getRegiones()
-      .subscribe((ubigeo) => (this.ubigeo = ubigeo));
-  }
-
-  getRoles() {
-    this.usuarioService.getRoles().subscribe((roles) => (this.roles = roles));
-  }
-
-  //------- VISIBILIDAD DEL ACORDION -----------
-  registro: boolean = true;
-
-  password: boolean = true;
-
-  //--------------------------------------------
+  //-----------------------------------------------------------------
 
   //-------------- --- UBIGEO -------------------
 
   de: string;
 
   pr: string;
+
+  dis: Ubigeo;
+
+  //-----------------------------------------------
 
   getDepartamentos() {
     this.ubigeoService
@@ -610,7 +485,7 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
   onChangeDepart(depart) {
     if (depart == null || depart == undefined) {
       this.getProvincias(undefined);
-      this.de = depart;
+      this.de = undefined;
 
       //this.myform.controls["Prov"].setErrors({ incorrect: true });
       //this.myform.controls["IdUbi"].setErrors({ incorrect: true });
@@ -632,10 +507,8 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
   }
 
   onChangeProv(prov) {
-    console.log(prov);
-
     if (prov == null || prov == undefined) {
-      this.getDistritos(null, null);
+      this.getDistritos(undefined, undefined);
       this.myform.controls["IdUbi"].setValue(undefined);
     } else {
       this.myform.controls["IdUbi"].setValue(undefined);
@@ -650,16 +523,40 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
       .subscribe((dist) => (this.distritos = dist));
   }
 
-  /*getUbigeoActual() {
-    this.getDepartamentos();
-    //operador de elvis ?
-    //this.pr = this.usuario?.ubigeo?.provincia;
-    //this.de = this.usuario?.ubigeo?.departamento;
-    this.getDistritos(
-      this.usuario?.ubigeo?.departamento,
-      this.usuario?.ubigeo?.provincia
-    );
-  }*/
+  getUsuarioId(id: number) {
+    this.clienteService.getUsuario(id).subscribe((usuario) => {
+      this.usuario = usuario;
 
-  //-------------------------------------------
+      //console.log(this.usuario);
+      //----- -almacenar el ubigeo del usuario actual----
+      this.de = usuario?.ubigeo?.departamento;
+      this.pr = usuario?.ubigeo?.provincia;
+      this.dis = usuario.ubigeo;
+
+      this.Depart.setValue(this.de);
+      this.Prov.setValue(this.pr);
+      this.IdUbi.setValue(this.dis);
+    });
+  }
+
+  listarUsuarios() {
+    this.usuarioService
+      .getUsuarios()
+      .subscribe((usuarios) => (this.usuarios = usuarios));
+  }
+
+  //------- VISIBILIDAD DEL ACORDION -----------
+  registro: boolean = true;
+
+  password: boolean = true;
+
+  acordionHide() {
+    if (this.registro == true) {
+      this.registro = false;
+      this.getUsuarioId(this.authService.usuario.idusuario);
+    } else {
+      this.registro = true;
+      this.myform.reset();
+    }
+  }
 }

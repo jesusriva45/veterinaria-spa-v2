@@ -10,6 +10,7 @@ import { Ubigeo } from "src/app/models/ubigeo";
 import { Usuario } from "src/app/models/usuario";
 import { AuthService } from "src/app/services/auth.service";
 import { ClienteService } from "src/app/services/cliente.service";
+import { UbigeoService } from "src/app/services/ubigeo.service";
 import { UsuarioService } from "src/app/services/usuario.service";
 //import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import Swal from "sweetalert2";
@@ -40,9 +41,17 @@ export class RegistroClienteComponent implements OnInit {
 
   usernameDiferentesAlActual2 = [];
 
+  //------------- NUEVO UBIGEO ------------
+
+  departamentos: String[];
+  provincias: String[];
+  distritos?: Ubigeo[];
+  //---------------------------------------
+
   constructor(
     private usuarioService: UsuarioService,
     public clienteService: ClienteService,
+    public ubigeoService: UbigeoService,
     public router: Router,
     private _authService: AuthService
   ) {
@@ -50,7 +59,7 @@ export class RegistroClienteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUbigeo();
+    this.getDepartamentos();
     this.getValidarUserNameDni();
     this.createForm();
   }
@@ -59,7 +68,7 @@ export class RegistroClienteComponent implements OnInit {
 
   //------------------ FORM CONTROL USERNAME PERSONALIZADO -------------------------------
 
-  isLegitimateStarkUsername(username: string): boolean {
+  /*isLegitimateStarkUsername(username: string): boolean {
     return this.usernameDiferentesAlActual2.some((userActual) => {
       if (userActual == username) {
         Swal.fire(
@@ -75,11 +84,11 @@ export class RegistroClienteComponent implements OnInit {
         return false;
       }
     });
-  }
+  }*/
 
-  formControlPersonalizadoUsername(
-    control: AbstractControl
-  ): { [key: string]: any } {
+  /*formControlPersonalizadoUsername(control: AbstractControl): {
+    [key: string]: any;
+  } {
     // this.usuarios.map((data) => {
     if (this.isLegitimateStarkUsername(control.value)) {
       return { nick: true };
@@ -89,7 +98,7 @@ export class RegistroClienteComponent implements OnInit {
       return null;
     }
     //  });
-  }
+  }*/
 
   //-------------------------------------------------------------------------------------------------
 
@@ -139,6 +148,14 @@ export class RegistroClienteComponent implements OnInit {
       ]),
       Telef: new FormControl("", [Validators.required]),
       Direc: new FormControl("", [Validators.required]),
+      Depart: new FormControl(undefined, [
+        Validators.nullValidator,
+        Validators.required,
+      ]),
+      Prov: new FormControl(undefined, [
+        Validators.nullValidator,
+        Validators.required,
+      ]),
       IdUbi: new FormControl(undefined, [
         Validators.nullValidator,
         Validators.required,
@@ -151,10 +168,10 @@ export class RegistroClienteComponent implements OnInit {
       ]),
       FechaNac: new FormControl("", [Validators.required]),
       Password: new FormControl("", [Validators.required]),
-      UserName: new FormControl("", [
+      /*UserName: new FormControl("", [
         Validators.required,
         this.formControlPersonalizadoUsername.bind(this),
-      ]),
+      ]),*/
     });
   }
 
@@ -196,13 +213,20 @@ export class RegistroClienteComponent implements OnInit {
     return this.myform.get("IdUbi");
   }
 
+  get Depart() {
+    return this.myform.get("Depart");
+  }
+  get Prov() {
+    return this.myform.get("Prov");
+  }
+
   get Password() {
     return this.myform.get("Password");
   }
 
-  get UserName() {
+  /*get UserName() {
     return this.myform.get("UserName");
-  }
+  }*/
 
   //----------------------- UBIGEO ----------------------------------
   compareUbigeo(c1: Ubigeo, c2: Ubigeo): boolean {
@@ -273,7 +297,7 @@ export class RegistroClienteComponent implements OnInit {
               `${this.usuario.nombres} tus datos se actualizaron correctamente`,
               "success"
             );
-            this.update();
+            //this.update();
           }
         }
       });
@@ -302,20 +326,59 @@ export class RegistroClienteComponent implements OnInit {
     );
   }
 
-  update(): void {
-    this.clienteService.update(this.usuario).subscribe((response) => {
-      let currentUrl = this.router.url;
-      this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
-        this.router.navigate([currentUrl]);
-      });
-      // this.router.navigate([window.location.reload()]);
-    });
+  //-------------- --- UBIGEO -------------------
+
+  de: string;
+
+  pr: string;
+
+  getDepartamentos() {
+    this.ubigeoService
+      .getDepartamentos()
+      .subscribe((depart) => (this.departamentos = depart));
   }
 
-  getUbigeo() {
-    this.usuarioService
-      .getRegiones()
-      .subscribe((ubigeo) => (this.ubigeo = ubigeo));
+  onChangeDepart(depart) {
+    if (depart == null || depart == undefined) {
+      this.getProvincias(undefined);
+      this.de = depart;
+
+      //this.myform.controls["Prov"].setErrors({ incorrect: true });
+      //this.myform.controls["IdUbi"].setErrors({ incorrect: true });
+      this.myform.controls["Prov"].setValue(undefined);
+      this.myform.controls["IdUbi"].setValue(undefined);
+    } else {
+      this.de = depart;
+      this.myform.controls["Prov"].setValue(undefined);
+      this.myform.controls["IdUbi"].setValue(undefined);
+
+      this.getProvincias(depart);
+    }
+  }
+
+  getProvincias(depart: string) {
+    this.ubigeoService
+      .getProvincias(depart)
+      .subscribe((prov) => (this.provincias = prov));
+  }
+
+  onChangeProv(prov) {
+    console.log(prov);
+
+    if (prov == null || prov == undefined) {
+      this.getDistritos(null, null);
+      this.myform.controls["IdUbi"].setValue(undefined);
+    } else {
+      this.myform.controls["IdUbi"].setValue(undefined);
+      this.getDistritos(this.de, prov);
+      // this.myform.controls["IdUbi"].setErrors({ incorrect: true });
+    }
+  }
+
+  getDistritos(d: string, p: string) {
+    this.ubigeoService
+      .getDistritos(d, p)
+      .subscribe((dist) => (this.distritos = dist));
   }
 
   getValidarUserNameDni() {

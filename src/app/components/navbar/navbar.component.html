@@ -1,26 +1,28 @@
-<!--/.Navbar-->
+<!--Navbar-->
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark unique-color" [containerInside]="false">
 
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark cyan">
-
-
-    <li class="nav-item" routerLinkActive="active">
+    <!-- Navbar brand -->
+    <mdb-navbar-brand>
         <a class="navbar-brand" routerLink="inicio" href="#">
             <img mdbWavesEffect src="../../../assets/img/Logo de patazas-02.png" alt="" width="50" height="50">
         </a>
-    </li>
-    <li class="nav-item" routerLinkActive="active">
-        <h5 class="nav-link  m-auto  navbar-brand ">{{ authService.usuario.nombres }} {{ authService.usuario.apellidos }} </h5>
-    </li>
-
-
-    <links class="pe-5">
-        <ul class="navbar-nav w-100  justify-content-end ">
+    </mdb-navbar-brand>
 
 
 
+    <!-- Collapsible content -->
+    <links>
 
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" routerLinkActive="active">
+                <h5 class="nav-link  m-auto  navbar-brand ">{{ authService.usuario.nombres }} {{ authService.usuario.apellidos }} </h5>
+            </li>
 
+        </ul>
+        <!-- Links -->
 
+        <ul class="navbar-nav ml-auto">
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link waves-light" mdbWavesEffect routerLink="/productos">Nuestros Productos</a>
             </li>
@@ -49,16 +51,12 @@
                 <a class="nav-link " mdbWavesEffect routerLink="/registro-mascota"> Registra a tu Mascota</a>
             </li>
 
-            <li class="nav-item dropdown" *ngIf="(authService.isAuthenticated())" dropdown>
-                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-                        Basic dropdown<span class="caret"></span></a>
-                <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-                    <li><a class="dropdown-item waves-light" routerLink="crud-producto">Productos</a></li>
-                    <li><a class="dropdown-item waves-light" routerLink="crud-servicio">Servicios</a></li>
-                    <li><a class="dropdown-item waves-light" routerLink="cliente">Datos Personales</a></li>
-                </div>
+            <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_VENDEDOR')" routerLinkActive="active">
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/crud-servicio"> Crud de Servicios</a>
             </li>
+        </ul>
 
+        <ul class="navbar-nav nav-flex-icons">
 
             <li class="nav-item" *ngIf="(!authService.isAuthenticated()) else elseBlock">
                 <a class="nav-link" routerLink="/login" mdbWavesEffect>
@@ -68,14 +66,26 @@
             </li>
 
             <ng-template #elseBlock>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/login" (click)="logout()" mdbWavesEffect>
-                        <mdb-icon fas icon="sign-in-alt"></mdb-icon>
-                    </a>
+
+                <li class="nav-item dropdown mr-3" *ngIf="(authService.isAuthenticated())" dropdown>
+                    <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+                        <i class="fas fa-user-alt fa-1x mr-2"></i><span class="caret"></span>Profile</a>
+                    <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary " role="menu">
+                        <a class="dropdown-item waves-light" mdbWavesEffect routerLink="datos-personales"><i class="fas fa-user-edit mr-2"></i> Datos Personales</a>
+
+                        <hr class="dropdown-divider" />
+
+
+                        <a class="dropdown-item waves-light d-flex" mdbWavesEffect routerLink="/login" (click)="logout()" mdbWavesEffect>
+                                Logout <mdb-icon class="ml-auto mt-auto mb-auto" fas icon="sign-in-alt"></mdb-icon>
+                            </a>
+
+                    </div>
                 </li>
             </ng-template>
-
         </ul>
     </links>
+    <!-- Collapsible content -->
 
 </mdb-navbar>
+<!--/.Navbar-->

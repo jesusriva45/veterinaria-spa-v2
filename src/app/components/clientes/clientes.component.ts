@@ -456,7 +456,7 @@ export class ClientesComponent implements OnInit {
 
   update(): void {
     this.usuario.ubigeo = this.IdUbi.value;
-    this.clienteService.update(this.usuario).subscribe((response) => {
+    this.usuarioService.update(this.usuario).subscribe((response) => {
       /*let currentUrl = this.router.url;
       this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
         this.router.navigate([currentUrl]);

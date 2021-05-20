@@ -7,7 +7,7 @@
 
     <div class="card border-primary mb-5 container-fluid mt-5">
         <div class="card-header row text-primary">
-            <h2>Listado de Mascotas</h2>
+            <h2>Mi Mascota</h2>
         </div>
 
         <div class="card-body text-secondary table-responsive">
@@ -28,18 +28,15 @@
                 </thead>
                 <tbody class="text-center" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_VENDEDOR')">
                     <tr *ngFor="let mascota of mascotas; let i = index">
-                        <th>{{ mascota.idmascota }}</th>
-                        <th><img class="photo" (click)="modalDetail(mascota)" [src]="mascota.foto != null ? mascota.foto : myImgUrl" width="50px" height="50px"></th>
-                        <td>{{ mascota.nombre }}</td>
-                        <td>{{ mascota.raza }}</td>
-                        <td>{{ mascota.fecha_nacimiento }}</td>
-                        <td>{{ mascota.sexo }}</td>
-                        <td>{{ mascota.tipomascota.descripcion }}</td>
-                        <td class="text-center">
+                        <th class="align-middle">{{ mascota.idmascota }}</th>
+                        <th class="align-middle"><img class="photo" (click)="modalDetail(mascota)" [src]="mascota.foto != null ? mascota.foto : myImgUrl" width="50px" height="50px"></th>
+                        <td class="align-middle">{{ mascota.nombre }}</td>
+                        <td class="align-middle">{{ mascota.raza }}</td>
+                        <td class="align-middle">{{ mascota.fecha_nacimiento }}</td>
+                        <td class="align-middle">{{ mascota.sexo }}</td>
+                        <td class="align-middle">{{ mascota.tipomascota.descripcion }}</td>
+                        <td class="align-middle">
                             <mdb-icon (click)="openModalCrud('editar', mascota.idmascota)" type="button" fas size="2x" icon="edit"></mdb-icon>
-
-                            <p>Editar</p>
-
                         </td>
                         <!--td class="text-center">
                             <mdb-icon (click)="delete(mascota)" type="button" fas size="2x" icon="user-alt"></mdb-icon>
@@ -50,13 +47,13 @@
 
                 <tbody class="text-center" *ngIf="authService.hasRole('ROLE_CLIENTE')">
                     <tr *ngFor="let mascota of mascotasDeCliente; let i = index">
-                        <th>{{ mascota.idmascota }}</th>
-                        <th><img class="photo" (click)="modalDetail(mascota)" [src]="mascota.foto != null ? mascota.foto : myImgUrl" width="50px" height="50px"></th>
-                        <td>{{ mascota.nombre }}</td>
-                        <td>{{ mascota.raza }}</td>
-                        <td>{{ mascota.fecha_nacimiento }}</td>
-                        <td>{{ mascota.sexo }}</td>
-                        <td>{{ mascota.tipomascota.descripcion }}</td>
+                        <th class="align-middle">{{ mascota.idmascota }}</th>
+                        <th class="align-middle"><img class="photo" (click)="modalDetail(mascota)" [src]="mascota.foto != null ? mascota.foto : myImgUrl" width="50px" height="50px"></th>
+                        <td class="align-middle">{{ mascota.nombre }}</td>
+                        <td class="align-middle">{{ mascota.raza }}</td>
+                        <td class="align-middle">{{ mascota.fecha_nacimiento }}</td>
+                        <td class="align-middle">{{ mascota.sexo }}</td>
+                        <td class="align-middle">{{ mascota.tipomascota.descripcion }}</td>
                         <td class="text-center">
                             <mdb-icon (click)="openModalCrud('editar', mascota.idmascota)" type="button" fas size="2x" icon="edit"></mdb-icon>
 

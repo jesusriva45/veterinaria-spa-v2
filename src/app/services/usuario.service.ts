@@ -164,6 +164,27 @@ export class UsuarioService {
       );
   }
 
+  resetPassword(usuario: Usuario): Observable<Usuario> {
+    return this.http
+      .put<Usuario>(
+        `${this.urlEndPoint}/reset-pass/${usuario.idusuario}`,
+        usuario,
+        {
+          headers: this.agregarAuthorizationHeader(),
+        }
+      )
+      .pipe(
+        catchError((e) => {
+          if (this.isNoAutorizado(e)) {
+            return throwError(e);
+          }
+          console.error(e.error.mensaje);
+          swal.fire(e.error.mensaje, e.error.error, "error");
+          return throwError(e);
+        })
+      );
+  }
+
   asignarRol(acceso: AccesoRol): Observable<AccesoRol> {
     return this.http
       .put<AccesoRol>(

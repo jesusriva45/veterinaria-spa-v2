@@ -19,11 +19,10 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First</th>
+                        <th scope="col">Imagen</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Precio</th>
-                        <th scope="col">Descripcion</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Marca</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
 
@@ -35,7 +34,6 @@
                         <th class="align-middle"><img mdbWavesEffect (click)="modalDetalle(producto)" [src]="producto.foto1" width="50px" height="50px"></th>
                         <th class="align-middle">{{ producto.nombre }}</th>
                         <th class="align-middle">{{ producto.precio }}</th>
-                        <th class="align-middle">{{ producto.descripcion }}</th>
                         <th class="align-middle">{{ producto.marca.nombre }}</th>
 
                         <!--td class="align-middle"><button type="button" mdbBtn color="primary" mdbWavesEffect (click)="modalDetalle(producto)">Detalle</button></td-->

@@ -1,0 +1,218 @@
+<div class="col-md-12 p-3">
+    <div (click)="acordionHide()" class="col-12 acordion form-control d-flex bg-light">
+        <h5><i class="fas fa-edit"></i> Información Personal</h5>
+        <mdb-icon class="float-right align-middle ml-auto  mb-auto mt-auto" fas icon="angle-down"></mdb-icon>
+    </div>
+    <div class="collapsible" [@enterAnimation]="registro">
+
+        <form [formGroup]="myform" (ngSubmit)="verificarDatos()" class=" row container mr-auto ml-auto justify-content-center">
+
+
+            <fieldset class="row col-12">
+
+
+                <div class="form-group mt-4 mb-4 col-md-12 col-lg-4 col-xl-4">
+                    <p class="">Departamento</p>
+                    <select [ngClass]="{
+                        'is-invalid': Depart.invalid && (Depart.dirty || Depart.touched),
+                        'is-valid': Depart.valid && (Depart.dirty || Depart.touched)
+                      }" (ngModelChange)="onChangeDepart($event)" [compareWith]="compareUbigeoDepart" class="form-control pl-3 pr-3" [ngModel]="de" [formControl]="Depart" required>                        
+                                <option [ngValue]=undefined selected>--- selecionar un departamento ---</option>
+                                    <option *ngFor="let depart of departamentos" [ngValue]="depart" > {{ depart  }} </option>
+                               
+                                </select>
+
+                    <div class="pl-3">
+                        <mdb-error class="pl-3 mt-5" *ngIf="(Depart.errors && submitted ) ||((Depart.dirty || Depart.touched) && Depart.invalid)">
+                            Seleccione su departamento
+                        </mdb-error>
+                    </div>
+
+                </div>
+
+                <div class="mt-4 mb-4 col-md-12 col-lg-4 col-xl-4">
+                    <p class="">Provincia</p>
+                    <select [ngClass]="{
+                        'is-invalid': (Prov.invalid ) && (Prov.dirty || Prov.touched),
+                        'is-valid': Prov.valid && (Prov.dirty || Prov.touched)
+                      }" (ngModelChange)="onChangeProv($event)" [compareWith]="compareUbigeoProv" class="form-control pl-3 pr-3" [ngModel]="pr" [formControl]="Prov" required>                        
+                                    <option [ngValue]=undefined selected>--- selecionar una provincia ---</option>
+                                        <option *ngFor="let prov of provincias" [ngValue]="prov" > {{ prov  }} </option>
+                                   
+                    </select>
+                    <div class="pl-3">
+                        <mdb-error class="pl-3 mt-5" *ngIf="(Prov.errors && submitted ) || ((Prov.dirty || Prov.touched) && Prov.invalid)">
+                            Seleccione su provincia
+                        </mdb-error>
+                    </div>
+                </div>
+
+                <div class="mt-4 mb-4 col-md-12 col-lg-4 col-xl-4">
+                    <p class="">Distrito</p>
+                    <select [ngClass]="{
+                        'is-invalid':  ((IdUbi.invalid ) && (IdUbi.dirty || IdUbi.touched)),
+                        'is-valid': (IdUbi.valid ) && (IdUbi.dirty || IdUbi.touched)
+                      }" class="form-control pl-3 pr-3" [ngModel]="dis" name="usuario.ubigeo" [compareWith]="compareUbigeo" [formControl]="IdUbi" required>                        
+                        <option [ngValue]=undefined selected>--- selecionar una región ---</option>
+                            <option *ngFor="let region of distritos" [ngValue]="region" > {{ region.distrito  }}</option>
+                       
+                        </select>
+
+                    <div class="pl-3">
+                        <mdb-error class="pl-3 mt-5" *ngIf="(IdUbi.errors && submitted ) ||((IdUbi.dirty || IdUbi.touched) && IdUbi.invalid)">
+                            Seleccione su distrito
+                        </mdb-error>
+                    </div>
+
+                </div>
+
+                <div class="md-form col-md-12 col-lg-4 col-xl-4">
+
+                    <input type="text" class="form-input form-control" id="nomForm" mdbInput mdbValidate [(ngModel)]="usuario.nombres" [formControl]="Nombres" required>
+                    <label class="pl-3">Nombres</label>
+                    <div class="pl-3" *ngIf="(Nombres.errors && submitted ) ||((Nombres.dirty || Nombres.touched) && Nombres.invalid)">
+
+                        <mdb-error class="pl-3 mt-2" *ngIf="Nombres.errors.required ">Nombres is required</mdb-error>
+                        <mdb-error class="pl-3 mt-2" *ngIf="Nombres.errors.pattern ">Nombres invalido </mdb-error>
+                    </div>
+
+                </div>
+
+
+                <div class="md-form col-md-12 col-lg-4 col-xl-4">
+
+                    <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.apellidos" [formControl]="Apellidos" required>
+                    <label class="pl-3">Apellidos</label>
+                    <div class="pl-3" *ngIf="(Apellidos.errors && submitted ) ||((Apellidos.dirty || Apellidos.touched) && Apellidos.invalid)">
+
+                        <mdb-error class="pl-3 mt-2" *ngIf="Apellidos.errors.required ">Correo is required</mdb-error>
+                        <mdb-error class="pl-3 mt-2" *ngIf="Apellidos.errors.pattern ">Patron invalido </mdb-error>
+                    </div>
+                </div>
+
+
+
+                <div class="md-form col-md-12 col-lg-4 col-xl-4">
+
+                    <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.dni" [formControl]="Dni" required>
+                    <label class="pl-3">DNI</label>
+
+                    <div class="pl-3" *ngIf="(Dni.errors && submitted ) || ((Dni.dirty || Dni.touched) && Dni.invalid)">
+
+                        <mdb-error class="pl-3 mt-2" *ngIf="Dni.errors.required ">DNI is required</mdb-error>
+                        <mdb-error class="pl-3 mt-2" *ngIf="Dni.errors.pattern ">Patron invalido </mdb-error>
+                        <mdb-error class="pl-3 mt-2" *ngIf="Dni.errors.stark">EL DNI YA ESTA REGISTRADO </mdb-error>
+
+                    </div>
+
+
+                </div>
+
+                <div class="md-form col-md-12 col-lg-4 col-xl-4">
+
+                    <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.telefono" [formControl]="Telef" required>
+                    <label class="pl-3">Telefono</label>
+                    <div class="pl-3" *ngIf="(Telef.errors && submitted ) ||((Telef.dirty || Telef.touched) && Telef.invalid)">
+
+                        <mdb-error class="pl-3 mt-2" *ngIf="Telef.errors.required ">Correo is required</mdb-error>
+                        <mdb-error class="pl-3 mt-2" *ngIf="Telef.errors.pattern ">Patron invalido </mdb-error>
+                    </div>
+                </div>
+
+                <div class="md-form col-md-12 col-lg-4 col-xl-4">
+
+                    <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.direccion" [formControl]="Direc" required>
+                    <label class="pl-3">Dirección</label>
+                    <div class="pl-3" *ngIf="(Direc.errors && submitted ) ||((Direc.dirty || Direc.touched) && Direc.invalid)">
+
+                        <mdb-error class="pl-3 mt-2" *ngIf="Direc.errors.required ">Correo is required</mdb-error>
+                        <mdb-error class="pl-3 mt-2" *ngIf="Direc.errors.pattern ">Patron invalido </mdb-error>
+                    </div>
+
+                </div>
+
+                <div class="md-form col-md-12 col-lg-4 col-xl-4">
+
+                    <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.correo" [formControl]="Correo" required>
+                    <label class="pl-3">Correo</label>
+                    <div class="pl-3" *ngIf="(Correo.errors && submitted ) ||((Correo.dirty || Correo.touched) && Correo.invalid)">
+
+                        <mdb-error class="pl-3 mt-2" *ngIf="Correo.errors.required ">Correo is required</mdb-error>
+                        <mdb-error class="pl-3 mt-2" *ngIf="Correo.errors.pattern ">Patron invalido </mdb-error>
+                    </div>
+                </div>
+
+                <div class="md-form col-md-12 col-lg-4 col-xl-4">
+
+                    <input type="date" class="form-control" id="form58" mdbInput mdbValidate [(ngModel)]="usuario.fechaNac" [formControl]="FechaNac" required>
+                    <label class="pl-3" for="form58">Fecha Nacimiento</label>
+                    <div class="pl-3" *ngIf="(FechaNac.errors && submitted ) ||((FechaNac.dirty || FechaNac.touched) && FechaNac.invalid)">
+                        <mdb-error class="pl-3 mt-2" *ngIf="FechaNac.errors.required ">Fecha de Nacimiento is required</mdb-error>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </fieldset>
+
+            <div class="btn-group w-100 justify-content-center d-flex" role="group" aria-label="Basic example">
+                <button type="submit" mdbBtn color="primary" class="waves-light" mdbWavesEffect><i class="fas fa-pencil-alt mr-2"></i>ACTUALIZAR</button>
+            </div>
+
+        </form>
+    </div>
+
+
+
+
+
+</div>
+
+
+<div class="col-md-12 p-3">
+    <div (click)="password = (password == true)? false:true" class="col-12 acordion form-control d-flex bg-light">
+        <h5><i class="fas fa-edit"></i> Actualizar Contraseña</h5>
+        <mdb-icon class="float-right align-middle ml-auto  mb-auto mt-auto" fas icon="angle-down"></mdb-icon>
+    </div>
+    <div class="collapsible" [@enterAnimation]="password">
+        <form [formGroup]="myformPassword" (ngSubmit)="formUpdatePass()" class=" row container mr-auto ml-auto justify-content-center">
+
+
+            <fieldset class="row col-12">
+
+
+
+
+                <div class=" md-form ml-auto mr-auto">
+                    <mdb-icon fas icon="unlock envelope" class="prefix"></mdb-icon>
+                    <input type="password" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.password" [formControl]="Password" required>
+                    <label>Password</label>
+                    <div class="p-1" *ngIf="(Password.errors && submittedPass ) || ((Password.dirty || Password.touched) && Password.invalid)">
+
+                        <mdb-error class="mt-2" *ngIf="Password.errors.required ">Password is required</mdb-error>
+                        <mdb-error class="mt-2" *ngIf="Password.errors.pattern ">Patron invalido </mdb-error>
+
+                    </div>
+                </div>
+
+
+            </fieldset>
+
+
+            <div class="btn-group w-100 justify-content-center d-flex" role="group" aria-label="Basic example">
+
+                <button type="submit" mdbBtn color="primary" class="waves-light" mdbWavesEffect><i class="fas fa-pencil-alt mr-2"></i>ACTUALIZAR</button>
+
+            </div>
+
+        </form>
+    </div>
+
+    <hr class="p-1">
+
+
+
+</div>
