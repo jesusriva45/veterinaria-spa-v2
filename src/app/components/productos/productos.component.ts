@@ -8,6 +8,8 @@ import { ProductoService } from "../../services/producto.service";
 
 import swal from "sweetalert2";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { CarritoService } from "src/app/services/carrito.service";
+import { Carrito } from "src/app/models/carrito";
 
 @Component({
   selector: "app-productos",
@@ -22,7 +24,10 @@ export class ProductosComponent implements OnInit {
   precioMin: number;
   precioMax: number;
 
-  constructor(private productoService: ProductoService) {}
+  constructor(
+    private productoService: ProductoService,
+    private carritoService: CarritoService
+  ) {}
 
   ngOnInit(): void {
     this.listarProductos();
@@ -31,6 +36,14 @@ export class ProductosComponent implements OnInit {
   /*this.usuarioService .getUsuarios().subscribe(
       usuarios => this.usuarios = usuarios
     ); */
+
+  addToCart(producto: Producto) {
+    console.log(this.producto);
+
+    const itemCarrito = new Carrito(producto);
+
+    this.carritoService.agregarItem(itemCarrito);
+  }
 
   getProductoXPrecio(precioMin, precioMax) {
     this.productoService

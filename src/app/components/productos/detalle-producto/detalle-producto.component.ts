@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Acordion } from "src/app/animations/animaciones";
+import { Carrito } from "src/app/models/carrito";
 import { Producto } from "src/app/models/producto";
+import { CarritoService } from "src/app/services/carrito.service";
 import { ProductoService } from "src/app/services/producto.service";
 
 @Component({
@@ -21,7 +23,8 @@ export class DetalleProductoComponent implements OnInit {
   constructor(
     private productoService: ProductoService,
     private router: Router,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private carritoService: CarritoService
   ) {
     this.imgNotFound = "../../../../assets/img/no-image.png";
   }
@@ -77,5 +80,13 @@ export class DetalleProductoComponent implements OnInit {
     } else {
       this.especProduct = true;
     }
+  }
+
+  addToCart() {
+    console.log(this.producto);
+
+    const itemCarrito = new Carrito(this.producto);
+
+    this.carritoService.agregarItem(itemCarrito);
   }
 }

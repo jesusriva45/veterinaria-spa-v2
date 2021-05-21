@@ -52,7 +52,7 @@ import { AuthService } from "./services/auth.service";
 
 import { AuthGuard } from "./services/guards/auth.guard";
 import { RoleGuard } from "./services/guards/role.guard";
-
+import { EstadoCarritoComponent } from './components/productos/estado-carrito/estado-carrito.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,6 +76,7 @@ import { RoleGuard } from "./services/guards/role.guard";
     LoginComponent,
     DatosPersonalesComponent,
     DetalleProductoComponent,
+    EstadoCarritoComponent,
   ],
   imports: [
     BrowserModule,

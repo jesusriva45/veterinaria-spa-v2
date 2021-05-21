@@ -47,11 +47,10 @@
             <!-- Precio total -->
             <h5 class="text-right">Cantidad : <span id="total"></span> 1</h5>
             <h5 class="text-right">Total: <span id="total"></span>S/.{{ producto.precio }}</h5>
-            <button id="boton-vaciar" mdbBtn color="primary" mdbWavesEffect>Agregar a la bolsa</button>
+            <button id="btn-agregar" (click)="addToCart()" mdbBtn color="primary" mdbWavesEffect>Agregar a la bolsa</button>
         </div>
     </div>
 </div>
-
 
 <div (click)="acordionDescripcion()" class="col-10 mr-auto ml-auto form-control d-flex bg-light">
     <h5><i class="fas fa-edit"></i> Descripción del Producto</h5>

@@ -47,7 +47,7 @@ export const ROUTES: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: "productos/carrito-producto/:id",
+    path: "productos/carrito-productos",
     component: CarritoProductosComponent,
   },
   {
