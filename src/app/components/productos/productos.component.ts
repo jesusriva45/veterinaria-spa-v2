@@ -12,7 +12,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 @Component({
   selector: "app-productos",
   templateUrl: "./productos.component.html",
-  styleUrls: ["./productos.component.css"],
+  styleUrls: ["./productos.component.scss"],
 })
 export class ProductosComponent implements OnInit {
   productos: Producto[] = [];
@@ -25,7 +25,7 @@ export class ProductosComponent implements OnInit {
   constructor(private productoService: ProductoService) {}
 
   ngOnInit(): void {
-    this.getProductoXPrecio(12, 14);
+    this.listarProductos();
   }
 
   /*this.usuarioService .getUsuarios().subscribe(
@@ -35,6 +35,12 @@ export class ProductosComponent implements OnInit {
   getProductoXPrecio(precioMin, precioMax) {
     this.productoService
       .getProductoProPrecio(precioMin, precioMax)
+      .subscribe((productos) => (this.productos = productos));
+  }
+
+  listarProductos() {
+    this.productoService
+      .getProductos()
       .subscribe((productos) => (this.productos = productos));
   }
 }

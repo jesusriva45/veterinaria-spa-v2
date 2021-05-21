@@ -1,4 +1,18 @@
-body {
+img {
+    width: 150px;
+    height: 150px;
+}
+
+.view:hover {
+    cursor: pointer;
+}
+
+.card-body:hover {
+    cursor: pointer;
+}
+
+
+/*body {
     font-family: sans-serif;
 }
 
@@ -67,4 +81,4 @@ body {
 .respmenu input:not(:checked)~.fa-times {
     display: none;
     cursor: pointer;
-}
+}*/

@@ -44,6 +44,8 @@ import { LoginComponent } from "./components/login/login.component";
 
 import { DatosPersonalesComponent } from "./components/datos-personales/datos-personales.component";
 
+import { DetalleProductoComponent } from "./components/productos/detalle-producto/detalle-producto.component";
+
 //-------- AUTENTICACION DE USUARIO ------------
 
 import { AuthService } from "./services/auth.service";
@@ -73,6 +75,7 @@ import { RoleGuard } from "./services/guards/role.guard";
     ModalFormComponent,
     LoginComponent,
     DatosPersonalesComponent,
+    DetalleProductoComponent,
   ],
   imports: [
     BrowserModule,

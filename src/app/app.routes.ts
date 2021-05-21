@@ -16,6 +16,7 @@ import { RegistroMascotaComponent } from "./components/mascotas/registro-mascota
 import { PedidosComponent } from "./components/pedidos/pedidos.component";
 import { LoginComponent } from "./components/login/login.component";
 import { DatosPersonalesComponent } from "./components/datos-personales/datos-personales.component";
+import { DetalleProductoComponent } from "./components/productos/detalle-producto/detalle-producto.component";
 import { AuthGuard } from "./services/guards/auth.guard";
 import { ClienteService } from "./services/cliente.service";
 
@@ -48,6 +49,10 @@ export const ROUTES: Routes = [
   {
     path: "productos/carrito-producto/:id",
     component: CarritoProductosComponent,
+  },
+  {
+    path: "productos/detalle-producto/:id",
+    component: DetalleProductoComponent,
   },
   { path: "mascotas", component: MascotasComponent, canActivate: [AuthGuard] },
   {
