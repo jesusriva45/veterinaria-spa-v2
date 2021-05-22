@@ -192,25 +192,6 @@
                                     <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-8">
-
-                            <div class="form-group col-12">
-                                <label>Descripcion</label>
-
-                                <angular-editor [ngClass]="{
-                                    'is-invalid': (Descripcion.errors?.required && submitted) || ((Descripcion.dirty || Descripcion.touched) && Descripcion.invalid ),
-                                    'is-valid': Descripcion.valid && (Descripcion.dirty || Descripcion.touched)
-                                  }" class="" [(ngModel)]="servicio.descripcion" formControlName="Descripcion" required>
-                                </angular-editor>
-
-
-                                <div class="m-0">
-                                    <p class="alert-danger" *ngIf=" (Descripcion.errors?.required && submitted) || ((Descripcion.dirty || Descripcion.touched) && Descripcion.invalid )">Descripcion is required</p>
-                                    <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
-                                </div>
-                            </div>
-
                             <div class="form-group col-12">
                                 <label>foto</label>
 
@@ -221,13 +202,13 @@
                                     <img id="imgFoto3" *ngIf="producto" [attr.src]="producto.foto3" class="img-fluid me-auto ms-auto p-2" width="200px" height="200px">
                                 </div-->
 
-                                <div class="mr-auto ml-auto col-10">
+                                <div class="mr-auto ml-auto bg-secondary">
                                     <mdb-carousel [animation]="'slide'">
                                         <mdb-carousel-item>
-                                            <img class="d-block w-100" [attr.src]="servicio.foto1 != null ? servicio.foto1 : myImgUrl" height="400px" alt="First slide">
+                                            <img class="d-block w-100" [attr.src]="servicio.foto1 != null ? servicio.foto1 : myImgUrl" height="240px" alt="First slide">
                                         </mdb-carousel-item>
                                         <mdb-carousel-item>
-                                            <img class="d-block w-100" [attr.src]="servicio.foto2 != null ? servicio.foto2 : myImgUrl" height="400px" alt="Second slide">
+                                            <img class="d-block w-100" [attr.src]="servicio.foto2 != null ? servicio.foto2 : myImgUrl" height="240px" alt="Second slide">
                                         </mdb-carousel-item>
 
                                     </mdb-carousel>
@@ -257,6 +238,40 @@
 
                                 <div class="m-0">
                                     <!--p class="alert-danger" *ngIf=" (foto3.errors?.required && submitted) || ((foto3.dirty || foto3.touched) && foto3.invalid )">Stock is required</p-->
+                                    <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8">
+
+                            <div class="form-group col-12">
+                                <label>Horarios de Atención</label>
+
+                                <angular-editor id="editor1" [config]="editorConfig" [ngClass]="{
+                                    'is-invalid': (FechaAten.errors?.required && submitted) || ((FechaAten.dirty || FechaAten.touched) && FechaAten.invalid ),
+                                    'is-valid': FechaAten.valid && (FechaAten.dirty || FechaAten.touched)
+                                  }" [(ngModel)]="servicio.fecha_atencion" formControlName="FechaAten" required>
+                                </angular-editor>
+
+
+                                <div class="m-0">
+                                    <p class="alert-danger" *ngIf=" (FechaAten.errors?.required && submitted) || ((FechaAten.dirty || FechaAten.touched) && FechaAten.invalid )">Descripcion is required</p>
+                                    <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
+                                </div>
+                            </div>
+
+                            <div class=" col-12">
+                                <label>Descripcion</label>
+
+                                <angular-editor id="editor2" [config]="editorConfig" [ngClass]="{
+                                    'is-invalid': (Descripcion.errors?.required && submitted) || ((Descripcion.dirty || Descripcion.touched) && Descripcion.invalid ),
+                                    'is-valid': Descripcion.valid && (Descripcion.dirty || Descripcion.touched)
+                                  }" [(ngModel)]="servicio.descripcion" formControlName="Descripcion" required>
+                                </angular-editor>
+
+
+                                <div class="m-0">
+                                    <p class="alert-danger" *ngIf=" (Descripcion.errors?.required && submitted) || ((Descripcion.dirty || Descripcion.touched) && Descripcion.invalid )">Descripcion is required</p>
                                     <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
                                 </div>
                             </div>

@@ -30,7 +30,7 @@ export class CrudServicioComponent implements OnInit {
   Nombre: FormControl;
   Precio: FormControl;
   Descripcion: FormControl;
-  //FechaAten: FormControl;
+  FechaAten: FormControl;
   IdCategoria: FormControl;
 
   //----------- VISIBILIDAD DE MENSAJE DE ERROR DE CAMPOS DE FORMULARIO ----------------
@@ -66,54 +66,29 @@ export class CrudServicioComponent implements OnInit {
 
   editorConfig: AngularEditorConfig = {
     editable: true,
-    spellcheck: false,
-    height: "200px",
-    width: "100%",
-
-    fonts: [
-      { class: "arial", name: "Arial" },
-      { class: "times-new-roman", name: "Times New Roman" },
-      { class: "calibri", name: "Calibri" },
-      { class: "comic-sans-ms", name: "Comic Sans MS" },
-      { class: "Algerian", name: "Algerian" },
-      { class: "MT Extra", name: "MT Extra" },
-      { class: "Cooper Black", name: "Cooper Black" },
-    ],
-
-    toolbarHiddenButtons: [
-      [
-        //'undo',
-        //'redo',
-        //'bold',
-        //'italic',
-        //'underline',
-        //'strikeThrough',
-        "subscript",
-        "superscript",
-        "justifyLeft",
-        "justifyCenter",
-        "justifyRight",
-        "justifyFull",
-        //'indent',
-        //'outdent',
-        //'insertUnorderedList',
-        //'insertOrderedList',
-        //'heading',
-        //'fontName',
-      ],
-      [
-        //'fontSize',
-        //'textColor',
-        "backgroundColor",
-        "customClasses",
-        //'link',
-        //'unlink',
-        "insertImage",
-        "insertVideo",
-        "insertHorizontalRule",
-        //'removeFormat',
-        "toggleEditorMode",
-      ],
+    spellcheck: true,
+    height: "15rem",
+    minHeight: "5rem",
+    placeholder: "Enter text here...",
+    translate: "no",
+    defaultParagraphSeparator: "p",
+    defaultFontName: "Arial",
+    //toolbarHiddenButtons: [["bold"]],
+    sanitize: false,
+    customClasses: [
+      {
+        name: "quote",
+        class: "quote",
+      },
+      {
+        name: "redText",
+        class: "redText",
+      },
+      {
+        name: "titleText",
+        class: "titleText",
+        tag: "h1",
+      },
     ],
   };
 
@@ -127,7 +102,7 @@ export class CrudServicioComponent implements OnInit {
       Validators.pattern("[0-9]+([.][0-9]{1,2})?"),
     ]);
     this.Descripcion = new FormControl("", Validators.required);
-    //this.FechaAten = new FormControl('', Validators.required);
+    this.FechaAten = new FormControl("", Validators.required);
     this.IdCategoria = new FormControl("", Validators.required);
   }
 
@@ -138,7 +113,7 @@ export class CrudServicioComponent implements OnInit {
         Nombre: this.Nombre,
         Precio: this.Precio,
         Descripcion: this.Descripcion,
-        //FechaAten: this.FechaAten,
+        FechaAten: this.FechaAten,
         IdCategoria: this.IdCategoria,
       }),
     });
