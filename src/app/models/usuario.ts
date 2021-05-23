@@ -1,3 +1,4 @@
+import { Pedido } from "./pedido";
 import { Ubigeo } from "./ubigeo";
 
 export class Usuario {
@@ -17,4 +18,6 @@ export class Usuario {
   username: string;
   password: string;
   roles: string[] = [];
+
+  pedidos: Array<Pedido> = [];
 }

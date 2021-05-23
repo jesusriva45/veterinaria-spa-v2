@@ -1,0 +1,28 @@
+<div class="container p-5">
+    <h4>Mis Pedidos</h4>
+    <table mdbTable>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Cantidad </th>
+                <th scope="col">Precio</th>
+                <th scope="col">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let detail of detallePedidoProducto">
+                <th scope="col">#</th>
+                <td>{{detail.producto.nombre}}</td>
+                <td>{{detail.cantidad}}</td>
+                <td>S/. {{detail.precio | number : '1.2-2'}}</td>
+                <td>S/. {{detail.cantidad*detail.precio | number : '1.2-2'}}</td>
+
+            </tr>
+        </tbody>
+    </table>
+
+
+
+
+</div>

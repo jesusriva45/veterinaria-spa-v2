@@ -53,6 +53,8 @@ import { AuthService } from "./services/auth.service";
 import { AuthGuard } from "./services/guards/auth.guard";
 import { RoleGuard } from "./services/guards/role.guard";
 import { EstadoCarritoComponent } from './components/productos/estado-carrito/estado-carrito.component';
+import { PedidoComponent } from './components/pedido/pedido.component';
+import { DetallePedidoComponent } from './components/pedido/detalle-pedido/detalle-pedido.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,6 +79,8 @@ import { EstadoCarritoComponent } from './components/productos/estado-carrito/es
     DatosPersonalesComponent,
     DetalleProductoComponent,
     EstadoCarritoComponent,
+    PedidoComponent,
+    DetallePedidoComponent,
   ],
   imports: [
     BrowserModule,

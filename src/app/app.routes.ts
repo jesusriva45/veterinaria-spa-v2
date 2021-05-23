@@ -17,8 +17,9 @@ import { PedidosComponent } from "./components/pedidos/pedidos.component";
 import { LoginComponent } from "./components/login/login.component";
 import { DatosPersonalesComponent } from "./components/datos-personales/datos-personales.component";
 import { DetalleProductoComponent } from "./components/productos/detalle-producto/detalle-producto.component";
+import { PedidoComponent } from "./components/pedido/pedido.component";
+import { DetallePedidoComponent } from "./components/pedido/detalle-pedido/detalle-pedido.component";
 import { AuthGuard } from "./services/guards/auth.guard";
-import { ClienteService } from "./services/cliente.service";
 
 export const ROUTES: Routes = [
   { path: "", pathMatch: "full", redirectTo: "inicio" },
@@ -36,6 +37,17 @@ export const ROUTES: Routes = [
     component: CrudProductoComponent,
     canActivate: [AuthGuard],
   },
+  //--------- PEDIDO --------------------------
+  {
+    path: "pedidos",
+    component: PedidoComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "pedido/detalle-pedido/:id",
+    component: DetallePedidoComponent,
+  },
+  //-------------------------------------------
   {
     path: "servicios",
     component: ServiciosComponent,
@@ -66,7 +78,7 @@ export const ROUTES: Routes = [
     component: RegistroMascotaComponent,
     canActivate: [AuthGuard],
   },
-  { path: "pedidos", component: PedidosComponent, canActivate: [AuthGuard] },
+  //{ path: "pedidos", component: PedidosComponent, canActivate: [AuthGuard] },
   { path: "login", component: LoginComponent },
   {
     path: "modal-form-usuario",

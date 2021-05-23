@@ -28,8 +28,9 @@
             </li>
 
             <li class="nav-item" *ngIf="(authService.isAuthenticated())" routerLinkActive="active">
-                <a class="nav-link waves-light" mdbWavesEffect routerLink="/pedidos">Pedidos Clientes</a>
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/pedidos">Mis Pedidos</a>
             </li>
+
 
             <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
                 <a class="nav-link waves-light" mdbWavesEffect routerLink="/usuarios"> Crud de Usuarios</a>
@@ -39,9 +40,25 @@
                 <a class="nav-link waves-light" mdbWavesEffect routerLink="/historia-clinica"> Historial de Mascotas</a>
             </li>
 
-            <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_VENDEDOR')" routerLinkActive="active">
+            <li class="nav-item dropdown" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_VETERINARIO')" dropdown>
+                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+                CRUD Productos/Servicios <span class="caret"></span></a>
+                <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/crud-producto"> Crud de Productos</a>
+                    <div class="divider dropdown-divider"></div>
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/crud-servicio"> Crud de Servicios</a>
+
+                </div>
+            </li>
+
+
+            <!--li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_VENDEDOR')" routerLinkActive="active">
                 <a class="nav-link waves-light" mdbWavesEffect routerLink="/crud-producto"> Crud de Productos</a>
             </li>
+            <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_VENDEDOR')" routerLinkActive="active">
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/crud-servicio"> Crud de Servicios</a>
+            </li-->
 
             <li class="nav-item" *ngIf="(!authService.isAuthenticated())" routerLinkActive="active">
                 <a class="nav-link waves-light" mdbWavesEffect routerLink="/registro-cliente"> Registrarse</a>
@@ -51,9 +68,7 @@
                 <a class="nav-link " mdbWavesEffect routerLink="/registro-mascota"> Registra a tu Mascota</a>
             </li>
 
-            <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_VENDEDOR')" routerLinkActive="active">
-                <a class="nav-link waves-light" mdbWavesEffect routerLink="/crud-servicio"> Crud de Servicios</a>
-            </li>
+
         </ul>
 
         <app-estado-carrito></app-estado-carrito>

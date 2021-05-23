@@ -1,0 +1,25 @@
+<div class="container p-5">
+    <h4>Mis Pedidos</h4>
+    <table mdbTable>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">FECHA DEL PEDIDO</th>
+                <th scope="col"></th>
+                <th scope="col">DETALLE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let pedido of pedidos">
+                <th scope="row">{{pedido.idpedido}}</th>
+                <td>{{pedido.fecha_pedido | date:'dd-MM-yyyy hh:mm:ss'}}</td>
+                <td>NO SE</td>
+                <td>
+                    <mdb-icon style="cursor: pointer;" mdbWavesEffect far icon="file-alt" size="2x" [routerLink]="['/pedido/detalle-pedido', pedido.idpedido]"></mdb-icon>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p></p>
+</div>
