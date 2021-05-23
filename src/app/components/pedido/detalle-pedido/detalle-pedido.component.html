@@ -1,8 +1,8 @@
 <div class="container p-5">
     <h4>Mis Pedidos</h4>
-    <table mdbTable>
+    <table mdbTable striped="true">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th scope="col">#</th>
                 <th scope="col">Producto</th>
                 <th scope="col">Cantidad </th>
@@ -11,8 +11,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let detail of detallePedidoProducto">
-                <th scope="col">#</th>
+            <tr class="text-center" *ngFor="let detail of detallePedidoProducto">
+                <th scope="col"> {{pedido.idpedido}}</th>
                 <td>{{detail.producto.nombre}}</td>
                 <td>{{detail.cantidad}}</td>
                 <td>S/. {{detail.precio | number : '1.2-2'}}</td>

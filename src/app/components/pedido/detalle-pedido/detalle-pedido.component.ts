@@ -34,9 +34,7 @@ export class DetallePedidoComponent implements OnInit {
         this.pedidoService.getPedido(id).subscribe((pedido) => {
           this.pedido = pedido;
           this.detallePedidoProducto = pedido.detallesProducto;
-          console.log(
-            pedido.detallesProducto.forEach((e) => e.producto.nombre)
-          );
+          console.log(this.detallePedidoProducto);
         });
       }
     });

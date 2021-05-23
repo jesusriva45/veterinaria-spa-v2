@@ -1,8 +1,8 @@
 <div class="container p-5">
     <h4>Mis Pedidos</h4>
-    <table mdbTable>
+    <table mdbTable striped="true">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th scope="col">ID</th>
                 <th scope="col">FECHA DEL PEDIDO</th>
                 <th scope="col"></th>
@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let pedido of pedidos">
+            <tr class="text-center" *ngFor="let pedido of pedidos">
                 <th scope="row">{{pedido.idpedido}}</th>
                 <td>{{pedido.fecha_pedido | date:'dd-MM-yyyy hh:mm:ss'}}</td>
                 <td>NO SE</td>

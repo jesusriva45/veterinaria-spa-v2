@@ -22,7 +22,8 @@ export class CarritoService {
     if (this.cartItems.length > 0) {
       // find the item in the cart based on item id
       existingCartItem = this.cartItems.find(
-        (itemTemporal) => itemTemporal.id === theCartItem.id
+        (itemTemporal) =>
+          itemTemporal.producto.idproducto === theCartItem.producto.idproducto
       );
 
       /* for (let itemTemporal of this.cartItems) {
@@ -50,7 +51,7 @@ export class CarritoService {
 
   removeItem(item: Carrito) {
     const idItem = this.cartItems.findIndex(
-      (tempItem) => tempItem.id == item.id
+      (tempItem) => tempItem.producto.idproducto == item.producto.idproducto
     );
 
     if (idItem > -1) {
@@ -74,7 +75,7 @@ export class CarritoService {
     let cantidadTotal: number = 0;
 
     for (let itemActual of this.cartItems) {
-      precioTotal += itemActual.cantidad * itemActual.precioUnit;
+      precioTotal += itemActual.cantidad * itemActual.precio;
       cantidadTotal += itemActual.cantidad;
     }
 
@@ -89,9 +90,9 @@ export class CarritoService {
   logCartData(totalPriceValue: number, totalQuantityValue: number) {
     console.log("Contents of the cart");
     for (let tempCartItem of this.cartItems) {
-      const subTotalPrice = tempCartItem.cantidad * tempCartItem.precioUnit;
+      const subTotalPrice = tempCartItem.cantidad * tempCartItem.precio;
       console.log(
-        `name: ${tempCartItem.nombre}, quantity=${tempCartItem.cantidad}, unitPrice=${tempCartItem.precioUnit}, subTotalPrice=${subTotalPrice}`
+        `name: ${tempCartItem.producto.nombre}, quantity=${tempCartItem.cantidad}, unitPrice=${tempCartItem.precio}, subTotalPrice=${subTotalPrice}`
       );
     }
 

@@ -15,10 +15,10 @@
         </thead>
         <tbody>
             <tr class="text-center" mdbTableCol *ngFor="let item of cartItems">
-                <th scope="row">{{ item.id }}</th>
-                <th scope="row"><img [src]="item.imageUrl" width="50px" height="50px"></th>
-                <td scope="row">{{ item.nombre }}</td>
-                <td scope="row">{{ item.marca }}</td>
+                <th scope="row">{{ item.producto.idproducto}}</th>
+                <th scope="row"><img [src]="item.producto.foto1" width="50px" height="50px"></th>
+                <td scope="row">{{ item.producto.nombre }}</td>
+                <td scope="row">{{ item.producto.marca.nombre }}</td>
                 <td>
                     <div class="">
 
@@ -37,7 +37,7 @@
                         <p><button placement="right" triggers="hover" [mdbPopover]="Remove" class="remove white-text" mdbWavesEffect (click)="removeItem(item)"><mdb-icon fas icon="trash"></mdb-icon></button></p>
                     </div>
 
-                    <p class="mt-2">Subtotal: S/.{{ item.cantidad * item.precioUnit | number }}</p>
+                    <p class="mt-2">Subtotal: S/.{{ item.cantidad * item.precio | number }}</p>
                 </td>
             </tr>
         </tbody>
@@ -53,6 +53,9 @@
         </tfoot>
     </table>
 </div>
+
+<button (click)="insertar()">registrar pedido</button>
+
 
 
 <!--div class="row col-12 d-inline-flex justify-content-center p-5">

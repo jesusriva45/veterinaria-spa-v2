@@ -5,7 +5,9 @@ import { AuthService } from "./auth.service";
 import Swal from "sweetalert2";
 import { Pedido } from "../models/pedido";
 import { Observable, throwError } from "rxjs";
-import { catchError } from "rxjs/operators";
+import { catchError, map } from "rxjs/operators";
+import { Usuario } from "../models/usuario";
+import { DetallePedidoProducto } from "../models/detalle-pedido-producto";
 
 @Injectable({
   providedIn: "root",
@@ -52,6 +54,25 @@ export class PedidoService {
       return true;
     }
     return false;
+  }
+
+  insert(pedido: Pedido): Observable<Pedido> {
+    return this.http
+      .post(this.urlEndPoint, pedido, {
+        headers: this.agregarAuthorizationHeader(),
+      })
+      .pipe(
+        map((response: any) => response as any),
+        catchError((e) => {
+          if (e.status == 400) {
+            return throwError(e);
+          }
+
+          console.error(e.error.mensaje);
+          Swal.fire(e.error.mensaje, e.error.error, "error");
+          return throwError(e);
+        })
+      );
   }
 
   getPedido(idpedido: Pedido): Observable<Pedido> {

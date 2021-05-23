@@ -11,6 +11,12 @@ import swal from "sweetalert2";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Carrito } from "src/app/models/carrito";
 import { CarritoService } from "src/app/services/carrito.service";
+import { DetallePedidoServicio } from "src/app/models/detalle-pedido-servicio";
+import { PedidoService } from "src/app/services/pedido.service";
+import { AuthService } from "src/app/services/auth.service";
+import { DetallePedidoProducto } from "src/app/models/detalle-pedido-producto";
+import { Pedido } from "src/app/models/pedido";
+import { ClienteService } from "src/app/services/cliente.service";
 
 @Component({
   selector: "app-carrito-productos",
@@ -34,8 +40,11 @@ export class CarritoProductosComponent implements OnInit {
   constructor(
     private productoService: ProductoService,
     private carritoService: CarritoService,
+    private clienteService: ClienteService,
     private router: Router,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private pedidoService: PedidoService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -71,6 +80,30 @@ export class CarritoProductosComponent implements OnInit {
 
   removeItem(item: Carrito) {
     this.carritoService.removeItem(item);
+  }
+
+  pedido: Pedido = new Pedido();
+
+  //arr: Array<DetallePedidoProducto>;
+
+  insertar() {
+    this.clienteService
+      .getUsuario(this.authService.usuario.idusuario)
+      .subscribe((usuario) => {
+        this.pedido.usuario = usuario;
+        console.log(this.pedido.usuario);
+        this.pedido.detallesProducto = this.cartItems;
+
+        console.log(this.pedido.detallesProducto);
+        this.pedido.idpedido = null;
+        console.log(this.pedido.idpedido);
+
+        this.pedidoService.insert(this.pedido).subscribe((resp) => {
+          console.log(resp);
+        });
+      });
+
+    // this.pedido.usuario = this.authService.usuario;
   }
 
   cargarProducto(): void {
