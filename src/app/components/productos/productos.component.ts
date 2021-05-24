@@ -9,7 +9,7 @@ import { ProductoService } from "../../services/producto.service";
 import swal from "sweetalert2";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { CarritoService } from "src/app/services/carrito.service";
-import { Carrito } from "src/app/models/carrito";
+import { CarritoProducto } from "src/app/models/carrito-producto";
 
 @Component({
   selector: "app-productos",
@@ -40,7 +40,7 @@ export class ProductosComponent implements OnInit {
   addToCart(producto: Producto) {
     console.log(this.producto);
 
-    const itemCarrito = new Carrito(producto);
+    const itemCarrito = new CarritoProducto(producto);
 
     this.carritoService.agregarItem(itemCarrito);
   }

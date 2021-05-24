@@ -9,7 +9,7 @@ import { Producto } from "../../../models/producto";
 
 import swal from "sweetalert2";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { Carrito } from "src/app/models/carrito";
+import { CarritoProducto } from "src/app/models/carrito-producto";
 import { CarritoService } from "src/app/services/carrito.service";
 import { DetallePedidoServicio } from "src/app/models/detalle-pedido-servicio";
 import { PedidoService } from "src/app/services/pedido.service";
@@ -30,7 +30,7 @@ export class CarritoProductosComponent implements OnInit {
   nomMarca: string;
 
   //----------- ITEMS DE CARRITO --------------
-  cartItems: Carrito[] = [];
+  cartItems: CarritoProducto[] = [];
 
   precioTotal: number = 0;
   cantidadTotal: number = 0;
@@ -70,15 +70,15 @@ export class CarritoProductosComponent implements OnInit {
     this.carritoService.calcularPrecioPorCantidadTotal();
   }
 
-  incrementCantidad(item: Carrito) {
+  incrementCantidad(item: CarritoProducto) {
     this.carritoService.agregarItem(item);
   }
 
-  decrementCantidad(item: Carrito) {
+  decrementCantidad(item: CarritoProducto) {
     this.carritoService.diminuirCantidad(item);
   }
 
-  removeItem(item: Carrito) {
+  removeItem(item: CarritoProducto) {
     this.carritoService.removeItem(item);
   }
 

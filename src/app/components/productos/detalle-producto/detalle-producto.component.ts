@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Acordion } from "src/app/animations/animaciones";
-import { Carrito } from "src/app/models/carrito";
+import { CarritoProducto } from "src/app/models/carrito-producto";
 import { Producto } from "src/app/models/producto";
 import { CarritoService } from "src/app/services/carrito.service";
 import { ProductoService } from "src/app/services/producto.service";
@@ -85,7 +85,7 @@ export class DetalleProductoComponent implements OnInit {
   addToCart() {
     console.log(this.producto);
 
-    const itemCarrito = new Carrito(this.producto);
+    const itemCarrito = new CarritoProducto(this.producto);
 
     this.carritoService.agregarItem(itemCarrito);
   }
