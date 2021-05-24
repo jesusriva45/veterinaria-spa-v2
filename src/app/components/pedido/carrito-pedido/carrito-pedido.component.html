@@ -1,1 +1,73 @@
-<p>carrito-pedido works!</p>
+<div *ngIf="cartItems.detallesProducto.length == 0" class="alert alert-warning col-md-12" role="alert">
+    Tu Carrito de compras está vacio.
+</div>
+
+<div class="container mt-5">
+    <table mdbTable [hidden]="(cartItems.detallesProducto.length == 0)">
+        <thead class="text-center">
+            <tr>
+                <th>#</th>
+                <th>Imagen</th>
+                <th>Producto</th>
+                <th>Marca</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="text-center" mdbTableCol *ngFor="let item of cartItems.detallesProducto">
+                <th scope="row">{{ item.producto.idproducto}}</th>
+                <th scope="row"><img [src]="item.producto.foto1" width="50px" height="50px"></th>
+                <td scope="row">{{ item.producto.nombre }}</td>
+                <td scope="row">{{ item.producto.marca.nombre }}</td>
+                <td>
+                    <div class="">
+
+                        <button class="add mr-2" mdbWavesEffect (click)="incrementCantidad(item)">
+                            <mdb-icon class="m-auto white-text" fas icon="plus"></mdb-icon>
+                        </button> {{ item.cantidad }}
+                        <button class="minus ml-2 white-text" mdbWavesEffect (click)="decrementCantidad(item)"><mdb-icon class="m-auto" fas icon="minus"></mdb-icon></button>
+
+                        <ng-template #Remove>
+                            <div>Eliminar</div>
+                        </ng-template>
+                        <p><button placement="right" triggers="hover" [mdbPopover]="Remove" class="remove white-text" mdbWavesEffect (click)="removeItem(item)"><mdb-icon fas icon="trash"></mdb-icon></button></p>
+                    </div>
+
+                    <p class="mt-2">Subtotal: S/.{{ item.cantidad * item.precio | number }}</p>
+                </td>
+            </tr>
+            <tr class="text-center" mdbTableCol *ngFor="let item of cartItems.detallePedidoServicio">
+                <th scope="row">{{ item.servicio.idservicio}}</th>
+                <th scope="row"><img [src]="item.servicio.foto1" width="50px" height="50px"></th>
+                <td scope="row">{{ item.servicio.nombre }}</td>
+                <td>
+                    <div class="">
+                        <button class="add mr-2" mdbWavesEffect (click)="incrementCantidad(item)">
+                            <mdb-icon class="m-auto white-text" fas icon="plus"></mdb-icon>
+                        </button> {{ item.cantidad }}
+                        <button class="minus ml-2 white-text" mdbWavesEffect (click)="decrementCantidad(item)"><mdb-icon class="m-auto" fas icon="minus"></mdb-icon></button>
+                        <ng-template #Remove>
+                            <div>Eliminar</div>
+                        </ng-template>
+                        <p><button placement="right" triggers="hover" [mdbPopover]="Remove" class="remove white-text" mdbWavesEffect (click)="removeItem(item)"><mdb-icon fas icon="trash"></mdb-icon></button></p>
+                    </div>
+                    <p class="mt-2">Subtotal: S/.{{ item.cantidad * item.precio | number }}</p>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="text-center">
+                <td colspan="4"></td>
+                <td style="font-weight: bold">
+                    <p>Cantidad total: {{ cantidadTotal }}</p>
+                    <p>Envio gratis</p>
+                    <p>Precio Total: S/.{{ precioTotal | number}}</p>
+                    <br>
+                    <br>
+                    <button type="button" class="ml-auto" mdbBtn color="success" (click)="insertar()" mdbWavesEffect>Confirmar pedido</button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>

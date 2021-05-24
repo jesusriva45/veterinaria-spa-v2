@@ -7,7 +7,6 @@ import { ProductosComponent } from "./components/productos/productos.component";
 import { CrudProductoComponent } from "./components/productos/crud-producto/crud-producto.component";
 import { ServiciosComponent } from "./components/servicios/servicios.component";
 import { CrudServicioComponent } from "./components/servicios/crud-servicio/crud-servicio.component";
-import { CarritoProductosComponent } from "./components/productos/carrito-productos/carrito-productos.component";
 import { MascotasComponent } from "./components/mascotas/mascotas.component";
 import { HistoriaClinicaComponent } from "./components/mascotas/historia-clinica/historia-clinica.component";
 import { ClientesComponent } from "./components/clientes/clientes.component";
@@ -19,6 +18,7 @@ import { DetalleProductoComponent } from "./components/productos/detalle-product
 import { PedidoComponent } from "./components/pedido/pedido.component";
 import { DetallePedidoComponent } from "./components/pedido/detalle-pedido/detalle-pedido.component";
 import { AuthGuard } from "./services/guards/auth.guard";
+import { CarritoPedidoComponent } from './components/pedido/carrito-pedido/carrito-pedido.component';
 
 export const ROUTES: Routes = [
   { path: "", pathMatch: "full", redirectTo: "inicio" },
@@ -46,20 +46,19 @@ export const ROUTES: Routes = [
     path: "pedido/detalle-pedido/:id",
     component: DetallePedidoComponent,
   },
+  {
+    path: "carrito-pedido",
+    component: CarritoPedidoComponent,
+  },
   //-------------------------------------------
   {
     path: "servicios",
     component: ServiciosComponent,
-    canActivate: [AuthGuard],
   },
   {
     path: "crud-servicio",
     component: CrudServicioComponent,
     canActivate: [AuthGuard],
-  },
-  {
-    path: "productos/carrito-productos",
-    component: CarritoProductosComponent,
   },
   {
     path: "productos/detalle-producto/:id",

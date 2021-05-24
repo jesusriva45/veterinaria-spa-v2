@@ -30,7 +30,6 @@ import { ProductosComponent } from "./components/productos/productos.component";
 import { CrudProductoComponent } from "./components/productos/crud-producto/crud-producto.component";
 import { ServiciosComponent } from "./components/servicios/servicios.component";
 import { CrudServicioComponent } from "./components/servicios/crud-servicio/crud-servicio.component";
-import { CarritoProductosComponent } from "./components/productos/carrito-productos/carrito-productos.component";
 import { MascotasComponent } from "./components/mascotas/mascotas.component";
 import { HistoriaClinicaComponent } from "./components/mascotas/historia-clinica/historia-clinica.component";
 import { ClientesComponent } from "./components/clientes/clientes.component";
@@ -54,6 +53,8 @@ import { RoleGuard } from "./services/guards/role.guard";
 import { EstadoCarritoComponent } from './components/productos/estado-carrito/estado-carrito.component';
 import { PedidoComponent } from './components/pedido/pedido.component';
 import { DetallePedidoComponent } from './components/pedido/detalle-pedido/detalle-pedido.component';
+import { CarritoPedidoComponent } from './components/pedido/carrito-pedido/carrito-pedido.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +67,6 @@ import { DetallePedidoComponent } from './components/pedido/detalle-pedido/detal
     CrudProductoComponent,
     ServiciosComponent,
     CrudServicioComponent,
-    CarritoProductosComponent,
     MascotasComponent,
     HistoriaClinicaComponent,
     ClientesComponent,
@@ -79,6 +79,7 @@ import { DetallePedidoComponent } from './components/pedido/detalle-pedido/detal
     EstadoCarritoComponent,
     PedidoComponent,
     DetallePedidoComponent,
+    CarritoPedidoComponent
   ],
   imports: [
     BrowserModule,

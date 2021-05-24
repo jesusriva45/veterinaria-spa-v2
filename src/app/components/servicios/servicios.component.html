@@ -1,1 +1,26 @@
-<p>servicios works!</p>
+<div class="row col-12 p-5">
+    <!-- Card -->
+    <mdb-card *ngFor="let servicio of servicios; let i = index" class="col-2 m-2">
+
+        <div class="view rgba-white-slight waves-light" [routerLink]="['/productos/detalle-servicio', servicio.idservicio]">
+            <!-- Card img -->
+            <img class="img-fluid ml-auto mr-auto" [src]="servicio.foto1" alt="Card image cap">
+        </div>
+        <!--Card content-->
+        <mdb-card-body [routerLink]="['/productos/detalle-producto', servicio.idservicio]">
+            <!--Title-->
+            <mdb-card-title>
+                <h3>{{ servicio.nombre }}</h3>
+            </mdb-card-title>
+            <!--Text-->
+            <mdb-card-text>
+                <h1 class="card-text text-center">S/.{{ servicio.precio}}</h1>
+                <p class="card-text" style="text-align: justify;" [innerHTML]="servicio.descripcion"></p>
+            </mdb-card-text>
+
+        </mdb-card-body>
+
+        <button (click)="addToCart(servicio)" class="btn-card" mdbBtn color="primary" mdbWavesEffect>Agregar</button>
+    </mdb-card>
+    <!-- Card -->
+</div>

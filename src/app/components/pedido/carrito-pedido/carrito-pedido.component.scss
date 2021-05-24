@@ -1,0 +1,35 @@
+.add:hover {
+    cursor: pointer;
+}
+
+.add {
+    outline: none;
+    border: none;
+    background-color: #4285F4;
+    width: 30px;
+    height: 30px;
+}
+
+.minus:hover {
+    cursor: pointer;
+}
+
+.minus {
+    outline: none;
+    border: none;
+    background-color: #ff4444;
+    width: 30px;
+    height: 30px;
+}
+
+.remove:hover {
+    cursor: pointer;
+}
+
+.remove {
+    outline: none;
+    border: none;
+    background-color: #ffbb33;
+    width: 30px;
+    height: 30px;
+}
