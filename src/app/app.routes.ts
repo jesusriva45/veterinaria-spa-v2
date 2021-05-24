@@ -13,7 +13,6 @@ import { HistoriaClinicaComponent } from "./components/mascotas/historia-clinica
 import { ClientesComponent } from "./components/clientes/clientes.component";
 import { RegistroClienteComponent } from "./components/clientes/registro-cliente/registro-cliente.component";
 import { RegistroMascotaComponent } from "./components/mascotas/registro-mascota/registro-mascota.component";
-import { PedidosComponent } from "./components/pedidos/pedidos.component";
 import { LoginComponent } from "./components/login/login.component";
 import { DatosPersonalesComponent } from "./components/datos-personales/datos-personales.component";
 import { DetalleProductoComponent } from "./components/productos/detalle-producto/detalle-producto.component";

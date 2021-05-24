@@ -16,6 +16,7 @@ export class DetallePedidoComponent implements OnInit {
   pedido: Pedido;
 
   detallePedidoProducto: Array<DetallePedidoProducto>;
+  detallePedidoServicio: Array<DetallePedidoServicio>;
 
   constructor(
     public pedidoService: PedidoService,
@@ -34,6 +35,7 @@ export class DetallePedidoComponent implements OnInit {
         this.pedidoService.getPedido(id).subscribe((pedido) => {
           this.pedido = pedido;
           this.detallePedidoProducto = pedido.detallesProducto;
+          this.detallePedidoServicio =  pedido.detallePedidoServicio;
           console.log(this.detallePedidoProducto);
         });
       }

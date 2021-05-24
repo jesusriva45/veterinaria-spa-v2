@@ -1,23 +1,23 @@
 import { Injectable } from "@angular/core";
-import { Carrito } from "../models/carrito";
+import { CarritoProducto } from "../models/carrito-producto";
 import { iif, Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
 })
 export class CarritoService {
-  cartItems: Carrito[] = [];
+  cartItems: CarritoProducto[] = [];
 
-  //declaracion de Observables para obtener el precio y cantidad total del Carrito de Compras
+  //declaracion de Observables para obtener el precio y cantidad total del CarritoProducto de Compras
   precioTotal: Subject<number> = new Subject<number>();
   cantidadTotal: Subject<number> = new Subject<number>();
 
   constructor() {}
 
-  agregarItem(theCartItem: Carrito) {
+  agregarItem(theCartItem: CarritoProducto) {
     // valores para verificar si existe un item(producto) en el carro
     let itemExistente: boolean = false;
-    let existingCartItem: Carrito = undefined;
+    let existingCartItem: CarritoProducto = undefined;
 
     if (this.cartItems.length > 0) {
       // find the item in the cart based on item id
@@ -49,7 +49,7 @@ export class CarritoService {
     this.calcularPrecioPorCantidadTotal();
   }
 
-  removeItem(item: Carrito) {
+  removeItem(item: CarritoProducto) {
     const idItem = this.cartItems.findIndex(
       (tempItem) => tempItem.producto.idproducto == item.producto.idproducto
     );
@@ -60,7 +60,7 @@ export class CarritoService {
     }
   }
 
-  diminuirCantidad(item: Carrito) {
+  diminuirCantidad(item: CarritoProducto) {
     item.cantidad--;
 
     if (item.cantidad === 0) {

@@ -36,7 +36,6 @@ import { HistoriaClinicaComponent } from "./components/mascotas/historia-clinica
 import { ClientesComponent } from "./components/clientes/clientes.component";
 import { RegistroClienteComponent } from "./components/clientes/registro-cliente/registro-cliente.component";
 import { RegistroMascotaComponent } from "./components/mascotas/registro-mascota/registro-mascota.component";
-import { PedidosComponent } from "./components/pedidos/pedidos.component";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ModalFormComponent } from "./components/usuarios/modal-form/modal-form.component";
@@ -73,7 +72,6 @@ import { DetallePedidoComponent } from './components/pedido/detalle-pedido/detal
     ClientesComponent,
     RegistroClienteComponent,
     RegistroMascotaComponent,
-    PedidosComponent,
     ModalFormComponent,
     LoginComponent,
     DatosPersonalesComponent,
