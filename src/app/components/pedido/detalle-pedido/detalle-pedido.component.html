@@ -1,9 +1,16 @@
 <div class="container p-5">
-    <h4>Mis Pedidos</h4>
-    <table mdbTable striped="true">
+    <h4>Mis Productos</h4>
+    <!--div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="md-form">
+                <input type="text" [(ngModel)]="searchText" class="form-control" id="search" mdbInput />
+                <label for="search">Search</label>
+            </div>
+        </div>
+    </div-->
+    <table mdbTable #tableEl="mdbTable" class="z-depth-1">
         <thead>
             <tr class="text-center">
-                <th scope="col">#</th>
                 <th scope="col">Producto</th>
                 <th scope="col">Cantidad </th>
                 <th scope="col">Precio</th>
@@ -11,16 +18,46 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="text-center" *ngFor="let detail of detallePedidoProducto">
-                <th scope="col"> {{pedido.idpedido}}</th>
-                <td>{{detail.producto.nombre}}</td>
-                <td>{{detail.cantidad}}</td>
-                <td>S/. {{detail.precio | number : '1.2-2'}}</td>
-                <td>S/. {{detail.cantidad*detail.precio | number : '1.2-2'}}</td>
+            <tr class="text-center" *ngFor="let el of elements; let i = index">
+
+                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.nomProducto}}</td>
+                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.cantidad}}</td>
+                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">S/. {{el.precio | number : '1.2-2'}}</td>
+                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">S/. {{el.cantidad*el.precio | number : '1.2-2'}}</td>
 
             </tr>
         </tbody>
+        <tfoot class="grey lighten-5 w-100">
+            <tr>
+                <td colspan="4">
+                    <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+                </td>
+            </tr>
+        </tfoot>
     </table>
+</div>
+
+<div class="container p-5">
+    <h4>Mis Productos</h4>
+    <table mdbTable>
+        <thead>
+            <tr class="text-center">
+                <th>Servicio</th>
+                <th>Día Atención</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="text-center" mdbTableCol *ngFor="let servicios of detallePedidoServicio">
+                <th scope="row">{{servicios.servicio.nombre}}</th>
+                <td>{{servicios.fecha_atencion}}</td>
+                <td>S/. {{servicios.cantidad}}</td>
+                <td>S/. {{servicios.precio * servicios.cantidad}}</td>
+            </tr>
+        </tbody>
+    </table>
+
 </div>
 
 

@@ -16,6 +16,72 @@
 
     <!--Title-->
 
+
+    <div class="container-fluid p-2">
+        <!--div class="row">
+            <div class="col-md-12 mx-auto">
+                <div class="md-form">
+                    <input type="text" [(ngModel)]="searchText" class="form-control" id="search" mdbInput />
+                    <label for="search">Search</label>
+                </div>
+            </div>
+        </div-->
+        <table mdbTable #tableEl="mdbTable" class="z-depth-1">
+            <thead>
+                <tr class="text-center">
+                    <th scope="col">Producto</th>
+                    <th scope="col">Cantidad </th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center" *ngFor="let usuario of elements; let i = index">
+                    <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.idusuario }}</th>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.nombres }}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.apellidos }}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.dni }}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.telefono }}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.correo }}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ usuario.fechaNac }}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ usuario.direccion }}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.departamento }}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ usuario.provincia }}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.distrito }}</td>
+                    <td class="align-middle">
+                        <mdb-icon type="button" size="2x" far icon="file-alt"></mdb-icon>
+                    </td>
+                    <td class="align-middle" *ngIf="authService.hasRole('ROLE_ADMIN')">
+                        <mdb-icon (click)="openModalCrud(usuario)" type="button" fas size="2x" icon="edit">Estado</mdb-icon>
+                    </td>
+                    <td class="align-middle" *ngIf="authService.hasRole('ROLE_ADMIN')">
+                        <mdb-icon (click)="modalEstado(usuario)" type="button" fas size="2x" icon="user-alt"></mdb-icon>
+
+                    </td>
+                    <td class="align-middle" *ngIf="authService.hasRole('ROLE_ADMIN')">
+                        <mdb-icon (click)="modalRol(usuario)" type="button" fas size="2x" icon="users"></mdb-icon>
+                    </td>
+
+
+
+                </tr>
+            </tbody>
+            <tfoot class="grey lighten-5 w-100">
+                <tr>
+                    <td colspan="4">
+                        <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+
+
+
+
+
     <div class="card border-primary p-4">
         <div class="table-responsive">
             <table class="table" style="width:100%">
@@ -39,7 +105,7 @@
                 </thead>
                 <tbody>
                     <tr class="text-center" *ngFor="let usuario of usuarios; let i = index">
-                        <th class="align-middle">{{ usuario.idusuario }}</th>
+                        <th class="align-middle">|{{ usuario.idusuario }}</th>
                         <td class="align-middle">{{ usuario.nombres }}</td>
                         <td class="align-middle">{{ usuario.apellidos }}</td>
                         <td class="align-middle">{{ usuario.dni }}</td>
@@ -73,12 +139,12 @@
 </div>
 
 
-
+<!--
 <input type="checkbox" class="check">
 <input type="checkbox" class="check">
 <input type="checkbox" class="check">
 <input type="checkbox" class="check">
-
+-->
 
 
 

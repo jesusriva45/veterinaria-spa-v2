@@ -1,11 +1,23 @@
-import { Component, OnInit, Output, ViewChild } from "@angular/core";
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
 import { Usuario } from "../../models/usuario";
 import { ModalFormComponent } from "../usuarios/modal-form/modal-form.component";
 
 import { UsuarioService } from "../../services/usuario.service";
 
 //import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { MDBModalRef, MDBModalService } from "angular-bootstrap-md";
+import {
+  MDBModalRef,
+  MDBModalService,
+  MdbTableDirective,
+  MdbTablePaginationComponent,
+} from "angular-bootstrap-md";
 
 import swal from "sweetalert2";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
@@ -55,7 +67,8 @@ export class UsuariosComponent implements OnInit {
     private usuarioService: UsuarioService,
     private modalService: MDBModalService,
     public router: Router,
-    private _authService: AuthService //private modalService: NgbModal
+    private _authService: AuthService,
+    private cdRef: ChangeDetectorRef //private modalService: NgbModal
   ) {}
 
   authService = this._authService;
@@ -346,8 +359,63 @@ export class UsuariosComponent implements OnInit {
   //habil: boolean = true;
 
   listarUsuarios() {
-    this.usuarioService
-      .getUsuarios()
-      .subscribe((usuarios) => (this.usuarios = usuarios));
+    this.usuarioService.getUsuarios().subscribe((usuarios) => {
+      this.usuarios = usuarios;
+      this.data(usuarios);
+    });
+  }
+
+  //---------------------- DATA TABLE ---------------------------------
+  @ViewChild(MdbTablePaginationComponent, { static: true })
+  mdbTablePagination: MdbTablePaginationComponent;
+  @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
+  elements: any = [];
+  previous: any = [];
+  headElements = ["ID", "First", "Last", "Handle"];
+  searchText: string = "";
+
+  @HostListener("input") oninput() {
+    this.searchItems();
+  }
+  searchItems() {
+    const prev = this.mdbTable.getDataSource();
+    if (!this.searchText) {
+      this.mdbTable.setDataSource(this.previous);
+      this.elements = this.mdbTable.getDataSource();
+    }
+    if (this.searchText) {
+      this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
+      this.mdbTable.setDataSource(prev);
+    }
+  }
+
+  ngAfterViewInit() {
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(10);
+
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+    this.cdRef.detectChanges();
+  }
+
+  data(usuarios) {
+    for (let user of usuarios) {
+      this.elements.push({
+        idusuario: user.idusuario,
+        nombres: user.nombres,
+        apellidos: user.apellidos,
+        dni: user.dni,
+        telefono: user.telefono,
+        correo: user.correo,
+        fechaNac: user.fechaNac,
+        direccion: user.direccion,
+        departamento: user.ubigeo.departamento,
+        provincia: user.ubigeo.provincia,
+        distrito: user.ubigeo.distrito,
+      });
+    }
+
+    this.mdbTable.setDataSource(this.elements);
+    this.elements = this.mdbTable.getDataSource();
+    this.previous = this.mdbTable.getDataSource();
   }
 }

@@ -6,6 +6,8 @@ import {
 } from "@angular/core";
 import { MDBBootstrapModule } from "angular-bootstrap-md";
 
+import { WavesModule, TableModule } from "angular-bootstrap-md";
+
 import { AngularEditorModule } from "@kolkov/angular-editor";
 
 //import { ScrollingModule } from "@angular/cdk/scrolling";
@@ -95,6 +97,8 @@ import { CarritoPedidoComponent } from "./components/pedido/carrito-pedido/carri
     //ScrollingModule,
     AngularEditorModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: "never" }),
+    TableModule,
+    WavesModule,
   ],
   providers: [NgModule, AuthService],
   bootstrap: [AppComponent],
