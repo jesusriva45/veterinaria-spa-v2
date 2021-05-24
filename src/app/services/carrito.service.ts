@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { CarritoProducto } from "../models/carrito-producto";
 import { iif, Subject } from "rxjs";
-import { DetallePedidoProducto } from '../models/detalle-pedido-producto';
-import { DetallePedidoServicio } from '../models/detalle-pedido-servicio';
+import { DetallePedidoProducto } from "../models/detalle-pedido-producto";
+import { DetallePedidoServicio } from "../models/detalle-pedido-servicio";
 
 @Injectable({
   providedIn: "root",
@@ -11,12 +11,11 @@ export class CarritoService {
   cartItems: DetallePedidoProducto[] = [];
   cartItemsServicio: DetallePedidoServicio[] = [];
 
-
   //declaracion de Observables para obtener el precio y cantidad total del CarritoProducto de Compras
   precioTotal: Subject<number> = new Subject<number>();
   cantidadTotal: Subject<number> = new Subject<number>();
 
-  constructor() { }
+  constructor() {}
 
   agregarItem(theCartItem: DetallePedidoProducto) {
     // valores para verificar si existe un item(producto) en el carro
@@ -28,7 +27,7 @@ export class CarritoService {
       existingCartItem = this.cartItems.find(
         (itemTemporal) =>
           itemTemporal.producto.idproducto === theCartItem.producto.idproducto
-      )
+      );
       itemExistente = existingCartItem != undefined;
     }
 
@@ -55,7 +54,6 @@ export class CarritoService {
     }
   }
 
-
   agregarItemServicio(theCartItem: DetallePedidoServicio) {
     // valores para verificar si existe un item(producto) en el carro
     let itemExistente: boolean = false;
@@ -65,7 +63,7 @@ export class CarritoService {
       existingCartItem = this.cartItemsServicio.find(
         (itemTemporal) =>
           itemTemporal.servicio.idservicio === theCartItem.servicio.idservicio
-      )
+      );
       itemExistente = existingCartItem != undefined;
     }
     if (itemExistente) {
@@ -78,7 +76,6 @@ export class CarritoService {
     //calcular el precio total del carrito y la cantidad total
     this.calcularPrecioPorCantidadTotal();
   }
-
 
   removeItemServicio(item: CarritoProducto) {
     const idItem = this.cartItems.findIndex(
@@ -109,7 +106,6 @@ export class CarritoService {
         precioTotal += itemActual.cantidad * itemActual.precio;
         cantidadTotal += itemActual.cantidad;
       }
-
     }
     if (this.cartItems.length > 0) {
       for (let itemActual of this.cartItems) {
@@ -118,7 +114,6 @@ export class CarritoService {
       }
     }
 
-
     // publish the new values ... all subscribers will receive the new data
     this.precioTotal.next(precioTotal);
     this.cantidadTotal.next(cantidadTotal);
@@ -126,7 +121,6 @@ export class CarritoService {
     // log cart data just for debugging purposes
     this.logCartData(precioTotal, cantidadTotal);
   }
-
 
   logCartData(totalPriceValue: number, totalQuantityValue: number) {
     console.log("Contents of the cart");
