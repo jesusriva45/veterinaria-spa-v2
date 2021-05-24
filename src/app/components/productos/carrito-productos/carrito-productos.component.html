@@ -48,13 +48,18 @@
                     <p>Cantidad total: {{ cantidadTotal }}</p>
                     <p>Envio gratis</p>
                     <p>Precio Total: S/.{{ precioTotal | number}}</p>
+                    <br>
+                    <br>
+                    <button type="button" class="ml-auto" mdbBtn color="success" (click)="insertar()" mdbWavesEffect>Confirmar pedido</button>
                 </td>
             </tr>
         </tfoot>
     </table>
+
 </div>
 
-<button (click)="insertar()">registrar pedido</button>
+
+
 
 
 

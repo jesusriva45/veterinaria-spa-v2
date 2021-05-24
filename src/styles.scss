@@ -8,7 +8,17 @@
 //@import url(app/components/usuarios/usuarios.component.scss);
 //@import url(app/components/header/header.component.scss);
 //@import url(app/components/login/login.component.scss);
-@import url(app/components/usuarios/modal-form/modal-form.component.scss);
+@import "../node_modules/font-awesome/scss/font-awesome.scss";
+
+/*
+@import "../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "../node_modules/@fortawesome/fontawesome-free/scss/brands.scss";
+@import "../node_modules/@fortawesome/fontawesome-free/scss/regular.scss";
+@import "../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+@import "../node_modules/@fortawesome/fontawesome-free/scss/v4-shims.scss";*/
+
+//@import "app/components/pedido/detalle-pedido/detalle-pedido.component.scss";
+//node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss
 //@import "~mdb-angular-ui-kit/assets/scss/mdb.scss";
 html {
     position: relative;
