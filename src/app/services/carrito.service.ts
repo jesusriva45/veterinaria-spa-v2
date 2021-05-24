@@ -54,11 +54,23 @@ export class CarritoService {
     }
   }
 
+  diminuirCantidad(item: CarritoProducto) {
+    item.cantidad--;
+
+    if (item.cantidad === 0) {
+      this.removeItem(item);
+    } else {
+      this.calcularPrecioPorCantidadTotal();
+    }
+  }
+
+  //------------ SERIVICIO -----------------------
+
   agregarItemServicio(theCartItem: DetallePedidoServicio) {
     // valores para verificar si existe un item(producto) en el carro
     let itemExistente: boolean = false;
     let existingCartItem: DetallePedidoServicio = undefined;
-    if (this.cartItems.length > 0) {
+    if (this.cartItemsServicio.length > 0) {
       // find the item in the cart based on item id
       existingCartItem = this.cartItemsServicio.find(
         (itemTemporal) =>
@@ -77,25 +89,45 @@ export class CarritoService {
     this.calcularPrecioPorCantidadTotal();
   }
 
-  removeItemServicio(item: CarritoProducto) {
-    const idItem = this.cartItems.findIndex(
-      (tempItem) => tempItem.producto.idproducto == item.producto.idproducto
-    );
-    if (idItem > -1) {
-      this.cartItems.splice(idItem, 1);
-      this.calcularPrecioPorCantidadTotal();
-    }
-  }
-
-  diminuirCantidad(item: CarritoProducto) {
+  diminuirCantidadServicio(item: DetallePedidoServicio) {
     item.cantidad--;
 
     if (item.cantidad === 0) {
-      this.removeItem(item);
+      this.removeItemServicio(item);
     } else {
       this.calcularPrecioPorCantidadTotal();
     }
   }
+
+  removeItemServicio(item: any) {
+    const idItem = this.cartItemsServicio.findIndex(
+      (tempItem) => tempItem.servicio.idservicio == item.servicio.idservicio
+    );
+    if (idItem > -1) {
+      this.cartItemsServicio.splice(idItem, 1);
+      this.calcularPrecioPorCantidadTotal();
+    }
+  }
+
+  addFecha(theCartItem: DetallePedidoServicio) {
+    // valores para verificar si existe un item(producto) en el carro
+    let itemExistente: boolean = false;
+    let existingCartItem: DetallePedidoServicio = undefined;
+    if (this.cartItemsServicio.length > 0) {
+      // find the item in the cart based on item id
+      existingCartItem = this.cartItemsServicio.find(
+        (itemTemporal) =>
+          itemTemporal.servicio.idservicio === theCartItem.servicio.idservicio
+      );
+      itemExistente = existingCartItem != undefined;
+    }
+    if (itemExistente) {
+      existingCartItem.fecha_atencion = theCartItem.fecha_atencion;
+      console.log(existingCartItem.fecha_atencion);
+    }
+  }
+
+  //----------------------------------------------
 
   calcularPrecioPorCantidadTotal() {
     let precioTotal: number = 0;
@@ -129,6 +161,10 @@ export class CarritoService {
       console.log(
         `name: ${tempCartItem.producto.nombre}, quantity=${tempCartItem.cantidad}, unitPrice=${tempCartItem.precio}, subTotalPrice=${subTotalPrice}`
       );
+    }
+
+    for (let tempCartItem of this.cartItemsServicio) {
+      console.log(`name: ${tempCartItem.fecha_atencion}`);
     }
 
     console.log(

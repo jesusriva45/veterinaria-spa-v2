@@ -50,10 +50,10 @@ import { AuthService } from "./services/auth.service";
 
 import { AuthGuard } from "./services/guards/auth.guard";
 import { RoleGuard } from "./services/guards/role.guard";
-import { EstadoCarritoComponent } from './components/productos/estado-carrito/estado-carrito.component';
-import { PedidoComponent } from './components/pedido/pedido.component';
-import { DetallePedidoComponent } from './components/pedido/detalle-pedido/detalle-pedido.component';
-import { CarritoPedidoComponent } from './components/pedido/carrito-pedido/carrito-pedido.component';
+import { EstadoCarritoComponent } from "./components/productos/estado-carrito/estado-carrito.component";
+import { PedidoComponent } from "./components/pedido/pedido.component";
+import { DetallePedidoComponent } from "./components/pedido/detalle-pedido/detalle-pedido.component";
+import { CarritoPedidoComponent } from "./components/pedido/carrito-pedido/carrito-pedido.component";
 
 @NgModule({
   declarations: [
@@ -79,7 +79,7 @@ import { CarritoPedidoComponent } from './components/pedido/carrito-pedido/carri
     EstadoCarritoComponent,
     PedidoComponent,
     DetallePedidoComponent,
-    CarritoPedidoComponent
+    CarritoPedidoComponent,
   ],
   imports: [
     BrowserModule,

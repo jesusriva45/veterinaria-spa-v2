@@ -9,6 +9,33 @@
 //@import url(app/components/header/header.component.scss);
 //@import url(app/components/login/login.component.scss);
 @import "../node_modules/font-awesome/scss/font-awesome.scss";
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat right center;
+    background-origin: content-box, border-box;
+}
+
+.collapsible {
+    overflow: hidden;
+}
+
+hr {
+    height: 2px;
+    background-color: gray;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    //transition: background-color 9999s ease-in-out 9999s;
+    transition: color 9999s ease-out, background-color 9999s ease-out;
+}
+
 
 /*
 @import "../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";

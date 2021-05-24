@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 import { Router, ActivatedRoute } from "@angular/router";
 import { ProductoService } from "../../../services/producto.service";
@@ -17,12 +17,12 @@ import { AuthService } from "src/app/services/auth.service";
 import { DetallePedidoProducto } from "src/app/models/detalle-pedido-producto";
 import { Pedido } from "src/app/models/pedido";
 import { ClienteService } from "src/app/services/cliente.service";
-import { Servicio } from '../../../models/servicio';
+import { Servicio } from "../../../models/servicio";
 
 @Component({
-  selector: 'app-carrito-pedido',
-  templateUrl: './carrito-pedido.component.html',
-  styleUrls: ['./carrito-pedido.component.scss']
+  selector: "app-carrito-pedido",
+  templateUrl: "./carrito-pedido.component.html",
+  styleUrls: ["./carrito-pedido.component.scss"],
 })
 export class CarritoPedidoComponent implements OnInit {
   producto: Producto = new Producto();
@@ -35,7 +35,7 @@ export class CarritoPedidoComponent implements OnInit {
   precioTotal: number = 0;
   cantidadTotal: number = 0;
   //----------------------
-
+  myImgUrl: string;
   constructor(
     private productoService: ProductoService,
     private carritoService: CarritoService,
@@ -45,7 +45,7 @@ export class CarritoPedidoComponent implements OnInit {
     private pedidoService: PedidoService,
     private authService: AuthService
   ) {
-
+    this.myImgUrl = "../../../../assets/img/no-image.png";
   }
 
   ngOnInit(): void {
@@ -56,10 +56,11 @@ export class CarritoPedidoComponent implements OnInit {
   listarItems() {
     // get a handle to the cart items
     this.cartItems.detallesProducto = this.carritoService.cartItems;
-    this.cartItems.detallePedidoServicio = this.carritoService.cartItemsServicio;
-    console.log(this.carritoService.cartItems);
+    this.cartItems.detallePedidoServicio =
+      this.carritoService.cartItemsServicio;
+    //console.log(this.carritoService.cartItems);
 
-    console.log(this.cartItems.detallesProducto);
+    //console.log(this.cartItems.detallesProducto);
 
     // precio total de carrito por item
     this.carritoService.precioTotal.subscribe(
@@ -81,6 +82,19 @@ export class CarritoPedidoComponent implements OnInit {
   removeItem(item: CarritoProducto) {
     this.carritoService.removeItem(item);
   }
+
+  //--------------- AGREGAR-DISMINUIR-REMOVER SERVICIO -----------------
+  incrementCantidadServicio(item: DetallePedidoServicio) {
+    this.carritoService.agregarItemServicio(item);
+  }
+  decrementCantidadServicio(item: DetallePedidoServicio) {
+    this.carritoService.diminuirCantidadServicio(item);
+  }
+  removeItemServicio(item: DetallePedidoServicio) {
+    this.carritoService.removeItemServicio(item);
+  }
+  //------------------------------------------
+
   pedido: Pedido = new Pedido();
   //arr: Array<DetallePedidoProducto>;
   insertar() {
@@ -88,17 +102,41 @@ export class CarritoPedidoComponent implements OnInit {
       .getUsuario(this.authService.usuario.idusuario)
       .subscribe((usuario) => {
         this.pedido.usuario = usuario;
-        console.log(this.pedido.usuario);
+
         this.pedido.detallesProducto = this.cartItems.detallesProducto;
-        console.log(this.pedido.detallesProducto);
-        this.pedido.idpedido = null;
-        console.log(this.pedido.idpedido);
+
+        //console.log(this.pedido.detallesProducto);
+
+        this.pedido.detallePedidoServicio =
+          this.cartItems.detallePedidoServicio;
+
         this.pedidoService.insert(this.pedido).subscribe((resp) => {
-          console.log(resp);
+          //console.log(resp);
         });
       });
     // this.pedido.usuario = this.authService.usuario;
   }
+
+  item: DetallePedidoServicio;
+
+  agregarFecha(index: any, item: DetallePedidoServicio) {
+    console.log(index, item);
+    //this.item = item;
+    this.carritoService.addFecha(item);
+    return item;
+    //this.carritoService.addFecha(item);
+  }
+
+  fecha(item: DetallePedidoServicio) {
+    //item.fecha_atencion = this.fechaServicio;
+
+    this.cartItems.detallePedidoServicio.forEach((e) => {
+      console.log(e.fecha_atencion);
+      item = e;
+      this.carritoService.addFecha(e);
+    });
+  }
+
   cargarProducto(): void {
     this.activateRoute.params.subscribe((params) => {
       let id = params["id"];
