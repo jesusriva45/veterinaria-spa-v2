@@ -21,7 +21,7 @@ export class ClienteService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   //----------------------------------

@@ -8,12 +8,15 @@ import { Cliente } from "../models/cliente";
   providedIn: "root",
 })
 export class AuthService implements OnInit {
-  private _usuario: Usuario;
-  private _token: string;
-  private _cliente: Cliente;
+  public _usuario: Usuario;
+  public _token: string;
+  public _cliente: Cliente;
 
   constructor(private http: HttpClient) {}
-
+  /*C:\CIBERTEC\CICLO VI\PROYECTO INTEGRADOR\Proyecto Integrador - Project V.3.0 - 4to avance\api-rest-Mariano\spring-veterinaria-api-rest
+  
+  java -jar .\target\veterinaria-api-rest-0.0.1-SNAPSHOT.jar
+  .\mvnw.cmd clean package*/
   ngOnInit(): void {}
 
   public get usuario(): Usuario {

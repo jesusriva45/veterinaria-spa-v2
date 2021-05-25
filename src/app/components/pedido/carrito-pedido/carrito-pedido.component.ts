@@ -37,13 +37,13 @@ export class CarritoPedidoComponent implements OnInit {
   //----------------------
   myImgUrl: string;
   constructor(
-    private productoService: ProductoService,
-    private carritoService: CarritoService,
-    private clienteService: ClienteService,
-    private router: Router,
-    private activateRoute: ActivatedRoute,
-    private pedidoService: PedidoService,
-    private authService: AuthService
+    public productoService: ProductoService,
+    public carritoService: CarritoService,
+    public clienteService: ClienteService,
+    public router: Router,
+    public activateRoute: ActivatedRoute,
+    public pedidoService: PedidoService,
+    public authService: AuthService
   ) {
     this.myImgUrl = "../../../../assets/img/no-image.png";
   }

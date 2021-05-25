@@ -22,7 +22,7 @@ export class MascotaService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   private agregarAuthorizationHeader() {

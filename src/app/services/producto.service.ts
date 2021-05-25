@@ -26,7 +26,7 @@ export class ProductoService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   //------------AUTENTICACION DE ROL DE USUARIO -----------------

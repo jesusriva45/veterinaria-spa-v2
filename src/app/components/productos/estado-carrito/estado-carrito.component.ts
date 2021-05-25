@@ -10,7 +10,7 @@ export class EstadoCarritoComponent implements OnInit {
   precioTotal: number = 0.0;
   cantidadTotal: number = 0;
 
-  constructor(private carritoService: CarritoService) {}
+  constructor(public carritoService: CarritoService) {}
 
   ngOnInit(): void {
     this.updateEstadoCarrito();

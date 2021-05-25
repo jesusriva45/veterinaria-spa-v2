@@ -22,7 +22,7 @@ export class ServicioService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   //------------ PERMISOS DE USUARIO -----------------

@@ -23,7 +23,7 @@ export class UsuarioService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   //@Output() error;

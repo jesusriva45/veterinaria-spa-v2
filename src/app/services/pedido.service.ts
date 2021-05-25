@@ -22,7 +22,7 @@ export class PedidoService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   //----------------------------------

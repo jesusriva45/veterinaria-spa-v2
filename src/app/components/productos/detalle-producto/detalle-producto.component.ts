@@ -21,10 +21,10 @@ export class DetalleProductoComponent implements OnInit {
   imgNotFound: string;
 
   constructor(
-    private productoService: ProductoService,
-    private router: Router,
-    private activateRoute: ActivatedRoute,
-    private carritoService: CarritoService
+    public productoService: ProductoService,
+    public router: Router,
+    public activateRoute: ActivatedRoute,
+    public carritoService: CarritoService
   ) {
     this.imgNotFound = "../../../../assets/img/no-image.png";
   }
@@ -40,7 +40,7 @@ export class DetalleProductoComponent implements OnInit {
       if (id) {
         this.productoService.getProducto(id).subscribe((producto) => {
           this.producto = producto;
-          this.descripcion = this.producto.descripcion;
+          this.descripcion = `${this.producto.descripcion}`;
           this.nomMarca = this.producto.marca.nombre;
           this.classAdd();
         });

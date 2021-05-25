@@ -41,9 +41,9 @@ export class DetallePedidoComponent implements OnInit, AfterViewInit {
   constructor(
     public pedidoService: PedidoService,
     public clienteService: ClienteService,
-    private activateRoute: ActivatedRoute,
-    private trackingService: TrackingService,
-    private cdRef: ChangeDetectorRef
+    public activateRoute: ActivatedRoute,
+    public trackingService: TrackingService,
+    public cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {

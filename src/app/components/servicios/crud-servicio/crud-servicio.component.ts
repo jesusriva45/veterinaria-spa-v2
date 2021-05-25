@@ -45,8 +45,8 @@ export class CrudServicioComponent implements OnInit {
   myImgUrl: string;
   //---------------------------------------------------------
   constructor(
-    private servicioService: ServicioService,
-    private router: Router,
+    public servicioService: ServicioService,
+    public router: Router,
     public _authService: AuthService // private modalService: NgbModal
   ) {
     this.myImgUrl = "../../../../assets/img/no-image.png";

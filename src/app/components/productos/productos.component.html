@@ -1,30 +1,42 @@
-<div class="row col-12 p-5">
-    <!-- Card -->
-    <mdb-card *ngFor="let producto of productos; let i = index" class="col-2 m-2">
+<div class="row col-12">
 
-        <div class="view rgba-white-slight waves-light" [routerLink]="['/productos/detalle-producto', producto.idproducto]">
-            <!-- Card img -->
-            <img class="img-fluid ml-auto mr-auto" [src]="producto.foto1" alt="Card image cap">
+
+    <app-sidebar></app-sidebar>
+
+
+    <div class="row col-10 d-flex ml-auto mr-auto">
+
+
+        <div class="row col-12 ml-auto mr-auto justify-content-center">
+            <!-- Card -->
+            <mdb-card *ngFor="let producto of productos; let i = index" class="col-xl-3 col-lg-3 col-md-8 col-sm-12 col-xs-12 m-2" style="height: 500px">
+
+                <div class="view rgba-white-slight waves-light" [routerLink]="['/productos/detalle-producto', producto.idproducto]">
+                    <!-- Card img -->
+                    <img class="img-fluid ml-auto mr-auto" [src]="producto.foto1" alt="Card image cap">
+                </div>
+                <!--Card content-->
+                <mdb-card-body [routerLink]="['/productos/detalle-producto', producto.idproducto]">
+                    <!--Title-->
+                    <mdb-card-title>
+                        <h3>{{ producto.nombre }} - {{ producto.marca.nombre }}</h3>
+                    </mdb-card-title>
+                    <!--Text-->
+                    <mdb-card-text>
+                        <h1 class="card-text text-center">S/.{{ producto.precio}}</h1>
+                        <p class="card-text" style="text-align: justify;" [innerHTML]="producto.descripcion"></p>
+                    </mdb-card-text>
+
+                </mdb-card-body>
+
+                <button (click)="addToCart(producto)" class="btn-card" mdbBtn color="primary" mdbWavesEffect>Agregar</button>
+            </mdb-card>
+            <!-- Card -->
+
+
         </div>
-        <!--Card content-->
-        <mdb-card-body [routerLink]="['/productos/detalle-producto', producto.idproducto]">
-            <!--Title-->
-            <mdb-card-title>
-                <h3>{{ producto.nombre }} - {{ producto.marca.nombre }}</h3>
-            </mdb-card-title>
-            <!--Text-->
-            <mdb-card-text>
-                <h1 class="card-text text-center">S/.{{ producto.precio}}</h1>
-                <p class="card-text" style="text-align: justify;" [innerHTML]="producto.descripcion"></p>
-            </mdb-card-text>
-
-        </mdb-card-body>
-
-        <button (click)="addToCart(producto)" class="btn-card" mdbBtn color="primary" mdbWavesEffect>Agregar</button>
-    </mdb-card>
-    <!-- Card -->
+    </div>
 </div>
-
 
 <!--div class="respmenu">
     <input type="checkbox">

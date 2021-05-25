@@ -56,7 +56,7 @@ export class RegistroMascotaComponent implements OnInit {
 
   constructor(
     private mascotasService: MascotaService,
-    private router: Router,
+    public router: Router,
     public _authService: AuthService //private modalService: NgbModal
   ) {
     this.myImgUrl = "../../../../assets/img/no-image.png";

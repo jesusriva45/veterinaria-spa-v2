@@ -64,11 +64,11 @@ export class UsuariosComponent implements OnInit {
   input = document.getElementsByClassName("form-input");
 
   constructor(
-    private usuarioService: UsuarioService,
-    private modalService: MDBModalService,
+    public usuarioService: UsuarioService,
+    public modalService: MDBModalService,
     public router: Router,
-    private _authService: AuthService,
-    private cdRef: ChangeDetectorRef //private modalService: NgbModal
+    public _authService: AuthService,
+    public cdRef: ChangeDetectorRef //private modalService: NgbModal
   ) {}
 
   authService = this._authService;

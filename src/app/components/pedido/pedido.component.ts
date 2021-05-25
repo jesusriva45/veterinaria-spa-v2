@@ -37,7 +37,7 @@ export class PedidoComponent implements OnInit {
     public pedidoService: PedidoService,
     public clienteService: ClienteService,
     public authService: AuthService,
-    private cdRef: ChangeDetectorRef
+    public cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {

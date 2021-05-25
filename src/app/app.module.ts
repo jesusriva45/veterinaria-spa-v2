@@ -56,6 +56,8 @@ import { EstadoCarritoComponent } from "./components/productos/estado-carrito/es
 import { PedidoComponent } from "./components/pedido/pedido.component";
 import { DetallePedidoComponent } from "./components/pedido/detalle-pedido/detalle-pedido.component";
 import { CarritoPedidoComponent } from "./components/pedido/carrito-pedido/carrito-pedido.component";
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { DetalleServicioComponent } from './components/servicios/detalle-servicio/detalle-servicio.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,8 @@ import { CarritoPedidoComponent } from "./components/pedido/carrito-pedido/carri
     PedidoComponent,
     DetallePedidoComponent,
     CarritoPedidoComponent,
+    SidebarComponent,
+    DetalleServicioComponent,
   ],
   imports: [
     BrowserModule,

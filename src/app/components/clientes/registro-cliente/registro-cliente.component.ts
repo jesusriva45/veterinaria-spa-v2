@@ -53,7 +53,7 @@ export class RegistroClienteComponent implements OnInit {
     public clienteService: ClienteService,
     public ubigeoService: UbigeoService,
     public router: Router,
-    private _authService: AuthService
+    public _authService: AuthService
   ) {
     this.usuario = new Usuario();
   }

@@ -12,7 +12,7 @@ import swal from "sweetalert2";
 export class LoginComponent implements OnInit {
   titulo: string = "Por favor inicia sesión";
   usuario: Usuario;
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, public router: Router) {
     this.usuario = new Usuario();
   }
 

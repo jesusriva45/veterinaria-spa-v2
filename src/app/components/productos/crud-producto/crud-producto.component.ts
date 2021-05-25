@@ -102,8 +102,8 @@ export class CrudProductoComponent implements OnInit {
 
   //---------------------------------------------------------
   constructor(
-    private productoService: ProductoService,
-    private router: Router,
+    public productoService: ProductoService,
+    public router: Router,
     public _authService: AuthService //private modalService: NgbModal
   ) {
     this.myImgUrl = "../../../../assets/img/no-image.png";

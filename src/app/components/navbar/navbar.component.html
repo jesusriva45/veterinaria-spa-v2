@@ -23,16 +23,10 @@
         <!-- Links -->
 
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown" dropdown>
-                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-                Tienda <span class="caret"></span></a>
-                <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/productos"> Productos</a>
-                    <div class="divider dropdown-divider"></div>
-                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/servicios"> Servicios</a>
-                </div>
-            </li>
 
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/tienda/productos">Tienda</a>
+            </li>
             <li class="nav-item" *ngIf="(authService.isAuthenticated())" routerLinkActive="active">
                 <a class="nav-link waves-light" mdbWavesEffect routerLink="/pedidos">Mis Pedidos</a>
             </li>

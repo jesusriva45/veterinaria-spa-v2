@@ -5,19 +5,13 @@
             <mdb-carousel class="carousel slide carousel-fade p-0 m-0" [animation]="'fade'">
                 <mdb-carousel-item>
                     <div class="view w-100">
-                        <img class="d-block w-100" [attr.src]="(producto.foto1 != null || producto.foto1 != undefined) ? producto.foto1 : imgNotFound" alt="First slide">
+                        <img class="d-block w-100" [attr.src]="(servicio.foto1 != null || servicio.foto1 != undefined) ? servicio.foto1 : imgNotFound" alt="First slide">
                     </div>
 
                 </mdb-carousel-item>
                 <mdb-carousel-item>
                     <div class="view w-100">
-                        <img class="d-block w-100" [attr.src]="(producto.foto2 != null || producto.foto2 != undefined) ? producto.foto2 : imgNotFound" alt="Second slide">
-                    </div>
-
-                </mdb-carousel-item>
-                <mdb-carousel-item>
-                    <div class="view w-100">
-                        <img class="d-block w-100" [attr.src]="(producto.foto3 != null || producto.foto3 != undefined) ? producto.foto3 : imgNotFound" alt="Third slide">
+                        <img class="d-block w-100" [attr.src]="(servicio.foto2 != null || servicio.foto2 != undefined) ? servicio.foto2 : imgNotFound" alt="Second slide">
                     </div>
 
                 </mdb-carousel-item>
@@ -33,8 +27,7 @@
 
     <div class="row col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 d-flex m-4">
         <div class="col-12">
-            <h2>{{ producto.nombre }}</h2>
-            <h2 [innerHTML]="nomMarca"></h2>
+            <h2>{{ servicio.nombre }}</h2>
             <hr>
             <h3>Indicaciones</h3>
             <div [innerHTML]="descripcion"></div>
@@ -46,14 +39,14 @@
             <hr>
             <!-- Precio total -->
             <h5 class="text-right">Cantidad : <span id="total"></span> 1</h5>
-            <h5 class="text-right">Total: <span id="total"></span>S/.{{ producto.precio }}</h5>
+            <h5 class="text-right">Total: <span id="total"></span>S/.{{ servicio.precio }}</h5>
             <button id="btn-agregar" (click)="addToCart()" mdbBtn color="primary" mdbWavesEffect>Agregar a la bolsa</button>
         </div>
     </div>
 </div>
 
 <div (click)="acordionDescripcion()" class="col-10 mr-auto ml-auto form-control d-flex bg-light">
-    <h5><i class="fas fa-edit"></i> Descripción del Producto</h5>
+    <h5><i class="fas fa-edit"></i> Descripción del Servicio</h5>
     <mdb-icon class="float-right align-middle ml-auto  mb-auto mt-auto" fas icon="plus"></mdb-icon>
 </div>
 
@@ -61,9 +54,7 @@
 
 <div class="row mr-auto ml-auto col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12 d-flex collapsible" [@enterAnimation]="descProduct">
     <div class="col-12 mb-5 mt-5">
-        <h2>Nombre: {{ producto.nombre }}</h2>
-
-        <h2>Marca: {{nomMarca}}</h2>
+        <h2>Nombre: {{ servicio.nombre }}</h2>
         <hr>
         <h3>Descripción</h3>
         <div [innerHTML]="descripcion"></div>
@@ -73,14 +64,14 @@
 
 
 <div (click)="acordionEspecificaciones()" class="col-10 mr-auto ml-auto form-control d-flex bg-light">
-    <h5><i class="fas fa-edit"></i> Especificaciones del Producto</h5>
+    <h5><i class="fas fa-edit"></i>Horario de atención</h5>
     <mdb-icon class="float-right align-middle ml-auto  mb-auto mt-auto" fas icon="plus"></mdb-icon>
 </div>
 
 <div class="row mr-auto ml-auto col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12 d-flex collapsible" [@enterAnimation]="especProduct">
     <div class="col-12 mt-5">
-        <h2>{{ producto.nombre }}</h2>
-        <h2 [innerHTML]="nomMarca"></h2>
+        <h2>{{ servicio.nombre }}</h2>
+
         <hr>
         <h3>Indicaciones</h3>
         <div [innerHTML]="descripcion"></div>
