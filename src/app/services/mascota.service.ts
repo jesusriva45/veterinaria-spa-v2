@@ -9,11 +9,14 @@ import { Tipomascota } from "../models/tipomascota";
 import { AuthService } from "./auth.service";
 import swal from "sweetalert2";
 import { Usuario } from "../models/usuario";
+
+import { URL_BACKEND } from "../config/config";
+
 @Injectable({
   providedIn: "root",
 })
 export class MascotaService {
-  private urlEndPoint: string = "http://localhost:8090/api/mascotas";
+  private urlEndPoint: string = URL_BACKEND + "/api/mascotas";
 
   private httpHeaders = new HttpHeaders({
     "Content-Type": "application/json",

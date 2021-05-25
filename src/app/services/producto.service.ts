@@ -11,13 +11,15 @@ import { Marca } from "../models/marca";
 import { Router } from "@angular/router";
 import { AuthService } from "./auth.service";
 
+import { URL_BACKEND } from "../config/config";
+
 @Injectable({
   providedIn: "root",
 })
 export class ProductoService {
-  private urlEndPoint: string = "http://localhost:8090/api/productos";
+  private urlEndPoint: string = URL_BACKEND + "/api/productos";
 
-  private urlEndPoint2: string = "http://localhost:8090/api/productosPrecio";
+  private urlEndPoint2: string = URL_BACKEND + "/api/productosPrecio";
 
   private httpHeaders = new HttpHeaders({
     "Content-Type": "application/json",

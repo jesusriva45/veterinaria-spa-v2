@@ -7,13 +7,15 @@ import { SerCategoria } from "../models/ser-categoria";
 import { Servicio } from "../models/servicio";
 import { AuthService } from "./auth.service";
 import swal from "sweetalert2";
+
+import { URL_BACKEND } from "../config/config";
 @Injectable({
   providedIn: "root",
 })
 export class ServicioService {
-  private urlEndPoint: string = "http://localhost:8090/servicio/servicios";
+  private urlEndPoint: string = URL_BACKEND + "/servicio/servicios";
 
-  private urlEndPoint2: string = "http://localhost:8090/api/productosPrecio";
+  private urlEndPoint2: string = URL_BACKEND + "/api/productosPrecio";
 
   private httpHeaders = new HttpHeaders({
     "Content-Type": "application/json",

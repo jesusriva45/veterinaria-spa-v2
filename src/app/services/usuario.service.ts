@@ -9,11 +9,13 @@ import swal from "sweetalert2";
 import { AuthService } from "./auth.service";
 import { Rol } from "../models/rol";
 import { AccesoRol } from "../models/acceso-rol";
+import { URL_BACKEND } from "../config/config";
+
 @Injectable({
   providedIn: "root",
 })
 export class UsuarioService {
-  private urlEndPoint: string = "http://localhost:8090/api/usuarios";
+  private urlEndPoint: string = URL_BACKEND + "/api/usuarios";
   //private urlEndPointUbigeo: string = "http://localhost:8090/api/ubigeo";
 
   private httpHeaders = new HttpHeaders({

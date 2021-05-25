@@ -8,11 +8,13 @@ import { Tracking } from "../models/tracking";
 import { Usuario } from "../models/usuario";
 import { AuthService } from "./auth.service";
 
+import { URL_BACKEND } from "../config/config";
+
 @Injectable({
   providedIn: "root",
 })
 export class TrackingService {
-  private urlEndPoint: string = "http://localhost:8090/api/tracking";
+  private urlEndPoint: string = URL_BACKEND + "/api/tracking";
 
   private httpHeaders = new HttpHeaders({
     "Content-Type": "application/json",

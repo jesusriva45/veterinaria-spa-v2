@@ -7,13 +7,15 @@ import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { Rol } from "../models/rol";
 import { Ubigeo } from "../models/ubigeo";
+
+import { URL_BACKEND } from "../config/config";
 @Injectable({
   providedIn: "root",
 })
 export class UbigeoService {
-  private urlEndPointDepart: string = "http://localhost:8090/api/departamentos";
-  private urlEndPointProv: string = "http://localhost:8090/api/provincias";
-  private urlEndPointDist: string = "http://localhost:8090/api/distritos";
+  private urlEndPointDepart: string = URL_BACKEND + "/api/departamentos";
+  private urlEndPointProv: string = URL_BACKEND + "/api/provincias";
+  private urlEndPointDist: string = URL_BACKEND + "/api/distritos";
 
   private httpHeaders = new HttpHeaders({
     "Content-Type": "application/json",

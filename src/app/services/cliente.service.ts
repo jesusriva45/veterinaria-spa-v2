@@ -7,12 +7,14 @@ import Swal from "sweetalert2";
 import { Usuario } from "../models/usuario";
 import { AuthService } from "./auth.service";
 
+import { URL_BACKEND } from "../config/config";
+
 @Injectable({
   providedIn: "root",
 })
 export class ClienteService {
-  private urlEndPoint: string = "http://localhost:8090/api/cliente";
-  private urlEndPointUser: string = "http://localhost:8090/api/usuarios";
+  private urlEndPoint: string = URL_BACKEND + "/api/cliente";
+  private urlEndPointUser: string = URL_BACKEND + "/api/usuarios";
 
   private httpHeaders = new HttpHeaders({
     "Content-Type": "application/json",

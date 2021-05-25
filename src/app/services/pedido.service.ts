@@ -9,11 +9,13 @@ import { catchError, map } from "rxjs/operators";
 import { Usuario } from "../models/usuario";
 import { DetallePedidoProducto } from "../models/detalle-pedido-producto";
 
+import { URL_BACKEND } from "../config/config";
+
 @Injectable({
   providedIn: "root",
 })
 export class PedidoService {
-  private urlEndPoint: string = "http://localhost:8090/api/pedidos";
+  private urlEndPoint: string = URL_BACKEND + "/api/pedidos";
 
   private httpHeaders = new HttpHeaders({
     "Content-Type": "application/json",
