@@ -20,6 +20,7 @@ import { DetallePedidoComponent } from "./components/pedido/detalle-pedido/detal
 import { AuthGuard } from "./services/guards/auth.guard";
 import { CarritoPedidoComponent } from "./components/pedido/carrito-pedido/carrito-pedido.component";
 import { DetalleServicioComponent } from "./components/servicios/detalle-servicio/detalle-servicio.component";
+import { EstadoTrackingComponent } from "./components/pedido/estado-tracking/estado-tracking.component";
 
 export const ROUTES: Routes = [
   { path: "", pathMatch: "full", redirectTo: "inicio" },
@@ -31,6 +32,7 @@ export const ROUTES: Routes = [
     canActivate: [AuthGuard],
   },
   { path: "inicio", component: InicioComponent },
+  { path: "estado-tracking", component: EstadoTrackingComponent },
   { path: "tienda/productos", component: ProductosComponent },
   {
     path: "crud-producto",

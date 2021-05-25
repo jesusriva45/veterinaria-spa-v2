@@ -165,11 +165,14 @@ export class CarritoPedidoComponent implements OnInit {
 
   registrarPedido() {
     this.pedidoService.insert(this.pedido).subscribe((resp) => {
-      let currentUrl = this.router.url;
+      this.router.navigate(["/pedidos"]);
+
+      /* let currentUrl = this.router.url;
       this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
-        this.router.navigate([currentUrl]);
-        this.carritoService.vaciarCarrito();
-      });
+        this.router.navigate([currentUrl]);*/
+
+      this.carritoService.vaciarCarrito();
+      // });
       //console.log(resp);
     });
   }

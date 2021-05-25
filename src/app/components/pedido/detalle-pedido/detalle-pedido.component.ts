@@ -23,6 +23,7 @@ import {
 } from "angular-bootstrap-md";
 import { WavesModule, TableModule, InputsModule } from "angular-bootstrap-md";
 import { FormsModule } from "@angular/forms";
+import { Estado } from "src/app/models/estado";
 //-------------------------------------------------------
 
 @Component({
@@ -34,6 +35,8 @@ export class DetallePedidoComponent implements OnInit, AfterViewInit {
   pedido: Pedido = new Pedido();
 
   tracking: Tracking = new Tracking();
+
+  estados: Estado[];
 
   detallePedidoProducto: Array<DetallePedidoProducto>;
   detallePedidoServicio: Array<DetallePedidoServicio>;
@@ -49,6 +52,7 @@ export class DetallePedidoComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.cargarPedido();
     this.estadoTracking();
+    // this.updateEstadoTracking();
   }
 
   cargarPedido(): void {
@@ -67,13 +71,13 @@ export class DetallePedidoComponent implements OnInit, AfterViewInit {
     });
   }
 
-  idPedido: number;
+  //idPedido: number;
 
   estadoTracking() {
     this.activateRoute.params.subscribe((params) => {
       let id = params["id"];
       if (id) {
-        this.trackingService.getTracking(id).subscribe((track) => {
+        this.trackingService.getTrackingPorPedido(id).subscribe((track) => {
           this.tracking = track;
 
           let processed = document.getElementById("orderProcess");

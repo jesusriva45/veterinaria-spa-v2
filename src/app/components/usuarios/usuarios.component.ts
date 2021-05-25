@@ -92,6 +92,8 @@ export class UsuariosComponent implements OnInit {
       console.log(this.status[index].descripcion);
     }
 
+    //----checkbox--------------------------
+
     for (let index = 0; index < this.box.length; index++) {
       this.box[index].addEventListener("click", () => {
         if (this.Checked != null) {
@@ -101,7 +103,7 @@ export class UsuariosComponent implements OnInit {
         this.Checked = this.box[index];
       });
     }
-
+    //----------------------
     this.getRoles();
   }
 

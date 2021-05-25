@@ -1,0 +1,69 @@
+<div class="row col-12">
+
+
+
+
+    <div class="col-8 container-fluid p-5">
+        <h4>Pedidos de clientes</h4>
+        <div class="row">
+            <div class="col-md-12 mx-auto">
+                <div class="md-form">
+                    <input type="text" [(ngModel)]="searchText" class="form-control" id="search" mdbInput />
+                    <label for="search">Buscar</label>
+                </div>
+            </div>
+        </div>
+        <table mdbTable #tableEl="mdbTable" striped="true" class="z-depth-1">
+            <thead class="text-bolder bg-secondary">
+                <tr class="text-center">
+                    <th class="text-bolder" scope="col"># Cliente</th>
+                    <th class="text-bolder" scope="col"># Tracking</th>
+                    <th class="text-bolder" scope="col"># Pedido</th>
+                    <th class="text-bolder" scope="col"># Estado</th>
+                    <th class="text-bolder" scope="col">Detalle Estado</th>
+                    <th class="text-bolder" scope="col">#</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center" *ngFor="let el of elements; let i = index">
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.pedido.usuario.nombres}}</td>
+                    <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.idtracking}}</th>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.pedido.idpedido}}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.estado.idestado}}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.estado.descripcion}}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        <input type="checkbox" (change)="eventCheck($event,el)" class="check">
+                    </td>
+
+                </tr>
+            </tbody>
+            <tfoot class="grey lighten-5 w-100">
+                <tr>
+                    <td colspan="4">
+                        <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <!--
+<input type="checkbox" class="check">
+<input type="checkbox" class="check">
+<input type="checkbox" class="check">
+<input type="checkbox" class="check">
+-->
+
+    <form class="col-4 m-auto text-center" (ngSubmit)="updateEstadoTracking()">
+
+        <select class="form-control pl-3 pr-3" [(ngModel)]="tracking.estado" name="tracking.estado" required>                        
+                <option [ngValue]=undefined selected>--- seleccione estado ---</option>
+                <option *ngFor="let esatdo of estados" [ngValue]="esatdo" > {{ esatdo.descripcion  }} </option>
+               
+    </select>
+
+        <button type="button" class="ml-auto mr-auto mt-5" mdbBtn color="primary" mdbWavesEffect>Cambiar estado</button>
+
+    </form>
+
+</div>

@@ -58,6 +58,7 @@ import { DetallePedidoComponent } from "./components/pedido/detalle-pedido/detal
 import { CarritoPedidoComponent } from "./components/pedido/carrito-pedido/carrito-pedido.component";
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { DetalleServicioComponent } from './components/servicios/detalle-servicio/detalle-servicio.component';
+import { EstadoTrackingComponent } from './components/pedido/estado-tracking/estado-tracking.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { DetalleServicioComponent } from './components/servicios/detalle-servici
     CarritoPedidoComponent,
     SidebarComponent,
     DetalleServicioComponent,
+    EstadoTrackingComponent,
   ],
   imports: [
     BrowserModule,

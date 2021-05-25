@@ -22,7 +22,12 @@
         </ul-->
         <!-- Links -->
 
+
         <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/estado-tracking"> Cambiar Estado Tracking</a>
+            </li>
 
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link waves-light" mdbWavesEffect routerLink="/tienda/productos">Tienda</a>

@@ -2,13 +2,13 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable, throwError } from "rxjs";
-import { catchError } from "rxjs/operators";
+import { catchError, map } from "rxjs/operators";
 import Swal from "sweetalert2";
 import { Tracking } from "../models/tracking";
-import { Usuario } from "../models/usuario";
 import { AuthService } from "./auth.service";
 
 import { URL_BACKEND } from "../config/config";
+import { Estado } from "../models/estado";
 
 @Injectable({
   providedIn: "root",
@@ -57,7 +57,7 @@ export class TrackingService {
     return false;
   }
 
-  getTracking(idpedido: number): Observable<Tracking> {
+  getTrackingPorPedido(idpedido: number): Observable<Tracking> {
     return this.http
       .get<Tracking>(`${this.urlEndPoint}/${idpedido}`, {
         headers: this.agregarAuthorizationHeader(),
@@ -69,5 +69,35 @@ export class TrackingService {
           }
         })
       );
+  }
+
+  updateTracking(tracking: Tracking): Observable<Tracking> {
+    return this.http
+      .put<Tracking>(`${this.urlEndPoint}/${tracking.idtracking}`, tracking, {
+        headers: this.agregarAuthorizationHeader(),
+      })
+      .pipe(
+        catchError((e) => {
+          if (this.isNoAutorizado(e)) {
+            return throwError(e);
+          }
+        })
+      );
+  }
+
+  getEstados(): Observable<Estado[]> {
+    return this.http
+      .get(`${this.urlEndPoint}/estado`, {
+        headers: this.agregarAuthorizationHeader(),
+      })
+      .pipe(map((response) => response as Estado[]));
+  }
+
+  getTacking(): Observable<Tracking[]> {
+    return this.http
+      .get(`${this.urlEndPoint}`, {
+        headers: this.agregarAuthorizationHeader(),
+      })
+      .pipe(map((response) => response as Tracking[]));
   }
 }
