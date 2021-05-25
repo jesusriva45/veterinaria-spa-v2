@@ -19,6 +19,7 @@ export class DetalleServicioComponent implements OnInit {
   descripcion: string;
 
   imgNotFound: string;
+  horarioAten: string;
 
   constructor(
     public servicioService: ServicioService,
@@ -40,6 +41,7 @@ export class DetalleServicioComponent implements OnInit {
         this.servicioService.getServicio(id).subscribe((servicio) => {
           this.servicio = servicio;
           this.descripcion = `${this.servicio.descripcion}`;
+          this.horarioAten = `${this.servicio.fecha_atencion}`;
           this.classAdd();
         });
       }

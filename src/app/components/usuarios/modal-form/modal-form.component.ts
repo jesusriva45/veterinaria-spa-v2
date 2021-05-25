@@ -86,7 +86,7 @@ export class ModalFormComponent implements OnInit {
   usernameDiferentesAlActual2 = [];
 
   ngOnInit(): void {
-    console.log(this.usuarios);
+    // console.log(this.usuarios);
     //----- -almacenar el ubigeo del usuario actual----
     this.de = this.usuario?.ubigeo?.departamento;
     this.pr = this.usuario?.ubigeo?.provincia;
@@ -106,12 +106,12 @@ export class ModalFormComponent implements OnInit {
       this.dniDiferentesAlActual.push(i.dni);
     });
 
-    console.log(this.dniDiferentesAlActual);
+    //console.log(this.dniDiferentesAlActual);
 
     this.dniDiferentesAlActual2 = this.dniDiferentesAlActual.filter(
       (dni) => dni != this.usuario.dni
     );
-    console.log(this.dniDiferentesAlActual2);
+    //console.log(this.dniDiferentesAlActual2);
   }
   //--------------------------------------------------------------
   //---------------- FILTRADO DE USERNAME -----------------------------
@@ -120,12 +120,12 @@ export class ModalFormComponent implements OnInit {
       this.usernameDiferentesAlActual.push(i.username);
     });
 
-    console.log(this.usernameDiferentesAlActual);
+    //console.log(this.usernameDiferentesAlActual);
 
     this.usernameDiferentesAlActual2 = this.usernameDiferentesAlActual.filter(
       (username) => username != this.usuario.username
     );
-    console.log(this.usernameDiferentesAlActual2);
+    // console.log(this.usernameDiferentesAlActual2);
   }
 
   //------------------------------------------
@@ -254,8 +254,8 @@ export class ModalFormComponent implements OnInit {
 
   validator(): Validators {
     if (this.usuario.direccion == "jesus@gmail.com")
-      console.log("si sale la validacion con funciones");
-    return true;
+      // console.log("si sale la validacion con funciones");
+      return true;
   }
 
   get IdUsuario() {
@@ -324,7 +324,7 @@ export class ModalFormComponent implements OnInit {
     this.submitted = false;
     this.modalRef.hide();
     this.myform.reset();
-    console.log("no cierra pero si ejecuta el metodo cerramodal");
+    //console.log("no cierra pero si ejecuta el metodo cerramodal");
     //this.usuarioService.getRegiones().subscribe((ubigeo) => (this.ubigeo = []));
   }
 
@@ -414,7 +414,7 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
         // text: 'Oops...'
       });
       this.submitted = true;
-      console.log(this.submitted);
+      // console.log(this.submitted);
       //this.myform.invalid;
     }
     if (this.myform.valid) {
@@ -438,7 +438,7 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
                 `${this.usuario.nombres} bienvenido a nuestra veterinaria`,
                 "success"
               );
-              console.log("sigue mal el insert");
+              // console.log("sigue mal el insert");
               this.insert();
               this.modalRef.hide();
             }
@@ -474,7 +474,7 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
         // text: 'Oops...'
       });
       this.submittedPass = true;
-      console.log(this.submittedPass);
+      //console.log(this.submittedPass);
       //this.myform.invalid;
     }
     if (this.myform.valid) {
@@ -546,8 +546,8 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
       },
       (err) => {
         this.errores = err.error.errors as string[];
-        console.error("Código del error desde el backend: " + err.status);
-        console.error(err.error.errors);
+        //console.error("Código del error desde el backend: " + err.status);
+        //console.error(err.error.errors);
       }
     );
   }
@@ -632,7 +632,7 @@ return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? fals
   }
 
   onChangeProv(prov) {
-    console.log(prov);
+    //console.log(prov);
 
     if (prov == null || prov == undefined) {
       this.getDistritos(null, null);

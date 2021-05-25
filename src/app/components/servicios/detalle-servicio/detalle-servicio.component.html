@@ -31,6 +31,7 @@
             <hr>
             <h3>Indicaciones</h3>
             <div [innerHTML]="descripcion"></div>
+
         </div>
         <div class="col-12">
             <h2>Carrito</h2>
@@ -70,11 +71,9 @@
 
 <div class="row mr-auto ml-auto col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12 d-flex collapsible" [@enterAnimation]="especProduct">
     <div class="col-12 mt-5">
-        <h2>{{ servicio.nombre }}</h2>
+        <hr class="p-1">
 
-        <hr>
-        <h3>Indicaciones</h3>
-        <div [innerHTML]="descripcion"></div>
+        <div [innerHTML]="horarioAten"></div>
     </div>
 </div>
 

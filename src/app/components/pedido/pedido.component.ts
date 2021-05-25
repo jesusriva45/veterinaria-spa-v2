@@ -99,7 +99,7 @@ export class PedidoComponent implements OnInit {
       ) {
         descripcion = "Productos y Servicios";
       }
-      console.log(pedido);
+      //  console.log(pedido);
       this.elements.push({
         idpedido: pedido.idpedido.toString(),
         fecha_pedido: pedido.fecha_pedido,

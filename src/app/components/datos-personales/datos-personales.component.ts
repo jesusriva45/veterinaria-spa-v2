@@ -92,7 +92,7 @@ export class DatosPersonalesComponent implements OnInit {
 
     this.usuario = this.authService.usuario;
 
-    console.log(this.authService.usuario.idusuario);
+    //console.log(this.authService.usuario.idusuario);
 
     this.getUsuarioId(this.usuario.idusuario);
 
@@ -331,7 +331,7 @@ export class DatosPersonalesComponent implements OnInit {
   submittedPass: boolean = false;
 
   formUpdatePass() {
-    console.log("que pasas");
+    // console.log("que pasas");
 
     if (this.myformPassword.invalid) {
       swal.fire({
@@ -340,7 +340,7 @@ export class DatosPersonalesComponent implements OnInit {
         // text: 'Oops...'
       });
       this.submittedPass = true;
-      console.log(this.submittedPass);
+      //console.log(this.submittedPass);
       //this.myform.invalid;
     }
     if (this.myform.valid) {
@@ -388,7 +388,7 @@ export class DatosPersonalesComponent implements OnInit {
   ///---------------------------------- VERIFICAR DATOS ----------------
 
   verificarDatos() {
-    console.log("que pasas");
+    //console.log("que pasas");
 
     if (this.myform.invalid) {
       swal.fire({
@@ -397,7 +397,7 @@ export class DatosPersonalesComponent implements OnInit {
         // text: 'Oops...'
       });
       this.submitted = true;
-      console.log(this.submitted);
+      // console.log(this.submitted);
       //this.myform.invalid;
     }
     if (this.myform.valid) {
@@ -421,7 +421,7 @@ export class DatosPersonalesComponent implements OnInit {
                 `${this.usuario.nombres} bienvenido a nuestra veterinaria`,
                 "success"
               );
-              console.log("sigue mal el insert");
+              //console.log("sigue mal el insert");
               //this.insert();
             }
           } else if (
