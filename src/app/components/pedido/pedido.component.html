@@ -1,4 +1,4 @@
-<div class="container p-5">
+<div class="container-fluid p-5">
     <h4>Mis Pedidos</h4>
     <div class="row">
         <div class="col-md-12 mx-auto">
@@ -8,19 +8,20 @@
             </div>
         </div>
     </div>
-    <table mdbTable #tableEl="mdbTable" class="z-depth-1">
-        <thead>
+    <table mdbTable #tableEl="mdbTable" striped="true" class="z-depth-1">
+        <thead class="bg-secondary text-bolder">
             <tr class="text-center">
-                <th scope="col">ID</th>
-                <th scope="col">FECHA DEL PEDIDO</th>
-
-                <th scope="col">DETALLE</th>
+                <th class="text-bolder" scope="col">ID</th>
+                <th class="text-bolder" scope="col">FECHA DEL PEDIDO</th>
+                <th class="text-bolder" scope="col">DESCRIPCIÓN</th>
+                <th class="text-bolder" scope="col">DETALLE</th>
             </tr>
         </thead>
         <tbody>
             <tr class="text-center" *ngFor="let el of elements; let i = index">
                 <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.idpedido}}</th>
                 <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.fecha_pedido | date:'dd-MM-yyyy hh:mm:ss'}}</td>
+                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.descripcion}}</td>
                 <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
                     <mdb-icon style="cursor: pointer;" mdbWavesEffect far icon="file-alt" size="2x" [routerLink]="['/pedido/detalle-pedido', el.idpedido]"></mdb-icon>
                 </td>

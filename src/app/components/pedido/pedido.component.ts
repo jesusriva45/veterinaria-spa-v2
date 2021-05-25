@@ -20,6 +20,7 @@ import {
 } from "angular-bootstrap-md";
 import { WavesModule, TableModule, InputsModule } from "angular-bootstrap-md";
 import { FormsModule } from "@angular/forms";
+import { F } from "projects/angular-bootstrap-md/src/lib/free/utils/keyboard-navigation";
 //-------------------------------------------------------
 
 @Component({
@@ -85,10 +86,24 @@ export class PedidoComponent implements OnInit {
   }
 
   data(pedidos: any) {
+    let descripcion;
     for (let pedido of pedidos) {
+      if (pedido.detallePedidoServicio.length === 0) {
+        descripcion = "Productos";
+        console.log(pedido.detallePedidoServicio);
+      } else if (pedido.detallesProducto.length === 0) {
+        descripcion = "Servicios";
+      } else if (
+        pedido.detallePedidoServicio.length != 0 &&
+        pedido.detallesProducto.length != 0
+      ) {
+        descripcion = "Productos y Servicios";
+      }
+      console.log(pedido);
       this.elements.push({
         idpedido: pedido.idpedido.toString(),
         fecha_pedido: pedido.fecha_pedido,
+        descripcion: descripcion,
       });
     }
 

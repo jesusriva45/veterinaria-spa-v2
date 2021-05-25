@@ -87,4 +87,45 @@ export class ClienteService {
         })
       );
   }
+
+  continueCompra(idusuario: number) {
+    return this.http
+      .get<Usuario>(`${this.urlEndPointUser}/${idusuario}`, {
+        headers: this.agregarAuthorizationHeader(),
+      })
+      .pipe(
+        catchError((e) => {
+          if (this.isNoAutorizadoCarrito(e)) {
+            return throwError(e);
+          }
+        })
+      );
+  }
+
+  private isNoAutorizadoCarrito(e): boolean {
+    if (e.status == 401) {
+      if (this.authService.isAuthenticated()) {
+        this.authService.logout();
+      }
+      Swal.fire(
+        "Ups... Parece que aun no eres miembro de Patazas",
+        `Para continuar con la compra debes registrarte`,
+        "warning"
+      );
+      //this.router.navigate(["/login"]);
+      return true;
+    }
+
+    if (e.status == 403) {
+      Swal.fire(
+        "Acceso denegado",
+        `Hola ${this.authService.usuario.username} no tienes acceso a este recurso!`,
+        "warning"
+      );
+      console.log(this.authService.usuario.roles);
+      this.router.navigate(["/inicio"]);
+      return true;
+    }
+    return false;
+  }
 }

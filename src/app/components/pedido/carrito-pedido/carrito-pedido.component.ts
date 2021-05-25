@@ -98,33 +98,80 @@ export class CarritoPedidoComponent implements OnInit {
   pedido: Pedido = new Pedido();
   //arr: Array<DetallePedidoProducto>;
   insertar() {
-    this.clienteService
-      .getUsuario(this.authService.usuario.idusuario)
-      .subscribe((usuario) => {
-        this.pedido.usuario = usuario;
+    if (
+      this.authService.usuario === null ||
+      this.authService.usuario === undefined
+    ) {
+      swal.fire(
+        `Escoja su fecha de atención preferida según el horario que se brinde el servicio...!`,
+        `fecha inválida`,
+        "warning"
+      );
+    } else {
+      this.clienteService
+        .continueCompra(this.authService.usuario.idusuario)
+        .subscribe((usuario) => {
+          this.pedido.usuario = usuario;
 
-        this.pedido.detallesProducto = this.cartItems.detallesProducto;
+          this.pedido.detallesProducto = this.cartItems.detallesProducto;
+          this.pedido.detallePedidoServicio =
+            this.cartItems.detallePedidoServicio;
+          //console.log(this.pedido.detallesProducto);
+          let fecha;
+          fecha = this.carritoService.cartItemsServicio.find((e) => {
+            if (e.fecha_atencion == undefined) {
+              return (fecha = true);
+            } else {
+              return (fecha = false);
+            }
+          });
 
-        //console.log(this.pedido.detallesProducto);
-
-        this.pedido.detallePedidoServicio =
-          this.cartItems.detallePedidoServicio;
-
-        this.pedidoService.insert(this.pedido).subscribe((resp) => {
-          //console.log(resp);
+          if (fecha) {
+            swal.fire(
+              `Escoja su fecha de atención preferida según el horario que se brinde el servicio...!`,
+              `fecha inválida`,
+              "warning"
+            );
+            console.log("NULL FECHA " + fecha);
+          } else if (!fecha) {
+            swal
+              .fire({
+                title:
+                  "Por favor verifique sus productos y/o servicios antes de continuar",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, realizar pedido",
+              })
+              .then((result) => {
+                if (result.isConfirmed) {
+                  swal.fire(
+                    "Registro Exitoso...!",
+                    `Gracias por su compra, estaremos en contacto con usted`,
+                    "success"
+                  );
+                  this.registrarPedido();
+                } else {
+                }
+              });
+          }
         });
-      });
+    }
     // this.pedido.usuario = this.authService.usuario;
   }
 
-  item: DetallePedidoServicio;
-
-  agregarFecha(index: any, item: DetallePedidoServicio) {
-    console.log(index, item);
-    //this.item = item;
-    this.carritoService.addFecha(item);
-    return item;
-    //this.carritoService.addFecha(item);
+  registrarPedido() {
+    this.pedidoService.insert(this.pedido).subscribe((resp) => {
+      let currentUrl = this.router.url;
+      this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
+        this.router.navigate([currentUrl]);
+        this.carritoService.vaciarCarrito();
+      });
+      //console.log(resp);
+    });
   }
 
   fecha(item: DetallePedidoServicio) {

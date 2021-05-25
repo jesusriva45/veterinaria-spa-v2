@@ -174,4 +174,9 @@ export class CarritoService {
     );
     console.log("----");
   }
+
+  vaciarCarrito() {
+    this.cartItemsServicio = [];
+    this.cartItems = [];
+  }
 }

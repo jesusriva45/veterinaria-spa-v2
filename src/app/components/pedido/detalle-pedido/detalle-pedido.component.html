@@ -8,8 +8,9 @@
             </div>
         </div>
     </div-->
-    <table mdbTable #tableEl="mdbTable" class="z-depth-1">
-        <thead>
+
+    <table mdbTable #tableEl="mdbTable" striped="true" class="z-depth-1">
+        <thead class="bg-info">
             <tr class="text-center">
                 <th scope="col">Producto</th>
                 <th scope="col">Cantidad </th>
@@ -38,9 +39,9 @@
 </div>
 
 <div class="container p-5">
-    <h4>Mis Productos</h4>
-    <table mdbTable>
-        <thead>
+    <h4>Mis Servicios</h4>
+    <table mdbTable striped="true">
+        <thead class="bg-secondary">
             <tr class="text-center">
                 <th>Servicio</th>
                 <th>Día Atención</th>
@@ -52,7 +53,7 @@
             <tr class="text-center" mdbTableCol *ngFor="let servicios of detallePedidoServicio">
                 <th scope="row">{{servicios.servicio.nombre}}</th>
                 <td>{{servicios.fecha_atencion}}</td>
-                <td>S/. {{servicios.cantidad}}</td>
+                <td>{{servicios.cantidad}}</td>
                 <td>S/. {{servicios.precio * servicios.cantidad}}</td>
             </tr>
         </tbody>

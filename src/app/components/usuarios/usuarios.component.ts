@@ -369,7 +369,7 @@ export class UsuariosComponent implements OnInit {
   @ViewChild(MdbTablePaginationComponent, { static: true })
   mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
-  elements: any = [];
+  // elements: any = [];
   previous: any = [];
   headElements = ["ID", "First", "Last", "Handle"];
   searchText: string = "";
@@ -381,10 +381,10 @@ export class UsuariosComponent implements OnInit {
     const prev = this.mdbTable.getDataSource();
     if (!this.searchText) {
       this.mdbTable.setDataSource(this.previous);
-      this.elements = this.mdbTable.getDataSource();
+      this.usuarios = this.mdbTable.getDataSource();
     }
     if (this.searchText) {
-      this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
+      this.usuarios = this.mdbTable.searchLocalDataBy(this.searchText);
       this.mdbTable.setDataSource(prev);
     }
   }
@@ -397,8 +397,8 @@ export class UsuariosComponent implements OnInit {
     this.cdRef.detectChanges();
   }
 
-  data(usuarios) {
-    for (let user of usuarios) {
+  data(user: Array<any>) {
+    /*for (let user of usuarios) {
       this.elements.push({
         idusuario: user.idusuario,
         nombres: user.nombres,
@@ -412,10 +412,10 @@ export class UsuariosComponent implements OnInit {
         provincia: user.ubigeo.provincia,
         distrito: user.ubigeo.distrito,
       });
-    }
+    }*/
 
-    this.mdbTable.setDataSource(this.elements);
-    this.elements = this.mdbTable.getDataSource();
+    this.mdbTable.setDataSource(user);
+    user = this.mdbTable.getDataSource();
     this.previous = this.mdbTable.getDataSource();
   }
 }
