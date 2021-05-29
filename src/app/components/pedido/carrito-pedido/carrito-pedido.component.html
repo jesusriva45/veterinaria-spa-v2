@@ -26,7 +26,7 @@
 
 
 
-                            <th><img [src]="item.producto.foto1" width="50px" height="50px"></th>
+                            <th><img [attr.src]="(item.producto?.foto1 != null || item.producto?.foto1 != undefined) ? item.producto?.foto1 : myImgUrl" width="50px" height="50px"></th>
                             <td>{{ item.producto.nombre }}</td>
                             <td>{{ item.producto.marca.nombre }}</td>
                             <td>
@@ -53,7 +53,9 @@
                                 <p class="mt-2">S/.{{ item.cantidad * item.precio | number }}</p>
                             </td>
                             <td>
-                                <p><button placement="right" triggers="hover" [mdbPopover]="Remove" class="remove white-text" mdbWavesEffect (click)="removeItem(item)"><mdb-icon fas icon="trash"></mdb-icon></button></p>
+                                <a placement="bottom" triggers="hover" [mdbPopover]="Remove" class="remove white-text p-2" mdbWavesEffect (click)="removeItem(item)">
+                                    <mdb-icon fas icon="trash"></mdb-icon>
+                                </a>
                             </td>
                         </tr>
 

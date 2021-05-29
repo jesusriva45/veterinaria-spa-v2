@@ -173,14 +173,36 @@ export class DatosPersonalesComponent implements OnInit {
   createForm() {
     this.myform = new FormGroup({
       IdUsuario: new FormControl("", [Validators.nullValidator]),
-      Nombres: new FormControl("", [Validators.required]),
-      Apellidos: new FormControl("", [Validators.required]),
+      Nombres: new FormControl("", [
+        Validators.required,
+        Validators.pattern(
+          "^[A-Z]{1}([a-z]{1,})?([ ][A-Z]{1})?([a-z]{1,})?[ ]?([a-zA-Z]{1,})?[ ]?([a-zA-Z]{1,})?$"
+        ),
+        Validators.minLength(4),
+        Validators.maxLength(30),
+      ]),
+      Apellidos: new FormControl("", [
+        Validators.required,
+        Validators.pattern(
+          "^[A-Z]{1}([a-z]{1,3})?([ ][A-Z]{1})?([a-z]{1,})?[ ]?([a-zA-Z]{1,})?[ ]?([a-zA-Z]{1,})?$"
+        ),
+        Validators.minLength(4),
+        Validators.maxLength(40),
+      ]),
       Dni: new FormControl("", [
         Validators.pattern("[0-9]{8}"),
         this.formControlPersonalizado.bind(this),
       ]),
-      Telef: new FormControl("", [Validators.required]),
-      Direc: new FormControl("", [Validators.required]),
+      Telef: new FormControl("", [
+        Validators.required,
+        Validators.pattern("^((([0-9]{7})|([0-9]{9})))$"),
+      ]),
+      Direc: new FormControl("", [
+        Validators.required,
+
+        Validators.minLength(10),
+        Validators.maxLength(50),
+      ]),
       Depart: new FormControl(undefined, [
         Validators.nullValidator,
         Validators.required,
@@ -196,11 +218,15 @@ export class DatosPersonalesComponent implements OnInit {
       Correo: new FormControl("", [
         Validators.required,
         Validators.pattern(
-          "^[a-zA-Z]{1,}([.]{1})?[a-zA-Z]{1,}[@]{1}[a-zA-Z]{1,}[.]{1}[a-z]{2,5}([.][a-z]{2,3})?$"
+          "^([0-9]{1,20})?([a-zA-Z]{1,})([0-9]{1,20})?([.]{1})?([a-zA-Z]{1,})([0-9]{1,20})?[@]{1}[a-zA-Z]{1,}[.]{1}[a-z]{2,5}([.][a-z]{2,3})?$"
         ),
       ]),
       FechaNac: new FormControl("", [Validators.required]),
-      // Password: new FormControl("", [Validators.required]),
+      //Password: new FormControl("", [Validators.required]),
+      /*UserName: new FormControl("", [
+        Validators.required,
+        this.formControlPersonalizadoUsername.bind(this),
+      ]),*/
     });
   }
 

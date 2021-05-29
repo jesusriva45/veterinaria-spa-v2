@@ -11,6 +11,7 @@ import swal from "sweetalert2";
 import { Usuario } from "../models/usuario";
 
 import { URL_BACKEND } from "../config/config";
+import { Raza } from "../models/raza";
 
 @Injectable({
   providedIn: "root",
@@ -153,6 +154,19 @@ export class MascotaService {
   getTipoMascota(): Observable<Tipomascota[]> {
     return this.http
       .get<Tipomascota[]>(`${this.urlEndPoint}/tipomascota`, {
+        headers: this.agregarAuthorizationHeader(),
+      })
+      .pipe(
+        catchError((e) => {
+          this.isNoAutorizado(e);
+          return throwError(e);
+        })
+      );
+  }
+
+  getRaza(idTipo: number): Observable<Raza[]> {
+    return this.http
+      .get<Raza[]>(`${this.urlEndPoint}/raza/${idTipo}`, {
         headers: this.agregarAuthorizationHeader(),
       })
       .pipe(

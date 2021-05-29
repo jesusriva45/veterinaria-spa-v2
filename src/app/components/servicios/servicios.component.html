@@ -8,30 +8,66 @@
 
         <div class="row col-12 ml-auto mr-auto justify-content-center">
             <!-- Card -->
-            <mdb-card *ngFor="let servicio of servicios; let i = index" class="col-xl-3 col-lg-3 col-md-10 col-sm-12 col-xs-12 m-2" style="height: 500px">
+            <mdb-card *ngFor="let servicio of servicios; let i = index" class="col-xl-3 col-lg-3 col-md-10 col-sm-12 col-xs-12 m-2" style="height: auto">
 
-                <div class="view rgba-white-slight waves-light" [routerLink]="['/servicios/detalle-servicio', servicio.idservicio]">
+                <div class="view rgba-white-slight waves-light" [routerLink]="['/servicios/detalle-servicio', servicio.idservicio]" style="height: auto">
                     <!-- Card img -->
                     <img class="img-fluid ml-auto mr-auto" [attr.src]="(servicio.foto1 != null || servicio.foto1 != undefined) ? servicio.foto1 : imgNotFound" alt="Card image cap">
                 </div>
                 <!--Card content-->
-                <mdb-card-body [routerLink]="['/servicios/detalle-servicio', servicio.idservicio]">
+                <mdb-card-body style="height: 300px; max-height: 1000px; margin-top: 15%;">
                     <!--Title-->
                     <mdb-card-title>
                         <h3>{{ servicio.nombre }}</h3>
+
+                        <h5>{{ servicio.serCategoria?.descripcion}}</h5>
                     </mdb-card-title>
                     <!--Text-->
+                    <h3 class="text-center text-danger">S/.{{ servicio.precio}}</h3>
+                    <br>
                     <mdb-card-text>
-                        <h1 class="card-text text-center">S/.{{ servicio.precio}}</h1>
-                        <p class="card-text" style="text-align: justify;" [innerHTML]="servicio.descripcion"></p>
+
+                        <div class="d-flex">
+                            <mdb-icon class="text-success" fas icon="check"></mdb-icon>
+                            <h3 class="card-text text-center ml-2">Servicio en tienda</h3>
+                        </div>
+                        <div class="d-flex">
+                            <mdb-icon class="text-success" fas icon="check"></mdb-icon>
+                            <h3 class="card-text text-center ml-2">Servicio a domicilio</h3>
+                        </div>
+
+                        <div class="d-flex" id="star">
+                            <p class="clasificacion">
+                                <input id="radio1" type="radio" name="estrellas" value="5">
+                                <!--
+                                --><label for="radio1">★</label>
+                                <!--
+                                --><input id="radio2" type="radio" name="estrellas" value="4">
+                                <!--
+                                --><label for="radio2">★</label>
+                                <!--
+                                --><input id="radio3" type="radio" name="estrellas" value="3">
+                                <!--
+                                --><label for="radio3">★</label>
+                                <!--
+                                --><input id="radio4" type="radio" name="estrellas" value="2">
+                                <!--
+                                --><label for="radio4">★</label>
+                                <!--
+                                --><input id="radio5" type="radio" name="estrellas" value="1">
+                                <!--
+                                --><label for="radio5">★</label>
+                            </p>
+                        </div>
+
                     </mdb-card-text>
+
 
                 </mdb-card-body>
 
                 <button (click)="addToCart(servicio)" class="btn-card" mdbBtn color="primary" mdbWavesEffect>Agregar</button>
             </mdb-card>
 
-            <!-- Card -->
         </div>
 
     </div>

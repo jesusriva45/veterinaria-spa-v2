@@ -27,11 +27,13 @@ export class ProductosComponent implements OnInit {
 
   precioMin: number;
   precioMax: number;
-
+  imgNotFound: string;
   constructor(
     public productoService: ProductoService,
     public carritoService: CarritoService
-  ) {}
+  ) {
+    this.imgNotFound = "../../../../assets/img/no-image.png";
+  }
 
   ngOnInit(): void {
     this.listarProductos();

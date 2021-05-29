@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { Estado } from "src/app/models/estado";
 import { Tracking } from "src/app/models/tracking";
@@ -22,6 +22,7 @@ import { WavesModule, TableModule, InputsModule } from "angular-bootstrap-md";
 import { FormsModule } from "@angular/forms";
 import { F } from "projects/angular-bootstrap-md/src/lib/free/utils/keyboard-navigation";
 import { Pedido } from "src/app/models/pedido";
+import { AuthService } from "src/app/services/auth.service";
 //-------------------------------------------------------
 
 @Component({
@@ -43,7 +44,9 @@ export class EstadoTrackingComponent implements OnInit {
     public clienteService: ClienteService,
     public activateRoute: ActivatedRoute,
     public trackingService: TrackingService,
-    public cdRef: ChangeDetectorRef
+    public cdRef: ChangeDetectorRef,
+    public router: Router,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -53,20 +56,23 @@ export class EstadoTrackingComponent implements OnInit {
       if (this.elements != null) {
         this.checkBox();
       }
-    }, 2000);
+    }, 5000);
   }
 
   listarEstados() {
     this.trackingService.getEstados().subscribe((estado) => {
       this.estados = estado;
-      console.log(this.estados);
     });
   }
 
   updateEstadoTracking() {
     this.trackingService.updateTracking(this.tracking).subscribe((track) => {
       this.tracking = track;
-      console.log(this.tracking);
+
+      let currentUrl = this.router.url;
+      this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
+        this.router.navigate([currentUrl]);
+      });
     });
   }
 
@@ -74,7 +80,6 @@ export class EstadoTrackingComponent implements OnInit {
     this.trackingService.getTacking().subscribe((tracks) => {
       this.trackings = tracks;
       this.data(this.trackings);
-      console.log(this.trackings);
     });
   }
 
@@ -146,7 +151,7 @@ export class EstadoTrackingComponent implements OnInit {
 
   data(trackings: any) {
     for (let track of trackings) {
-      console.log(track);
+      //console.log(track);
       this.elements.push({
         idtracking: track.idtracking.toString(),
         pedido: track.pedido,

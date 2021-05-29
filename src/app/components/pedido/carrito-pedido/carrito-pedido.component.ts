@@ -153,6 +153,7 @@ export class CarritoPedidoComponent implements OnInit {
                     `Gracias por su compra, estaremos en contacto con usted`,
                     "success"
                   );
+
                   this.registrarPedido();
                 } else {
                 }
@@ -165,14 +166,14 @@ export class CarritoPedidoComponent implements OnInit {
 
   registrarPedido() {
     this.pedidoService.insert(this.pedido).subscribe((resp) => {
+      this.carritoService.vaciarCarrito();
       this.router.navigate(["/pedidos"]);
 
       /* let currentUrl = this.router.url;
       this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
         this.router.navigate([currentUrl]);*/
 
-      this.carritoService.vaciarCarrito();
-      // });
+      //});
       //console.log(resp);
     });
   }

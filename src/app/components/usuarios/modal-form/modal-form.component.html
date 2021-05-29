@@ -80,7 +80,10 @@
                             <div class="pl-3" *ngIf="(Nombres.errors && submitted ) ||((Nombres.dirty || Nombres.touched) && Nombres.invalid)">
 
                                 <mdb-error class="pl-3 mt-2" *ngIf="Nombres.errors.required ">Nombres is required</mdb-error>
-                                <mdb-error class="pl-3 mt-2" *ngIf="Nombres.errors.pattern ">Nombres invalido </mdb-error>
+
+                                <mdb-error class="pl-3 mt-2" *ngIf="Nombres.errors.maxlength ">Máximo 30 letras</mdb-error>
+                                <mdb-error class="pl-3 mt-2" *ngIf="Nombres.errors.minlength ">Minimo 4 letras y empieza con mayúscula</mdb-error>
+                                <mdb-error class="pl-3 mt-2" *ngIf="!Nombres.errors.minlength && Nombres.errors.pattern ">Nombre invalido, y solo se aceptan letras</mdb-error>
                             </div>
 
                         </div>
@@ -92,8 +95,10 @@
                             <label class="pl-3">Apellidos</label>
                             <div class="pl-3" *ngIf="(Apellidos.errors && submitted ) ||((Apellidos.dirty || Apellidos.touched) && Apellidos.invalid)">
 
-                                <mdb-error class="pl-3 mt-2" *ngIf="Apellidos.errors.required ">Correo is required</mdb-error>
-                                <mdb-error class="pl-3 mt-2" *ngIf="Apellidos.errors.pattern ">Patron invalido </mdb-error>
+                                <mdb-error class="pl-3 mt-2" *ngIf="Apellidos.errors.required ">Apellidos is required</mdb-error>
+                                <mdb-error class="pl-3 mt-2" *ngIf="Apellidos.errors.maxlength ">Máximo 30 letras</mdb-error>
+                                <mdb-error class="pl-3 mt-2" *ngIf="Apellidos.errors.minlength ">Minimo 4 letras y empieza con mayúscula</mdb-error>
+                                <mdb-error class="pl-3 mt-2" *ngIf="!Apellidos.errors.minlength && Apellidos.errors.pattern ">Apellido invalido, y solo se aceptan letras</mdb-error>
                             </div>
                         </div>
 
@@ -118,11 +123,11 @@
                         <div class="md-form col-4">
 
                             <input type="text" class="form-control" mdbInput mdbValidate [(ngModel)]="usuario.telefono" [formControl]="Telef" required>
-                            <label class="pl-3">Telefono</label>
+                            <label class="pl-3">Telefono/Celular</label>
                             <div class="pl-3" *ngIf="(Telef.errors && submitted ) ||((Telef.dirty || Telef.touched) && Telef.invalid)">
 
                                 <mdb-error class="pl-3 mt-2" *ngIf="Telef.errors.required ">Correo is required</mdb-error>
-                                <mdb-error class="pl-3 mt-2" *ngIf="Telef.errors.pattern ">Patron invalido </mdb-error>
+                                <mdb-error class="pl-3 mt-2" *ngIf="Telef.errors.pattern ">Formato in correcto, debe contener 7 #s para teléfono o 9 #s para celular</mdb-error>
                             </div>
                         </div>
 
@@ -133,7 +138,9 @@
                             <div class="pl-3" *ngIf="(Direc.errors && submitted ) ||((Direc.dirty || Direc.touched) && Direc.invalid)">
 
                                 <mdb-error class="pl-3 mt-2" *ngIf="Direc.errors.required ">Correo is required</mdb-error>
-                                <mdb-error class="pl-3 mt-2" *ngIf="Direc.errors.pattern ">Patron invalido </mdb-error>
+                                <mdb-error class="pl-3 mt-2" *ngIf="Direc.errors.maxlength ">Máximo 50 letras</mdb-error>
+                                <mdb-error class="pl-3 mt-2" *ngIf="Direc.errors.minlength ">Minimo 10 letras </mdb-error>
+
                             </div>
 
                         </div>
@@ -145,7 +152,7 @@
                             <div class="pl-3" *ngIf="(Correo.errors && submitted ) ||((Correo.dirty || Correo.touched) && Correo.invalid)">
 
                                 <mdb-error class="pl-3 mt-2" *ngIf="Correo.errors.required ">Correo is required</mdb-error>
-                                <mdb-error class="pl-3 mt-2" *ngIf="Correo.errors.pattern ">Patron invalido </mdb-error>
+                                <mdb-error class="pl-3 mt-2" *ngIf="Correo.errors.pattern ">Patron invalido, xxxxxxx@xxxx.xx(.xx opcional) </mdb-error>
                             </div>
                         </div>
 

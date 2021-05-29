@@ -66,35 +66,86 @@ export class CrudProductoComponent implements OnInit {
 
   showPreviewImage1(event: any) {
     if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.onload = (event: any) => {
-        this.localUrl = event.target.result;
+      let typeFile = event.target.files[0].name;
 
-        this.producto.foto1 = this.localUrl.toString();
-      };
-      reader.readAsDataURL(event.target.files[0]);
+      let cadenainvertida = typeFile.split("").reverse().join("");
+      let extension = cadenainvertida.split(".")[0];
+      let extensionFile = extension.split("").reverse().join("");
+
+      if (
+        extensionFile != "jpg" &&
+        extensionFile != "jpeg" &&
+        extensionFile != "png"
+      ) {
+        swal.fire({
+          title: `No se permiten archivos diferentes a jpg/jpeg/png`,
+          icon: "warning",
+        });
+      } else {
+        var reader = new FileReader();
+        reader.onload = (event: any) => {
+          this.localUrl = event.target.result;
+          // console.log(this.localUrl);
+          this.producto.foto1 = this.localUrl.toString();
+        };
+        reader.readAsDataURL(event.target.files[0]);
+      }
     }
   }
   showPreviewImage2(event: any) {
     if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.onload = (event: any) => {
-        this.localUrl = event.target.result;
+      let typeFile = event.target.files[0].name;
 
-        this.producto.foto2 = this.localUrl.toString();
-      };
-      reader.readAsDataURL(event.target.files[0]);
+      let cadenainvertida = typeFile.split("").reverse().join("");
+      let extension = cadenainvertida.split(".")[0];
+      let extensionFile = extension.split("").reverse().join("");
+
+      if (
+        extensionFile != "jpg" &&
+        extensionFile != "jpeg" &&
+        extensionFile != "png"
+      ) {
+        swal.fire({
+          title: `No se permiten archivos diferentes a jpg/jpeg/png`,
+          icon: "warning",
+        });
+      } else {
+        var reader = new FileReader();
+        reader.onload = (event: any) => {
+          this.localUrl = event.target.result;
+
+          this.producto.foto2 = this.localUrl.toString();
+        };
+        reader.readAsDataURL(event.target.files[0]);
+      }
     }
   }
   showPreviewImage3(event: any) {
     if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.onload = (event: any) => {
-        this.localUrl = event.target.result;
+      let typeFile = event.target.files[0].name;
 
-        this.producto.foto3 = this.localUrl.toString();
-      };
-      reader.readAsDataURL(event.target.files[0]);
+      let cadenainvertida = typeFile.split("").reverse().join("");
+      let extension = cadenainvertida.split(".")[0];
+      let extensionFile = extension.split("").reverse().join("");
+
+      if (
+        extensionFile != "jpg" &&
+        extensionFile != "jpeg" &&
+        extensionFile != "png"
+      ) {
+        swal.fire({
+          title: `No se permiten archivos diferentes a jpg/jpeg/png`,
+          icon: "warning",
+        });
+      } else {
+        var reader = new FileReader();
+        reader.onload = (event: any) => {
+          this.localUrl = event.target.result;
+          // console.log(this.localUrl);
+          this.producto.foto3 = this.localUrl.toString();
+        };
+        reader.readAsDataURL(event.target.files[0]);
+      }
     }
   }
   //---------------------------------------------------------

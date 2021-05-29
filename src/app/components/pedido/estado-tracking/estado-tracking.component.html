@@ -54,7 +54,12 @@
 <input type="checkbox" class="check">
 -->
 
-    <form class="col-4 m-auto text-center" (ngSubmit)="updateEstadoTracking()">
+    <form class="col-4 m-auto text-center">
+
+
+        <input [(ngModel)]="tracking.idtracking" name="tracking.idtracking" hidden>
+
+        <input [(ngModel)]="tracking.pedido" name="tracking.pedido" hidden>
 
         <select class="form-control pl-3 pr-3" [(ngModel)]="tracking.estado" name="tracking.estado" required>                        
                 <option [ngValue]=undefined selected>--- seleccione estado ---</option>
@@ -62,7 +67,7 @@
                
     </select>
 
-        <button type="button" class="ml-auto mr-auto mt-5" mdbBtn color="primary" mdbWavesEffect>Cambiar estado</button>
+        <button type="button" (click)="updateEstadoTracking()" class="ml-auto mr-auto mt-5" mdbBtn color="primary" mdbWavesEffect>Cambiar estado</button>
 
     </form>
 

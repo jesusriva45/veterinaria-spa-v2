@@ -10,6 +10,7 @@ import { MascotaService } from "src/app/services/mascota.service";
 import swal from "sweetalert2";
 import { AuthService } from "src/app/services/auth.service";
 import { Usuario } from "src/app/models/usuario";
+import { Raza } from "src/app/models/raza";
 
 @Component({
   selector: "app-registro-mascota",
@@ -25,6 +26,8 @@ export class RegistroMascotaComponent implements OnInit {
 
   tipomascota: Tipomascota[] = [];
 
+  razas: Raza[] = [];
+
   titulo: string = "Agregar Mascota";
   /*** */
 
@@ -35,7 +38,7 @@ export class RegistroMascotaComponent implements OnInit {
   myform: FormGroup;
   IdMascota: FormControl;
   Nombres: FormControl;
-  Raza: FormControl;
+  RazaAnimal: FormControl;
   Estado: FormControl;
   FechaNacimiento: FormControl;
   Sexo: FormControl;
@@ -83,8 +86,15 @@ export class RegistroMascotaComponent implements OnInit {
 
   createFormControls() {
     this.IdMascota = new FormControl("", [Validators.nullValidator]);
-    this.Nombres = new FormControl("", [Validators.required]);
-    this.Raza = new FormControl("", [Validators.required]);
+    this.Nombres = new FormControl("", [
+      Validators.required,
+      Validators.pattern(
+        "^[A-Z]{1}([a-z]{1,})?([ ][A-Z]{1})?([a-z]{1,})?[ ]?([a-zA-Z]{1,})?[ ]?([a-zA-Z]{1,})?$"
+      ),
+      Validators.minLength(4),
+      Validators.maxLength(30),
+    ]);
+    this.RazaAnimal = new FormControl("", [Validators.required]);
     this.FechaNacimiento = new FormControl("", [Validators.required]);
     this.Sexo = new FormControl("", [Validators.required]);
     this.TipoMascota = new FormControl("", [Validators.required]);
@@ -97,7 +107,7 @@ export class RegistroMascotaComponent implements OnInit {
       name: new FormGroup({
         IdMascota: this.IdMascota,
         Nombres: this.Nombres,
-        Raza: this.Raza,
+        RazaAnimal: this.RazaAnimal,
         Estado: this.Estado,
         FechaNacimiento: this.FechaNacimiento,
         Sexo: this.Sexo,
@@ -116,7 +126,7 @@ export class RegistroMascotaComponent implements OnInit {
   @ViewChild("basicModal", { static: true }) basicModal: ModalDirective;
   //@ViewChild("content", { static: true }) public contentModal;
 
-  openModalCrud(accion: string, idMascota?: number): void {
+  openModalCrud(accion: string, mascota?: Mascota): void {
     this.createFormControls();
     this.createForm();
 
@@ -124,10 +134,11 @@ export class RegistroMascotaComponent implements OnInit {
 
     if (accion == "editar") {
       this.titulo = "Actualizar Información";
-      this.mascota.idmascota = idMascota;
-      this.getMascota(idMascota);
+      this.mascota.idmascota = mascota.idmascota;
+      this.getMascota(mascota.idmascota);
       this.getTipoMascota();
-      console.log(this.mascota.idmascota);
+      this.getRaza(mascota.tipomascota.idtipomascota);
+      console.log(mascota.tipomascota.idtipomascota);
     } else if (accion == "agregar") {
       this.mascota.foto = this.myImgUrl;
       this.mascota.usuario = this.clienteLog;
@@ -176,6 +187,7 @@ export class RegistroMascotaComponent implements OnInit {
                   "success"
                 );
                 this.insert();
+                this.basicModal.hide();
                 // this.modalService.dismissAll();
               }
             } else if (
@@ -190,6 +202,7 @@ export class RegistroMascotaComponent implements OnInit {
                   "success"
                 );
                 this.update();
+                this.basicModal.hide();
                 //this.modalService.dismissAll();
               }
             }
@@ -241,40 +254,96 @@ export class RegistroMascotaComponent implements OnInit {
       return p1.idtipomascota === p2.idtipomascota;
     }
   }
+  //------------------------ COMBO TIPO MASCOTA -----------------------
+
+  compareRaza(p1: Raza, p2: Raza): boolean {
+    //console.log(t1.id_ubigeo + t2.id_ubigeo);
+
+    if (
+      (p1 === null && p2 === null) ||
+      (p1 === undefined && p2 === undefined)
+    ) {
+      return true;
+    } else if (
+      p1 === null ||
+      p2 === null ||
+      p1 === undefined ||
+      p2 === undefined
+    ) {
+      return false;
+    } else {
+      return p1.idraza === p2.idraza;
+    }
+  }
+
   //--------------- FOTO DE MASCOTA -----------------------------
   localUrl: any[];
   showPreviewImage1(event: any) {
     if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.onload = (event: any) => {
-        this.localUrl = event.target.result;
-        // console.log(this.localUrl);
-        this.mascota.foto = this.localUrl.toString();
-      };
-      reader.readAsDataURL(event.target.files[0]);
+      let typeFile = event.target.files[0].name;
+
+      let cadenainvertida = typeFile.split("").reverse().join("");
+      let extension = cadenainvertida.split(".")[0];
+      let extensionFile = extension.split("").reverse().join("");
+
+      /*console.log(cadenainvertida);
+      console.log(extension);
+      console.log(extensionFile);*/
+
+      if (
+        extensionFile != "jpg" &&
+        extensionFile != "jpeg" &&
+        extensionFile != "png"
+      ) {
+        swal.fire({
+          title: `No se permiten archivos diferentes a jpg/jpeg/png`,
+          icon: "warning",
+        });
+      } else {
+        var reader = new FileReader();
+        reader.onload = (event: any) => {
+          this.localUrl = event.target.result;
+          // console.log(this.localUrl);
+          this.mascota.foto = this.localUrl.toString();
+        };
+        reader.readAsDataURL(event.target.files[0]);
+      }
     }
   }
 
   //------------------------------------------------------------------------
+
+  onChangeTipoMascota(e) {
+    if (
+      this.mascota?.tipomascota == null ||
+      this.mascota?.tipomascota == undefined
+    ) {
+      //this.getRaza(undefined);
+    } else {
+      this.getRaza(e.idtipomascota);
+    }
+  }
 
   //----------------------------------- CURD MASCOTA  -----------------------
 
   insert(): void {
     this.mascotasService.insert(this.mascota).subscribe((response) => {
       let currentUrl = this.router.url;
-      this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
+      /* this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
         this.router.navigate([currentUrl]);
-      });
+      });*/
+      this.getMascotas();
       // this.router.navigate([window.location.reload()]);
     });
   }
 
   update(): void {
     this.mascotasService.update(this.mascota).subscribe((response) => {
-      let currentUrl = this.router.url;
+      /* let currentUrl = this.router.url;
       this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
         this.router.navigate([currentUrl]);
-      });
+      });*/
+      this.getMascotas();
       // this.router.navigate([window.location.reload()]);
     });
   }
@@ -309,9 +378,10 @@ export class RegistroMascotaComponent implements OnInit {
   //------- CLIENTE LOGUEADO AL SISTEMA
 
   getClienteIdUsuario(usu: Usuario) {
-    this.mascotasService
-      .getCliente(usu)
-      .subscribe((cliente) => (this.clienteLog = cliente));
+    this.mascotasService.getCliente(usu).subscribe((cliente) => {
+      this.clienteLog = cliente;
+      // console.log(cliente);
+    });
   }
   //------------------------
   getMascota(idMascota: number) {
@@ -324,6 +394,13 @@ export class RegistroMascotaComponent implements OnInit {
     this.mascotasService
       .getTipoMascota()
       .subscribe((data) => (this.tipomascota = data));
+  }
+
+  getRaza(idTipo: number) {
+    this.mascotasService.getRaza(idTipo).subscribe((data) => {
+      this.razas = data;
+      //console.log(data);
+    });
   }
 
   getMascotas() {

@@ -178,5 +178,7 @@ export class CarritoService {
   vaciarCarrito() {
     this.cartItemsServicio = [];
     this.cartItems = [];
+    this.precioTotal.next(0);
+    this.cantidadTotal.next(0);
   }
 }

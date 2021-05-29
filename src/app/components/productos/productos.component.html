@@ -9,22 +9,52 @@
 
         <div class="row col-12 ml-auto mr-auto justify-content-center">
             <!-- Card -->
-            <mdb-card *ngFor="let producto of productos; let i = index" class="col-xl-3 col-lg-3 col-md-8 col-sm-12 col-xs-12 m-2" style="height: 500px">
+            <mdb-card *ngFor="let producto of productos; let i = index" class="col-xl-3 col-lg-3 col-md-8 col-sm-12 col-xs-12 m-2" style="height: auto">
 
-                <div class="view rgba-white-slight waves-light" [routerLink]="['/productos/detalle-producto', producto.idproducto]">
+                <div class="view rgba-white-slight waves-light" [routerLink]="['/productos/detalle-producto', producto.idproducto]" style="height: auto">
                     <!-- Card img -->
-                    <img class="img-fluid ml-auto mr-auto" [src]="producto.foto1" alt="Card image cap">
+                    <img class="img-fluid ml-auto mr-auto" [attr.src]="(producto.foto1 != null || producto.foto1 != undefined) ? producto.foto1 : imgNotFound" alt="Card image cap">
                 </div>
                 <!--Card content-->
-                <mdb-card-body [routerLink]="['/productos/detalle-producto', producto.idproducto]">
+                <mdb-card-body style="height: 300px; max-height: 1000px; margin-top: 15%;">
                     <!--Title-->
                     <mdb-card-title>
-                        <h3>{{ producto.nombre }} - {{ producto.marca.nombre }}</h3>
+                        <h3>{{ producto.nombre }} </h3>
+                        <h5>{{ producto.marca.nombre }}</h5>
                     </mdb-card-title>
                     <!--Text-->
+
+                    <h3 class="text-center text-danger">S/.{{ producto.precio}}</h3>
+                    <br>
+
+
                     <mdb-card-text>
-                        <h1 class="card-text text-center">S/.{{ producto.precio}}</h1>
-                        <p class="card-text" style="text-align: justify;" [innerHTML]="producto.descripcion"></p>
+
+
+
+                        <div class="d-flex" id="star">
+                            <p class="clasificacion">
+                                <input id="radio1" type="radio" name="estrellas" value="5">
+                                <!--
+                                --><label for="radio1">★</label>
+                                <!--
+                                --><input id="radio2" type="radio" name="estrellas" value="4">
+                                <!--
+                                --><label for="radio2">★</label>
+                                <!--
+                                --><input id="radio3" type="radio" name="estrellas" value="3">
+                                <!--
+                                --><label for="radio3">★</label>
+                                <!--
+                                --><input id="radio4" type="radio" name="estrellas" value="2">
+                                <!--
+                                --><label for="radio4">★</label>
+                                <!--
+                                --><input id="radio5" type="radio" name="estrellas" value="1">
+                                <!--
+                                --><label for="radio5">★</label>
+                            </p>
+                        </div>
                     </mdb-card-text>
 
                 </mdb-card-body>
