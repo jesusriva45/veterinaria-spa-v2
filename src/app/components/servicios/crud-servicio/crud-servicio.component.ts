@@ -33,6 +33,10 @@ export class CrudServicioComponent implements OnInit {
   FechaAten: FormControl;
   IdCategoria: FormControl;
 
+  DiaAtencion: FormControl;
+  HoraIniAtencion: FormControl;
+  HoraFinAtencion: FormControl;
+
   //----------- VISIBILIDAD DE MENSAJE DE ERROR DE CAMPOS DE FORMULARIO ----------------
   submitted: boolean = false;
 
@@ -92,6 +96,34 @@ export class CrudServicioComponent implements OnInit {
     ],
   };
 
+  editorConfigHora: AngularEditorConfig = {
+    editable: false,
+    //spellcheck: true,
+    // height: "15rem",
+    //minHeight: "5rem",
+    //placeholder: "Enter text here...",
+    //translate: "no",
+    // defaultParagraphSeparator: "p",
+    //defaultFontName: "Arial",
+    //toolbarHiddenButtons: [["bold"]],
+    //sanitize: false,
+    customClasses: [
+      {
+        name: "quote",
+        class: "quote",
+      },
+      {
+        name: "redText",
+        class: "redText",
+      },
+      {
+        name: "titleText",
+        class: "titleText",
+        tag: "h1",
+      },
+    ],
+  };
+
   //------------------------ VALIDACION DE FORMULARIO ---------------------------
 
   createFormControls() {
@@ -103,8 +135,13 @@ export class CrudServicioComponent implements OnInit {
     ]);
     this.Descripcion = new FormControl("", Validators.required);
     this.FechaAten = new FormControl("", Validators.required);
-    this.IdCategoria = new FormControl("", Validators.required);
+    this.IdCategoria = new FormControl(undefined, Validators.required);
+    this.DiaAtencion = new FormControl(undefined);
+    this.HoraIniAtencion = new FormControl("");
+    this.HoraFinAtencion = new FormControl("");
   }
+
+
 
   createForm() {
     this.myform = new FormGroup({
@@ -115,8 +152,52 @@ export class CrudServicioComponent implements OnInit {
         Descripcion: this.Descripcion,
         FechaAten: this.FechaAten,
         IdCategoria: this.IdCategoria,
+
+        DiaAtencion: this.DiaAtencion,
+        HoraIniAtencion: this.HoraIniAtencion,
+        HoraFinAtencion: this.HoraFinAtencion,
+
       }),
     });
+
+  }
+
+  dia: string;
+  horaIni: string;
+  horaFin: string;
+  diaHora: String = " ";
+
+
+  limpiar() {
+    this.diaHora = " ";
+    this.FechaAten.setValue(`<h3><strong>Horarios de Atenci&oacute;n:</strong></h3>
+    <ul style="font-weight: 300;">
+    ${this.diaHora}
+    </ul>`);
+  }
+
+  agregarDiaHora() {
+    // HoraAtencion: this.HoraAtencion,
+
+    this.dia = this.DiaAtencion.value;
+    this.horaIni = this.HoraIniAtencion.value;
+    this.horaFin = this.HoraFinAtencion.value;
+
+    this.diaHora += `<li>${this.dia} : ${this.horaIni + ":00"} - ${this.horaFin + ":00"}</li>`;
+
+    this.FechaAten.setValue(`<h3><strong>Horarios de Atenci&oacute;n:</strong></h3>
+    <ul style="font-weight: 300;">
+    ${this.diaHora}
+    </ul>`);
+
+  }
+
+  onChangeCate(cate) {
+
+
+
+    console.log("Fecha 1 " + cate?.descripcion);
+
   }
   //----------------- CAPTURAR FILE FOTOS -----------------------------
 
@@ -229,11 +310,14 @@ export class CrudServicioComponent implements OnInit {
     if (accion == "editar") {
       this.titulo = "ACTUALIZAR SERVICIO";
 
+      this.diaHora = " ";
+
       this.getServicio(servicio.idservicio);
       this.IdServicio.setValue(this.servicio.idservicio);
       this.Nombre.setValue(this.servicio.nombre);
       this.Precio.setValue(this.servicio.precio);
       this.Descripcion.setValue(this.servicio.descripcion);
+      this.FechaAten.setValue(this.servicio.fecha_atencion);
 
       this.getCategoria();
     } else if (accion == "agregar") {
@@ -334,6 +418,7 @@ export class CrudServicioComponent implements OnInit {
       this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
         this.router.navigate([currentUrl]);
       });*/
+      this.diaHora = " ";
       this.listarServicios();
       // this.router.navigate([window.location.reload()]);
     });

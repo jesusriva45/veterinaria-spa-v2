@@ -269,8 +269,8 @@ export class CrudProductoComponent implements OnInit {
       Validators.required,
       Validators.pattern("[0-9]{1,}"),
     ]);
-    this.IdCategoria = new FormControl("", Validators.required);
-    this.IdProveedor = new FormControl("", Validators.required);
+    this.IdCategoria = new FormControl(undefined, Validators.required);
+    this.IdProveedor = new FormControl(undefined, Validators.required);
     //this.foto1 = new FormControl("", Validators.nullValidator);
     //this.foto2 = new FormControl("", Validators.nullValidator);
     //this.foto3 = new FormControl("", Validators.nullValidator);

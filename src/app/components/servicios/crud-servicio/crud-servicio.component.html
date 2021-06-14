@@ -156,6 +156,8 @@
                                 </div>
                             </div>
 
+                        
+
 
                             <div class="form-group col-12">
                                 <label>Precio</label>
@@ -177,7 +179,7 @@
                             <div class="form-group col-12">
                                 <label>Categoria</label>
 
-                                <select class="w-100 form-control" [(ngModel)]="servicio.serCategoria" [compareWith]="compareCategoria" formControlName="IdCategoria" required>
+                                <select class="w-100 form-control" (ngModelChange)="onChangeCate($event)" [(ngModel)]="servicio.serCategoria" [compareWith]="compareCategoria" formControlName="IdCategoria" required>
                                        
                                         <option class="form-control" [ngValue]=null aria-hidden="aria-hidden" selected>--- selecionar una marca ---</option>
 
@@ -244,10 +246,50 @@
                         </div>
                         <div class="col-8">
 
+
+
+                            <div class="form-group col-12">
+                                <label>Dia Atención</label>
+
+                                <select class="w-100 form-control"  [(ngModel)]="dia"  formControlName="DiaAtencion">
+                                       
+                                        <option class="form-control" [ngValue]=undefined aria-hidden="aria-hidden" selected>--- selecionar una día ---</option>
+                                        <option class="form-control" value="Lunes" aria-hidden="aria-hidden">Lunes</option>
+                                        <option class="form-control" value="Martes" aria-hidden="aria-hidden">Martes</option>
+                                        <option class="form-control" value="Miércoles" aria-hidden="aria-hidden">Miércoles</option>
+                                        <option class="form-control" value="Jueves" aria-hidden="aria-hidden">Jueves</option>
+                                        <option class="form-control" value="Viernes" aria-hidden="aria-hidden">Viernes</option>                
+                                       
+                                    </select>
+
+                                <div class="m-0">
+                                    <p class="alert-danger" *ngIf="(DiaAtencion.errors?.required && submitted) || ((DiaAtencion.dirty || DiaAtencion.touched) && DiaAtencion.invalid )">Dia Atención is required</p>
+                                    <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
+                                </div>
+                            </div>
+
+               
+
+                            <div class="form-group  col-12 mb-4">
+                                <label>Hora Atención</label>
+                                <div class="d-flex  justify-items-center"> 
+                                    <input type="text" placeholder="Inicio"  class="form-control col-2 mr-2 mt-auto mb-auto" [(ngModel)]="horaIni" formControlName="HoraIniAtencion">
+                                
+                                    <input type="text" placeholder="Fin" class="form-control col-2 ml-2 mr-5 mt-auto mb-auto" [(ngModel)]="horaFin" formControlName="HoraFinAtencion">
+
+                                    <button type="button" class="btn btn-success m-0 mr-2" (click)="agregarDiaHora()" >AGREGAR</button>
+                                    <button type="button" class="btn btn-warning m-0 ml-2" (click)="limpiar()" >Limpiar</button>
+                                </div>
+                                
+                               
+                            </div>
+
+                            
+
                             <div class="form-group col-12">
                                 <label>Horarios de Atención</label>
 
-                                <angular-editor id="editor1" [config]="editorConfig" [ngClass]="{
+                                <angular-editor id="editor1" [config]="editorConfigHora" [ngClass]="{
                                     'is-invalid': (FechaAten.errors?.required && submitted) || ((FechaAten.dirty || FechaAten.touched) && FechaAten.invalid ),
                                     'is-valid': FechaAten.valid && (FechaAten.dirty || FechaAten.touched)
                                   }" [(ngModel)]="servicio.fecha_atencion" formControlName="FechaAten" required>
