@@ -14,12 +14,12 @@ export class AuthService implements OnInit {
   public _token: string;
   public _cliente: Cliente;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   /*C:\CIBERTEC\CICLO VI\PROYECTO INTEGRADOR\Proyecto Integrador - Project V.3.0 - 4to avance\api-rest-Mariano\spring-veterinaria-api-rest
   
   java -jar .\target\veterinaria-api-rest-0.0.1-SNAPSHOT.jar
   .\mvnw.cmd clean package*/
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   public get usuario(): Usuario {
     if (this._usuario != null) {
@@ -71,6 +71,7 @@ export class AuthService implements OnInit {
     this._usuario.idusuario = payload.idusuario;
     this._usuario.nombres = payload.nombres;
     this._usuario.apellidos = payload.apellidos;
+    this._usuario.dni = payload.dni;
     this._usuario.correo = payload.correo;
     this._usuario.username = payload.user_name;
     this._usuario.roles = payload.authorities;

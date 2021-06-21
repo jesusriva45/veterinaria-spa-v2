@@ -5,7 +5,7 @@ import { UbigeoService } from "src/app/services/ubigeo.service";
 @Component({
   selector: "app-inicio",
   templateUrl: "./inicio.component.html",
-  styleUrls: ["./inicio.component.css"],
+  styleUrls: ["./inicio.component.scss"],
 })
 export class InicioComponent implements OnInit {
   listaServicios: String[] = [
@@ -15,7 +15,7 @@ export class InicioComponent implements OnInit {
     "Paticure",
   ];
 
-  constructor(public ubigeoService: UbigeoService) {}
+  constructor(public ubigeoService: UbigeoService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

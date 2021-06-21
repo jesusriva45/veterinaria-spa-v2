@@ -59,6 +59,10 @@ import { CarritoPedidoComponent } from "./components/pedido/carrito-pedido/carri
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { DetalleServicioComponent } from './components/servicios/detalle-servicio/detalle-servicio.component';
 import { EstadoTrackingComponent } from './components/pedido/estado-tracking/estado-tracking.component';
+import { ConsultasComponent } from './components/mascotas/consultas/consultas.component';
+import { CitaComponent } from './components/cita/cita.component';
+import { DetalleCitaComponent } from './components/cita/detalle-cita/detalle-cita.component';
+import { FiltroCitaComponent } from './components/cita/filtro-cita/filtro-cita.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +92,10 @@ import { EstadoTrackingComponent } from './components/pedido/estado-tracking/est
     SidebarComponent,
     DetalleServicioComponent,
     EstadoTrackingComponent,
+    ConsultasComponent,
+    CitaComponent,
+    DetalleCitaComponent,
+    FiltroCitaComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,4 +118,4 @@ import { EstadoTrackingComponent } from './components/pedido/estado-tracking/est
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })
-export class AppModule {}
+export class AppModule { }

@@ -30,6 +30,8 @@ import { Rol } from "src/app/models/rol";
 import { AccesoRol } from "src/app/models/acceso-rol";
 import { animate, style, transition, trigger } from "@angular/animations";
 
+
+
 @Component({
   selector: "app-usuarios",
   animations: [
@@ -69,7 +71,7 @@ export class UsuariosComponent implements OnInit {
     public router: Router,
     public _authService: AuthService,
     public cdRef: ChangeDetectorRef //private modalService: NgbModal
-  ) {}
+  ) { }
 
   authService = this._authService;
   box = document.getElementsByClassName("check");
@@ -107,7 +109,7 @@ export class UsuariosComponent implements OnInit {
     this.getRoles();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() { }
 
   //-------------------- DATEPICKER------------
 

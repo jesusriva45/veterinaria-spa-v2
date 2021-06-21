@@ -2,9 +2,17 @@
     <!--button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
     Agregar Usuario
   </button*-->
-    <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample" (click)="openModalCrud('agregar')" mdbWavesEffect>
-    Agregar Mascota
-  </button>
+    <div class="d-flex">
+        <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
+            (click)="openModalCrud('agregar')" mdbWavesEffect>
+            Agregar Mascota
+        </button>
+
+        <button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample"
+            mdbWavesEffect class="ml-auto" routerLink="/historia-clinica">
+            Ver Historial de mascotas
+        </button>
+    </div>
     <!--input type="button" class="btn btn-primary crud" value="Agregar Mascota" (click)="openModalCrud(mymodal, 'agregar')" /-->
 
     <div class="card border-primary mb-5 container-fluid mt-5">
@@ -35,7 +43,8 @@
                     <tr *ngFor="let mascota of mascotas; let i = index">
                         <th class="align-middle">{{ mascota.idmascota }}</th>
                         <th class="align-middle">
-                            <img class="photo" (click)="modalDetail(mascota)" [src]="mascota.foto != null ? mascota.foto : myImgUrl" width="50px" height="50px" />
+                            <img class="photo" (click)="modalDetail(mascota)"
+                                [src]="mascota.foto != null ? mascota.foto : myImgUrl" width="50px" height="50px" />
                         </th>
                         <td class="align-middle">{{ mascota.nombre }}</td>
                         <td class="align-middle">{{ mascota.raza.descripcion }}</td>
@@ -43,7 +52,8 @@
                         <td class="align-middle">{{ mascota.sexo }}</td>
                         <td class="align-middle">{{ mascota.tipomascota.descripcion }}</td>
                         <td class="align-middle">
-                            <mdb-icon (click)="openModalCrud('editar', mascota)" type="button" fas size="2x" icon="edit"></mdb-icon>
+                            <mdb-icon (click)="openModalCrud('editar', mascota)" type="button" fas size="2x"
+                                icon="edit"></mdb-icon>
                         </td>
                         <!--td class="text-center">
                             <mdb-icon (click)="delete(mascota)" type="button" fas size="2x" icon="user-alt"></mdb-icon>
@@ -52,11 +62,13 @@
                     </tr>
                 </tbody>
 
-                <tbody class="text-center" *ngIf="authService.hasRole('ROLE_CLIENTE')">
+                <tbody class="text-center"
+                    *ngIf="authService.hasRole('ROLE_CLIENTE') || authService.hasRole('ROLE_VETERINARIO')">
                     <tr *ngFor="let mascota of mascotasDeCliente; let i = index">
                         <th class="align-middle">{{ mascota.idmascota }}</th>
                         <th class="align-middle">
-                            <img class="photo" (click)="modalDetail(mascota)" [src]="mascota.foto != null ? mascota.foto : myImgUrl" width="50px" height="50px" />
+                            <img class="photo" (click)="modalDetail(mascota)"
+                                [src]="mascota.foto != null ? mascota.foto : myImgUrl" width="50px" height="50px" />
                         </th>
                         <td class="align-middle">{{ mascota.nombre }}</td>
                         <td class="align-middle">{{ mascota.raza.descripcion }}</td>
@@ -64,7 +76,8 @@
                         <td class="align-middle">{{ mascota.sexo }}</td>
                         <td class="align-middle">{{ mascota.tipomascota.descripcion }}</td>
                         <td class="text-center">
-                            <mdb-icon (click)="openModalCrud('editar', mascota)" type="button" fas size="2x" icon="edit"></mdb-icon>
+                            <mdb-icon (click)="openModalCrud('editar', mascota)" type="button" fas size="2x"
+                                icon="edit"></mdb-icon>
 
                             <p>Editar</p>
                         </td>
@@ -79,7 +92,8 @@
     </div>
 </div>
 
-<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header text-center cyan">
@@ -91,7 +105,8 @@
                 <form [formGroup]="myform" class="container me-auto ms-auto justify-content-center">
                     <fieldset class="p-5" formGroupName="name">
                         <div class="form-group">
-                            <input type="text" class="form-input" [(ngModel)]="mascota.idmascota" formControlName="IdMascota" required hidden />
+                            <input type="text" class="form-input" [(ngModel)]="mascota.idmascota"
+                                formControlName="IdMascota" required hidden />
                             <div class="form-control-feedback" *ngIf="
                   IdMascota.errors && (IdMascota.dirty || IdMascota.touched)
                 "></div>
@@ -99,15 +114,16 @@
 
                         <div class="form-group d-flex justify-content-center mb-5">
                             <label for="photo" class="photo">
-                <img class="foto" [src]="mascota.foto"
-              /></label>
+                                <img class="foto" [src]="mascota.foto" /></label>
 
-                            <input type="file" id="photo" (change)="showPreviewImage1($event)" name="foto" required class="form-control" hidden />
+                            <input type="file" id="photo" (change)="showPreviewImage1($event)" name="foto" required
+                                class="form-control" hidden />
                         </div>
 
                         <div class="form-group col-12">
                             <label>Nombres</label>
-                            <input type="text" class="form-input form-control" id="nomForm" [(ngModel)]="mascota.nombre" formControlName="Nombres" required />
+                            <input type="text" class="form-input form-control" id="nomForm" [(ngModel)]="mascota.nombre"
+                                formControlName="Nombres" required />
 
                             <div class="form-control-feedback w-100" *ngIf="
                   (Nombres.errors && submitted) ||
@@ -119,7 +135,8 @@
                                 <p class="alert alert-danger" *ngIf="Nombres.errors.maxlength">
                                     Máximo 30 letras
                                 </p>
-                                <p class="alert alert-danger" *ngIf="!Nombres.errors.minlength && Nombres.errors.pattern">
+                                <p class="alert alert-danger"
+                                    *ngIf="!Nombres.errors.minlength && Nombres.errors.pattern">
                                     Raza invalida, y solo se aceptan letras
                                 </p>
                                 <p class="alert alert-danger" *ngIf="Nombres.errors.minlength">
@@ -130,7 +147,8 @@
 
                         <div class="form-group col-12">
                             <label>Fecha de Nacimiento</label>
-                            <input type="date" class="form-input form-control" [(ngModel)]="mascota.fecha_nacimiento" formControlName="FechaNacimiento" required />
+                            <input type="date" class="form-input form-control" [(ngModel)]="mascota.fecha_nacimiento"
+                                formControlName="FechaNacimiento" required />
                             <div class="form-control-feedback">
                                 <p class="alert alert-danger" *ngIf="
                     (FechaNacimiento.errors?.required && submitted) ||
@@ -146,16 +164,15 @@
                         <div class="form-group col-12">
                             <label>Sexo</label>
 
-                            <select id="select-option" class="form-control pl-3 pr-3" [(ngModel)]="mascota.sexo" formControlName="Sexo" required>
-                <option [ngValue]="null" selected>
-                  --- selecionar un sexo ---
-                </option>
-                <option *ngFor="let est of sexo" [ngValue]="est.value">
-                  {{ est.descripcion }}
-                </option>
-
-                |
-              </select>
+                            <select id="select-option" class="form-control pl-3 pr-3" [(ngModel)]="mascota.sexo"
+                                formControlName="Sexo" required>
+                                <option [ngValue]="null" selected>
+                                    --- selecionar un sexo ---
+                                </option>
+                                <option *ngFor="let est of sexo" [ngValue]="est.value">
+                                    {{ est.descripcion }}
+                                </option>
+                            </select>
 
                             <div class="form-control-feedback">
                                 <p class="alert alert-danger" *ngIf="
@@ -171,16 +188,17 @@
                         <div class="form-group col-12">
                             <label>Estado</label>
 
-                            <select id="select-estado" class="form-control pl-3 pr-3" [(ngModel)]="mascota.estado" formControlName="Estado" required>
-                <option [ngValue]="null" selected>
-                  --- seleciona el de tu mascota estado ---
-                </option>
-                <option *ngFor="let est of status" [ngValue]="est.value">
-                  {{ est.descripcion }}
-                </option>
+                            <select id="select-estado" class="form-control pl-3 pr-3" [(ngModel)]="mascota.estado"
+                                formControlName="Estado" required>
+                                <option [ngValue]="null" selected>
+                                    --- seleciona el de tu mascota estado ---
+                                </option>
+                                <option *ngFor="let est of status" [ngValue]="est.value">
+                                    {{ est.descripcion }}
+                                </option>
 
-                |
-              </select>
+                                |
+                            </select>
 
                             <div class="form-control-feedback">
                                 <p class="alert alert-danger" *ngIf="
@@ -196,14 +214,16 @@
                         <div class="form-group col-12">
                             <label>Tipo de Mascota</label>
 
-                            <select id="select-tipo" class="form-control" [(ngModel)]="mascota.tipomascota" (ngModelChange)="onChangeTipoMascota($event)" [compareWith]="compareTipomascota" formControlName="TipoMascota" required>
-                <option [ngValue]="null" selected>
-                  --- selecionar el Tipo ---
-                </option>
-                <option *ngFor="let tipo of tipomascota" [ngValue]="tipo">
-                  {{ tipo.descripcion }}
-                </option>
-              </select>
+                            <select id="select-tipo" class="form-control" [(ngModel)]="mascota.tipomascota"
+                                (ngModelChange)="onChangeTipoMascota($event)" [compareWith]="compareTipomascota"
+                                formControlName="TipoMascota" required>
+                                <option [ngValue]="null" selected>
+                                    --- selecionar el Tipo ---
+                                </option>
+                                <option *ngFor="let tipo of tipomascota" [ngValue]="tipo">
+                                    {{ tipo.descripcion }}
+                                </option>
+                            </select>
                             <div class="form-control-feedback">
                                 <p class="alert alert-danger" *ngIf="
                     (TipoMascota.errors?.required && submitted) ||
@@ -219,14 +239,15 @@
                         <div class="form-group col-12">
                             <label>Raza</label>
 
-                            <select id="select-raza" class="form-control" [(ngModel)]="mascota.raza" [compareWith]="compareRaza" formControlName="RazaAnimal" required>
-                <option [ngValue]="null" selected>
-                  --- selecionar la Raza ---
-                </option>
-                <option *ngFor="let raza of razas" [ngValue]="raza">
-                  {{ raza?.descripcion }}
-                </option>
-              </select>
+                            <select id="select-raza" class="form-control" [(ngModel)]="mascota.raza"
+                                [compareWith]="compareRaza" formControlName="RazaAnimal" required>
+                                <option [ngValue]="null" selected>
+                                    --- selecionar la Raza ---
+                                </option>
+                                <option *ngFor="let raza of razas" [ngValue]="raza">
+                                    {{ raza?.descripcion }}
+                                </option>
+                            </select>
                             <div class="form-control-feedback w-100" *ngIf="
                   (RazaAnimal.errors && submitted) ||
                   ((RazaAnimal.dirty || RazaAnimal.touched) &&
@@ -238,7 +259,7 @@
                             </div>
                         </div>
 
-                        <input type="" class="" value="{{ mascota.usuario | json }}" name="usuario" hidden />
+                        <!--input type="" class="" value="{{ mascota.usuario | json }}" name="usuario" hidden /-->
                     </fieldset>
 
                     <!--div class="col-12 btn-submit">
@@ -247,25 +268,29 @@
                 </form>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button type="button" color="secondary" mdbBtn mdbWavesEffect class="waves-light" aria-label="Close" (click)="cerrarmodal()">
-          Cancelar
-        </button>
+                <button type="button" color="secondary" mdbBtn mdbWavesEffect class="waves-light" aria-label="Close"
+                    (click)="cerrarmodal()">
+                    Cancelar
+                </button>
 
-                <button type="submit" color="secondary" mdbBtn mdbWavesEffect class="waves-light" (click)="verificarDatos()" *ngIf="mascota.idmascota == 0; else elseBlock">
-          Registrar
-        </button>
+                <button type="submit" color="secondary" mdbBtn mdbWavesEffect class="waves-light"
+                    (click)="verificarDatos()" *ngIf="mascota.idmascota == 0; else elseBlock">
+                    Registrar
+                </button>
 
                 <ng-template #elseBlock>
-                    <button type="" role="button" color="secondary" mdbBtn mdbWavesEffect class="waves-light" (click)="verificarDatos()" class="btn m-4" [disabled]="myform.invalid">
-            Actualizar
-          </button>
+                    <button type="" role="button" color="secondary" mdbBtn mdbWavesEffect class="waves-light"
+                        (click)="verificarDatos()" class="btn m-4" [disabled]="myform.invalid">
+                        Actualizar
+                    </button>
                 </ng-template>
             </div>
         </div>
     </div>
 </div>
 
-<div mdbModal #modalDetalle="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+<div mdbModal #modalDetalle="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby=""
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header cyan text-white text-center">
@@ -281,17 +306,15 @@
 
                     <div class="col-6 text-center">
                         <label class="photo">
-              <img
-                class="foto"
-                [src]="mascota.foto != null ? mascota.foto : myImgUrl"
-            /></label>
+                            <img class="foto" [src]="mascota.foto != null ? mascota.foto : myImgUrl" /></label>
                     </div>
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button type="button" mdbBtn color="secondary" class="waves-light" (click)="cerrarmodalDetalle()" mdbWavesEffect>
-          Cerrar
-        </button>
+                <button type="button" mdbBtn color="secondary" class="waves-light" (click)="cerrarmodalDetalle()"
+                    mdbWavesEffect>
+                    Cerrar
+                </button>
             </div>
         </div>
     </div>

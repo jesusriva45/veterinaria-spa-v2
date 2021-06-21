@@ -11,6 +11,8 @@ import swal from "sweetalert2";
 import { AuthService } from "src/app/services/auth.service";
 import { Usuario } from "src/app/models/usuario";
 import { Raza } from "src/app/models/raza";
+import { Historial } from "src/app/models/historial";
+import { HistorialService } from "src/app/services/historial.service";
 
 @Component({
   selector: "app-registro-mascota",
@@ -27,6 +29,10 @@ export class RegistroMascotaComponent implements OnInit {
   tipomascota: Tipomascota[] = [];
 
   razas: Raza[] = [];
+
+  historial: Historial[] = [];
+
+  historialPorMascota: Historial;
 
   titulo: string = "Agregar Mascota";
   /*** */
@@ -59,6 +65,7 @@ export class RegistroMascotaComponent implements OnInit {
 
   constructor(
     private mascotasService: MascotaService,
+    private historialService: HistorialService,
     public router: Router,
     public _authService: AuthService //private modalService: NgbModal
   ) {
@@ -80,6 +87,20 @@ export class RegistroMascotaComponent implements OnInit {
 
     this.createFormControls();
     this.createForm();
+
+    //getMascotasDeCliente(id_cliente) {
+    this.historialService
+      .getHistorial()
+      .subscribe((data) => {
+        this.historial = data;
+        console.log(data)
+      });   // }
+
+
+
+
+
+
   }
 
   submitted: boolean = false;
@@ -130,12 +151,18 @@ export class RegistroMascotaComponent implements OnInit {
     this.createFormControls();
     this.createForm();
 
+
+
     this.basicModal.show();
 
     if (accion == "editar") {
       this.titulo = "Actualizar Información";
-      this.mascota.idmascota = mascota.idmascota;
+      mascota.idmascota;
       this.getMascota(mascota.idmascota);
+      this.IdMascota.setValue(mascota.idmascota);
+      this.Nombres.setValue(mascota.nombre);
+      this.Sexo.setValue(mascota.sexo);
+      this.Estado.setValue(mascota.estado);
       this.getTipoMascota();
       this.getRaza(mascota.tipomascota.idtipomascota);
       console.log(mascota.tipomascota.idtipomascota);
@@ -186,6 +213,7 @@ export class RegistroMascotaComponent implements OnInit {
                   `${this.mascota.nombre} bienvenido a nuestra veterinaria`,
                   "success"
                 );
+                this.mascota.usuario = this.clienteLog;
                 this.insert();
                 this.basicModal.hide();
                 // this.modalService.dismissAll();
@@ -328,10 +356,13 @@ export class RegistroMascotaComponent implements OnInit {
 
   insert(): void {
     this.mascotasService.insert(this.mascota).subscribe((response) => {
-      let currentUrl = this.router.url;
+
       /* this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
         this.router.navigate([currentUrl]);
       });*/
+      this.getMascotasDeCliente(response.usuario.idusuario);
+
+
       this.getMascotas();
       // this.router.navigate([window.location.reload()]);
     });
@@ -343,6 +374,7 @@ export class RegistroMascotaComponent implements OnInit {
       this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
         this.router.navigate([currentUrl]);
       });*/
+      this.getMascotasDeCliente(response.usuario.idusuario);
       this.getMascotas();
       // this.router.navigate([window.location.reload()]);
     });
@@ -409,7 +441,7 @@ export class RegistroMascotaComponent implements OnInit {
       .subscribe((data) => (this.mascotas = data));
   }
 
-  getMascotasDeCliente(id_cliente) {
+  getMascotasDeCliente(id_cliente: number) {
     this.mascotasService
       .getMascotasDelCliente(id_cliente)
       .subscribe((data) => (this.mascotasDeCliente = data));

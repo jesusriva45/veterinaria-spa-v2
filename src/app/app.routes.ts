@@ -21,6 +21,8 @@ import { AuthGuard } from "./services/guards/auth.guard";
 import { CarritoPedidoComponent } from "./components/pedido/carrito-pedido/carrito-pedido.component";
 import { DetalleServicioComponent } from "./components/servicios/detalle-servicio/detalle-servicio.component";
 import { EstadoTrackingComponent } from "./components/pedido/estado-tracking/estado-tracking.component";
+import { CitaComponent } from './components/cita/cita.component';
+import { DetalleCitaComponent } from './components/cita/detalle-cita/detalle-cita.component';
 
 export const ROUTES: Routes = [
   { path: "", pathMatch: "full", redirectTo: "inicio" },
@@ -38,6 +40,15 @@ export const ROUTES: Routes = [
     path: "crud-producto",
     component: CrudProductoComponent,
     canActivate: [AuthGuard],
+  },
+  //------------ CITA --------------
+  {
+    path: "cita/registro-cita",
+    component: CitaComponent,
+  },
+  {
+    path: "cita/detalle-cita",
+    component: DetalleCitaComponent,
   },
   //--------- PEDIDO --------------------------
   {

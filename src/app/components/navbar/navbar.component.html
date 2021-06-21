@@ -26,7 +26,8 @@
         <ul class="navbar-nav ml-auto">
 
             <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
-                <a class="nav-link waves-light" mdbWavesEffect routerLink="/estado-tracking"> Cambiar Estado Tracking</a>
+                <a class="nav-link waves-light" mdbWavesEffect routerLink="/estado-tracking"> Cambiar Estado
+                    Tracking</a>
             </li>
 
             <li class="nav-item" routerLinkActive="active">
@@ -44,15 +45,49 @@
             <!--li class="nav-item" *ngIf="(authService.isAuthenticated())" routerLinkActive="active">
                 <a class="nav-link waves-light" mdbWavesEffect routerLink="/historia-clinica"> Historial de Mascotas</a>
             </li-->
-
-            <li class="nav-item dropdown" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_VETERINARIO')" dropdown>
-                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-                CRUD Productos/Servicios <span class="caret"></span></a>
+            <li class="nav-item dropdown" *ngIf="(authService.isAuthenticated())" dropdown>
+                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light"
+                    mdbWavesEffect>
+                    Cita <span class="caret"></span></a>
                 <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
 
-                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/crud-producto"> Crud de Productos</a>
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/cita/detalle-cita">Consultar Citas
+                    </a>
                     <div class="divider dropdown-divider"></div>
-                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/crud-servicio"> Crud de Servicios</a>
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/cita/registro-cita"> Registrar Cita
+                    </a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown"
+                *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_VETERINARIO')" dropdown>
+                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light"
+                    mdbWavesEffect>
+                    Citas/Historial <span class="caret"></span></a>
+                <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/historia-clinica"> Buscar Historial
+                    </a>
+                    <div class="divider dropdown-divider"></div>
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/registro-mascota"> Mi Mascota </a>
+                    <div class="divider dropdown-divider"></div>
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/cita/registro-cita"> Cita </a>
+
+                </div>
+            </li>
+
+            <li class="nav-item dropdown"
+                *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_VETERINARIO')" dropdown>
+                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light"
+                    mdbWavesEffect>
+                    CRUD Productos/Servicios <span class="caret"></span></a>
+                <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/crud-producto"> Crud de
+                        Productos</a>
+                    <div class="divider dropdown-divider"></div>
+                    <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/crud-servicio"> Crud de
+                        Servicios</a>
 
                 </div>
             </li>
@@ -69,7 +104,8 @@
                 <a class="nav-link waves-light" mdbWavesEffect routerLink="/registro-cliente"> Registrarse</a>
             </li>
 
-            <li class="nav-item" *ngIf="(authService.isAuthenticated())" routerLinkActive="active">
+            <li class="nav-item" *ngIf="(authService.isAuthenticated() && !authService.hasRole('ROLE_VETERINARIO'))"
+                routerLinkActive="active">
                 <a class="nav-link " mdbWavesEffect routerLink="/registro-mascota"> Registra a tu Mascota</a>
             </li>
             <li class="nav-item" routerLinkActive="active">
@@ -94,17 +130,20 @@
             <ng-template #elseBlock>
 
                 <li class="nav-item dropdown mr-3" *ngIf="(authService.isAuthenticated())" dropdown>
-                    <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+                    <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light"
+                        mdbWavesEffect>
                         <i class="fas fa-user-alt fa-1x mr-2"></i><span class="caret"></span>Profile</a>
                     <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary " role="menu">
-                        <a class="dropdown-item waves-light" mdbWavesEffect routerLink="datos-personales"><i class="fas fa-user-edit mr-2"></i> Datos Personales</a>
+                        <a class="dropdown-item waves-light" mdbWavesEffect routerLink="datos-personales"><i
+                                class="fas fa-user-edit mr-2"></i> Datos Personales</a>
 
                         <hr class="dropdown-divider" />
 
 
-                        <a class="dropdown-item waves-light d-flex" mdbWavesEffect routerLink="/login" (click)="logout()" mdbWavesEffect>
-                                Logout <mdb-icon class="ml-auto mt-auto mb-auto" fas icon="sign-in-alt"></mdb-icon>
-                            </a>
+                        <a class="dropdown-item waves-light d-flex" mdbWavesEffect routerLink="/login"
+                            (click)="logout()" mdbWavesEffect>
+                            Logout <mdb-icon class="ml-auto mt-auto mb-auto" fas icon="sign-in-alt"></mdb-icon>
+                        </a>
 
                     </div>
                 </li>

@@ -25,7 +25,7 @@ export class ServicioService {
     private http: HttpClient,
     private router: Router,
     public authService: AuthService
-  ) {}
+  ) { }
 
   //------------ PERMISOS DE USUARIO -----------------
   private agregarAuthorizationHeader() {
@@ -68,6 +68,14 @@ export class ServicioService {
       .pipe(map((response) => response as Servicio[]));
   }
 
+  getServiciosPorCategoria(id_cate: number): Observable<Servicio[]> {
+    //return of();
+    //return this.http.get<Usuario[]>(this.urlEndPoint);
+    return this.http
+      .get(`${this.urlEndPoint}/cate/${id_cate}`, { headers: this.agregarAuthorizationHeader() })
+      .pipe(map((response) => response as Servicio[]));
+  }
+
   insert(servicio: Servicio): Observable<Servicio> {
     return this.http
       .post<Servicio>(this.urlEndPoint, servicio, {
@@ -82,6 +90,8 @@ export class ServicioService {
         })
       );
   }
+
+
 
   getServicio(id): Observable<Servicio> {
     return this.http.get<Servicio>(`${this.urlEndPoint}/${id}`, {

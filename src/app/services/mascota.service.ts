@@ -27,7 +27,7 @@ export class MascotaService {
     private http: HttpClient,
     private router: Router,
     public authService: AuthService
-  ) {}
+  ) { }
 
   private agregarAuthorizationHeader() {
     let token = this.authService.token;
@@ -73,6 +73,24 @@ export class MascotaService {
     return this.http
       .get<Mascota[]>(
         `${this.urlEndPoint}/mascotas-del-cliente/${id_cliente}`,
+        {
+          headers: this.agregarAuthorizationHeader(),
+        }
+      )
+      .pipe(
+        catchError((e) => {
+          if (this.isNoAutorizado(e)) {
+            return throwError(e);
+          }
+        })
+      );
+  }
+
+
+  getMascotasPorDni(dni: string): Observable<Mascota[]> {
+    return this.http
+      .get<Mascota[]>(
+        `${this.urlEndPoint}/usuario/${dni}`,
         {
           headers: this.agregarAuthorizationHeader(),
         }

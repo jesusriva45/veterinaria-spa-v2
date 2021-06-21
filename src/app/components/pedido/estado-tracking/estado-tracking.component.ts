@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 
 import { Estado } from "src/app/models/estado";
 import { Tracking } from "src/app/models/tracking";
@@ -42,12 +42,11 @@ export class EstadoTrackingComponent implements OnInit {
   constructor(
     public pedidoService: PedidoService,
     public clienteService: ClienteService,
-    public activateRoute: ActivatedRoute,
     public trackingService: TrackingService,
     public cdRef: ChangeDetectorRef,
     public router: Router,
     public authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.listarEstados();
@@ -96,7 +95,6 @@ export class EstadoTrackingComponent implements OnInit {
   Checked = null;
 
   checkBox() {
-    console.log(this.box.length);
     for (let index = 0; index < this.box.length; index++) {
       this.box[index].addEventListener("click", () => {
         if (this.Checked != null) {
@@ -109,7 +107,6 @@ export class EstadoTrackingComponent implements OnInit {
   }
 
   eventCheck(event, el: any) {
-    console.log(el.pedido);
     this.tracking.pedido = el.pedido;
     this.tracking.idtracking = el.idtracking;
   }

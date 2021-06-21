@@ -20,7 +20,7 @@
         <tbody>
             <tr class="text-center" *ngFor="let el of elements; let i = index">
                 <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.idpedido}}</th>
-                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.fecha_pedido | date:'dd-MM-yyyy hh:mm:ss'}}</td>
+                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.fecha_pedido | date:'dd-MM-yyyy HH:mm:ss'}}</td>
                 <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.descripcion}}</td>
                 <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
                     <mdb-icon style="cursor: pointer;" mdbWavesEffect far icon="file-alt" size="2x" [routerLink]="['/pedido/detalle-pedido', el.idpedido]"></mdb-icon>

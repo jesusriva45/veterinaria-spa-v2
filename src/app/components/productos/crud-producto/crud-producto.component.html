@@ -31,13 +31,16 @@
                 <tbody>
                     <tr *ngFor="let producto of productos">
                         <th class="align-middle">{{ producto.idproducto }}</th>
-                        <th class="align-middle"><img mdbWavesEffect (click)="modalDetalle(producto)" [src]="producto.foto1  != null ? producto.foto1 : myImgUrl" width="50px" height="50px"></th>
+                        <th class="align-middle"><img mdbWavesEffect (click)="modalDetalle(producto)"
+                                [src]="producto.foto1  != null ? producto.foto1 : myImgUrl" width="50px" height="50px">
+                        </th>
                         <th class="align-middle">{{ producto.nombre }}</th>
                         <th class="align-middle">{{ producto.precio }}</th>
                         <th class="align-middle">{{ producto.marca.nombre }}</th>
 
                         <!--td class="align-middle"><button type="button" mdbBtn color="primary" mdbWavesEffect (click)="modalDetalle(producto)">Detalle</button></td-->
-                        <td class="align-middle"><button type="button" mdbBtn color="warning" mdbWavesEffect (click)="openModalCrud('editar',producto)">Editar</button></td>
+                        <td class="align-middle"><button type="button" mdbBtn color="warning" mdbWavesEffect
+                                (click)="openModalCrud('editar',producto)">Editar</button></td>
 
 
                     </tr>
@@ -49,7 +52,8 @@
 
 
 
-<div mdbModal #modalDetail="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div mdbModal #modalDetail="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center text-white cyan">
@@ -90,14 +94,16 @@
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button mdbBtn color="default" class="waves-light" (click)="cerrarmodalDetalle()" mdbWavesEffect>Cerrar</button>
+                <button mdbBtn color="default" class="waves-light" (click)="cerrarmodalDetalle()"
+                    mdbWavesEffect>Cerrar</button>
             </div>
         </div>
     </div>
 </div>
 
 
-<div mdbModal #contentModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div mdbModal #contentModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable  modal-fluid" role="document">
         <div class="modal-content">
             <div class="modal-header bg-secondary text-white text-center">
@@ -107,7 +113,8 @@
 
             <div class="modal-body">
 
-                <form id="form-producto" [formGroup]="myform" (ngSubmit)="verificarDatos()" class="" enctype="multipart/form-data">
+                <form id="form-producto" [formGroup]="myform" (ngSubmit)="verificarDatos()" class=""
+                    enctype="multipart/form-data">
 
 
                     <fieldset class="row ml-auto mr-auto" formGroupName="name">
@@ -116,9 +123,12 @@
                         <div class="col-md-4">
                             <div class="form-group col-12">
 
-                                <input type="text" class="form-input" [(ngModel)]="producto.idproducto" formControlName="IdProducto" required hidden>
-                                <div class="form-control-feedback" *ngIf="IdProducto.errors && (IdProducto.dirty || IdProducto.touched)">
-                                    <p class="alert alert-danger" role="alert" *ngIf="IdProducto.errors.required">Codigo incorrecto</p>
+                                <input type="text" class="form-input" [(ngModel)]="producto.idproducto"
+                                    formControlName="IdProducto" required hidden>
+                                <div class="form-control-feedback"
+                                    *ngIf="IdProducto.errors && (IdProducto.dirty || IdProducto.touched)">
+                                    <p class="alert alert-danger" role="alert" *ngIf="IdProducto.errors.required">Codigo
+                                        incorrecto</p>
                                 </div>
 
                             </div>
@@ -132,7 +142,9 @@
                               }" class="form-control" [(ngModel)]="producto.nombre" formControlName="Nombre" required>
 
                                 <div class="m-0">
-                                    <p class="alert-danger" *ngIf=" (Nombre.errors && Nombre.errors.required && submitted) || ((Nombre.dirty || Nombre.touched) && Nombre.invalid )">Nombre is required</p>
+                                    <p class="alert-danger"
+                                        *ngIf=" (Nombre.errors && Nombre.errors.required && submitted) || ((Nombre.dirty || Nombre.touched) && Nombre.invalid )">
+                                        Nombre is required</p>
                                     <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
                                 </div>
                             </div>
@@ -143,9 +155,12 @@
                                 <textarea [ngClass]="{
                                     'is-invalid': (Indicaciones.errors?.required && submitted) || ((Indicaciones.dirty || Indicaciones.touched) && Indicaciones.invalid ),
                                     'is-valid': Indicaciones.valid && (Indicaciones.dirty || Indicaciones.touched)
-                                  }" class="form-control" [(ngModel)]="producto.indicaciones" formControlName="Indicaciones" required></textarea>
+                                  }" class="form-control" [(ngModel)]="producto.indicaciones"
+                                    formControlName="Indicaciones" required></textarea>
                                 <div class="m-0">
-                                    <p class="alert-danger" *ngIf=" (Indicaciones.errors?.required && submitted) || ((Indicaciones.dirty || Indicaciones.touched) && Indicaciones.invalid )">Descripcion is required</p>
+                                    <p class="alert-danger"
+                                        *ngIf=" (Indicaciones.errors?.required && submitted) || ((Indicaciones.dirty || Indicaciones.touched) && Indicaciones.invalid )">
+                                        Descripcion is required</p>
                                     <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
                                 </div>
                             </div>
@@ -156,11 +171,14 @@
                                 <input type="text" [ngClass]="{
                                     'is-invalid': (Precio.errors?.required && submitted) || ((Precio.dirty || Precio.touched) && Precio.invalid ),
                                     'is-valid': Precio.valid && (Precio.dirty || Precio.touched)
-                                  }" class="form-control" [(ngModel)]="producto.precio" formControlName="Precio" required>
+                                  }" class="form-control" [(ngModel)]="producto.precio" formControlName="Precio"
+                                    required>
 
-                                <div class="form-control-feedback w-100" *ngIf="(Precio.errors && submitted) || (Precio.dirty || Precio.touched) && Precio.invalid">
+                                <div class="form-control-feedback w-100"
+                                    *ngIf="(Precio.errors && submitted) || (Precio.dirty || Precio.touched) && Precio.invalid">
                                     <p class="alert alert-danger" *ngIf="Precio.errors.required">Precio is required</p>
-                                    <p class="alert alert-danger" *ngIf="Precio.errors.pattern">Formato incorrecto, solo enteros o numero con 2 decimales </p>
+                                    <p class="alert alert-danger" *ngIf="Precio.errors.pattern">Formato incorrecto, solo
+                                        enteros o numero con 2 decimales </p>
                                 </div>
                             </div>
 
@@ -169,10 +187,13 @@
                                 <input type="text" [ngClass]="{
                                     'is-invalid': (Serie.errors?.required && submitted) || ((Serie.dirty || Serie.touched) && Serie.invalid ),
                                     'is-valid': Serie.valid && (Serie.dirty || Serie.touched)
-                                  }" class="form-control" [(ngModel)]="producto.serie" formControlName="Serie" required>
+                                  }" class="form-control" [(ngModel)]="producto.serie" formControlName="Serie"
+                                    required>
 
                                 <div class="m-0">
-                                    <p class="alert-danger" *ngIf=" (Serie.errors?.required && submitted) || ((Serie.dirty || Serie.touched) && Serie.invalid )">Serie is required</p>
+                                    <p class="alert-danger"
+                                        *ngIf=" (Serie.errors?.required && submitted) || ((Serie.dirty || Serie.touched) && Serie.invalid )">
+                                        Serie is required</p>
                                     <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
                                 </div>
                             </div>
@@ -182,11 +203,14 @@
                                 <input type="text" [ngClass]="{
                                     'is-invalid': (Stock.errors?.required && submitted) || ((Stock.dirty || Stock.touched) && Stock.invalid ),
                                     'is-valid': Stock.valid && (Stock.dirty || Stock.touched)
-                                  }" class="form-control" [(ngModel)]="producto.stock" formControlName="Stock" required>
+                                  }" class="form-control" [(ngModel)]="producto.stock" formControlName="Stock"
+                                    required>
 
-                                <div class="form-control-feedback w-100" *ngIf="(Stock.errors && submitted) || (Stock.dirty || Stock.touched) && Stock.invalid">
+                                <div class="form-control-feedback w-100"
+                                    *ngIf="(Stock.errors && submitted) || (Stock.dirty || Stock.touched) && Stock.invalid">
                                     <p class="alert alert-danger" *ngIf="Stock.errors.required">Stock is required</p>
-                                    <p class="alert alert-danger" *ngIf="Stock.errors.pattern">Formato incorrecto, solo números enteros </p>
+                                    <p class="alert alert-danger" *ngIf="Stock.errors.pattern">Formato incorrecto, solo
+                                        números enteros </p>
                                 </div>
                             </div>
 
@@ -197,18 +221,22 @@
                                 <select class="w-100 form-control" [ngClass]="{
                                     'is-invalid': (Marca.errors?.required && submitted) || ((Marca.dirty || Marca.touched) && Marca.invalid ),
                                     'is-valid': Marca.valid && (Marca.dirty || Marca.touched)
-                                  }" [(ngModel)]="producto.marca" [compareWith]="compareMarca" formControlName="Marca" required>
-                                       
-                                        <option class="" [ngValue]="undefined" aria-hidden="aria-hidden" selected>--- selecionar una marca ---</option>
+                                  }" [(ngModel)]="producto.marca" [compareWith]="compareMarca" formControlName="Marca"
+                                    required>
 
-                                       
-                                        <option *ngFor="let mar of marca" [ngValue]="mar" > {{ mar.nombre  }}</option>
-                                   
-                                       
-                                    </select>
+                                    <option class="" [ngValue]="undefined" aria-hidden="aria-hidden" selected>---
+                                        selecionar una marca ---</option>
+
+
+                                    <option *ngFor="let mar of marca" [ngValue]="mar"> {{ mar.nombre }}</option>
+
+
+                                </select>
 
                                 <div class="m-0">
-                                    <p class="alert-danger" *ngIf="(Marca.errors?.required && submitted) || ((Marca.dirty || Marca.touched) && Marca.invalid )">Marca is required</p>
+                                    <p class="alert-danger"
+                                        *ngIf="(Marca.errors?.required && submitted) || ((Marca.dirty || Marca.touched) && Marca.invalid )">
+                                        Marca is required</p>
                                     <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
                                 </div>
                             </div>
@@ -224,12 +252,16 @@
                                 <select [ngClass]="{
                                     'is-invalid': (IdProveedor.errors?.required && submitted) || ((IdProveedor.dirty || IdProveedor.touched) && IdProveedor.invalid ),
                                     'is-valid': IdProveedor.valid && (IdProveedor.dirty || IdProveedor.touched)
-                                  }" class="w-100 form-control" [(ngModel)]="producto.proveedor" [compareWith]="compareProveedor" formControlName="IdProveedor" required>
-                                        <option [ngValue]=null selected>--- selecionar un proveedor ---</option>
-                                        <option *ngFor="let prov of proveedor" [ngValue]="prov" > {{ prov.razon_social  }}</option>
+                                  }" class="w-100 form-control" [(ngModel)]="producto.proveedor"
+                                    [compareWith]="compareProveedor" formControlName="IdProveedor" required>
+                                    <option [ngValue]=null selected>--- selecionar un proveedor ---</option>
+                                    <option *ngFor="let prov of proveedor" [ngValue]="prov"> {{ prov.razon_social }}
+                                    </option>
                                 </select>
                                 <div class="">
-                                    <p class="alert-danger" *ngIf="(IdProveedor.errors?.required && submitted) || ((IdProveedor.dirty || IdProveedor.touched) && IdProveedor.invalid )">Proveedor is required</p>
+                                    <p class="alert-danger"
+                                        *ngIf="(IdProveedor.errors?.required && submitted) || ((IdProveedor.dirty || IdProveedor.touched) && IdProveedor.invalid )">
+                                        Proveedor is required</p>
 
                                 </div>
                             </div>
@@ -242,16 +274,20 @@
                                 <select [ngClass]="{
                                     'is-invalid': (IdCategoria.errors?.required && submitted) || ((IdCategoria.dirty || IdCategoria.touched) && IdCategoria.invalid ),
                                     'is-valid': IdCategoria.valid && (IdCategoria.dirty || IdCategoria.touched)
-                                  }" class="w-100 form-control" [(ngModel)]="producto.categoria" [compareWith]="compareCategoria" formControlName="IdCategoria" required>
-                                        
-                                        <option [ngValue]=null selected>--- selecionar una categoria ---</option>
-                                        <option *ngFor="let cate of categoria" [ngValue]="cate" > {{ cate.descripcion  }}</option>
-                                    
+                                  }" class="w-100 form-control" [(ngModel)]="producto.categoria"
+                                    [compareWith]="compareCategoria" formControlName="IdCategoria" required>
+
+                                    <option [ngValue]=null selected>--- selecionar una categoria ---</option>
+                                    <option *ngFor="let cate of categoria" [ngValue]="cate"> {{ cate.descripcion }}
+                                    </option>
+
                                 </select>
 
 
                                 <div class="">
-                                    <p class="alert-danger" *ngIf="(IdCategoria.errors?.required && submitted) || ((IdCategoria.dirty || IdCategoria.touched) && IdCategoria.invalid )">Categoria is required</p>
+                                    <p class="alert-danger"
+                                        *ngIf="(IdCategoria.errors?.required && submitted) || ((IdCategoria.dirty || IdCategoria.touched) && IdCategoria.invalid )">
+                                        Categoria is required</p>
 
                                 </div>
                             </div>
@@ -273,7 +309,9 @@
 
 
                                 <div class="m-0">
-                                    <p class="alert-danger" *ngIf=" (Descripcion.errors?.required && submitted) || ((Descripcion.dirty || Descripcion.touched) && Descripcion.invalid )">Descripcion is required</p>
+                                    <p class="alert-danger"
+                                        *ngIf=" (Descripcion.errors?.required && submitted) || ((Descripcion.dirty || Descripcion.touched) && Descripcion.invalid )">
+                                        Descripcion is required</p>
                                     <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
                                 </div>
                             </div>
@@ -294,34 +332,46 @@
                                 <div class="mr-auto ml-auto col-6">
                                     <mdb-carousel [animation]="'slide'">
                                         <mdb-carousel-item>
-                                            <img class="d-block w-100" [attr.src]="(producto.foto1 != null || producto.foto1 != undefined) ? producto.foto1 : myImgUrl" height="400px" alt="First slide">
+                                            <img class="d-block w-100"
+                                                [attr.src]="(producto.foto1 != null || producto.foto1 != undefined) ? producto.foto1 : myImgUrl"
+                                                height="400px" alt="First slide">
                                         </mdb-carousel-item>
                                         <mdb-carousel-item>
-                                            <img class="d-block w-100" [attr.src]="(producto.foto2 != null || producto.foto2 != undefined) ? producto.foto2 : myImgUrl" height="400px" alt="Second slide">
+                                            <img class="d-block w-100"
+                                                [attr.src]="(producto.foto2 != null || producto.foto2 != undefined) ? producto.foto2 : myImgUrl"
+                                                height="400px" alt="Second slide">
                                         </mdb-carousel-item>
                                         <mdb-carousel-item>
-                                            <img class="d-block w-100" [attr.src]="(producto.foto3 != null || producto.foto3 != undefined) ? producto.foto3 : myImgUrl" height="400px" alt="Third slide">
+                                            <img class="d-block w-100"
+                                                [attr.src]="(producto.foto3 != null || producto.foto3 != undefined) ? producto.foto3 : myImgUrl"
+                                                height="400px" alt="Third slide">
                                         </mdb-carousel-item>
                                     </mdb-carousel>
                                 </div>
 
                                 <div class="d-inline-flex justify-content-center w-100 mt-5">
                                     <div class="photo">
-                                        <label for="photo1" class="w-100">        
-                                    <mdb-icon fas size="3x" icon="camera"></mdb-icon></label>
-                                        <input type="file" id="photo1" (change)="showPreviewImage1($event)" name="foto1" required class="form-control" hidden>
+                                        <label for="photo1" class="w-100">
+                                            <mdb-icon fas size="3x" icon="camera"></mdb-icon>
+                                        </label>
+                                        <input type="file" id="photo1" (change)="showPreviewImage1($event)" name="foto1"
+                                            required class="form-control" hidden>
                                     </div>
 
                                     <div class="photo">
-                                        <label for="photo2" class="w-100">        
-                                    <mdb-icon  fas size="3x" icon="camera"></mdb-icon></label>
-                                        <input type="file" id="photo2" (change)="showPreviewImage2($event)" name="foto2" required class="form-control" hidden>
+                                        <label for="photo2" class="w-100">
+                                            <mdb-icon fas size="3x" icon="camera"></mdb-icon>
+                                        </label>
+                                        <input type="file" id="photo2" (change)="showPreviewImage2($event)" name="foto2"
+                                            required class="form-control" hidden>
                                     </div>
 
                                     <div class="photo">
-                                        <label for="photo3" class="w-100">        
-                                    <mdb-icon  fas size="3x" icon="camera"></mdb-icon></label>
-                                        <input type="file" id="photo3" (change)="showPreviewImage3($event)" name="foto3" required class="form-control" hidden>
+                                        <label for="photo3" class="w-100">
+                                            <mdb-icon fas size="3x" icon="camera"></mdb-icon>
+                                        </label>
+                                        <input type="file" id="photo3" (change)="showPreviewImage3($event)" name="foto3"
+                                            required class="form-control" hidden>
                                     </div>
                                 </div>
 
@@ -349,17 +399,20 @@
 
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button type="button" mdbBtn color="secondary" mdbWavesEffect class="waves-light" aria-label="Close" (click)="cerrarmodal()">
+                <button type="button" mdbBtn color="secondary" mdbWavesEffect class="waves-light" aria-label="Close"
+                    (click)="cerrarmodal()">
                     Cancelar
-                  </button>
+                </button>
 
-                <button type="submit" mdbBtn color="secondary" mdbWavesEffect class="waves-light" (click)="verificarDatos()" *ngIf="producto.idproducto == 0; else elseBlock">
+                <button type="submit" mdbBtn color="secondary" mdbWavesEffect class="waves-light"
+                    (click)="verificarDatos()" *ngIf="producto.idproducto == 0; else elseBlock">
                     Registrar
-                  </button>
+                </button>
 
                 <ng-template #elseBlock>
-                    <button type="" role="button" mdbBtn color="secondary" mdbWavesEffect class="waves-light" (click)="verificarDatos()" [disabled]="myform.invalid">
-                      Actualizar
+                    <button type="" role="button" mdbBtn color="secondary" mdbWavesEffect class="waves-light"
+                        (click)="verificarDatos()" [disabled]="myform.invalid">
+                        Actualizar
                     </button>
                 </ng-template>
             </div>

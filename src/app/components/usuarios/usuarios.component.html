@@ -1,10 +1,10 @@
 <!--app-modal-form *ngIf="usuarioSeleccionado" [usuario]="usuarioSeleccionado"></app-modal-form-->
 
-<div class="container-fluid p-5 ">
+<div class="row col-12">
     <!--button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
     Agregar Usuario
   </button*-->
-    <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" mdbBtn color="primary" class="relative waves-light" (click)="openModalCrud()" mdbWavesEffect>AGREGAR USUARIO</button>
+
 
 
     <!--Card image-->
@@ -17,7 +17,10 @@
     <!--Title-->
 
 
-    <div class="container-fluid p-2 d-flex justify-content-center">
+    <div class="col-11 container d-block p-5">
+
+        <button *ngIf="authService.hasRole('ROLE_ADMIN')" type="button" mdbBtn color="primary"
+            class="relative waves-light mb-5" (click)="openModalCrud()" mdbWavesEffect>AGREGAR USUARIO</button>
         <!--div class="row">
             <div class="col-md-12 mx-auto">
                 <div class="md-form">
@@ -26,7 +29,7 @@
                 </div>
             </div>
         </div-->
-        <table mdbTable #tableEl="mdbTable" mdbTableScroll scrollX="true" maxWidth="1920" class="p-0 m-0">
+        <table mdbTable #tableEl="mdbTable" mdbTableScroll scrollX="true" maxWidth="100vw" class="p-0 m-0">
             <thead>
                 <tr class="text-center">
                     <th scope="col">#</th>
@@ -48,25 +51,53 @@
             </thead>
             <tbody>
                 <tr class="text-center" *ngFor="let usuario of usuarios; let i = index">
-                    <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.idusuario }}</th>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.nombres }}</td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.apellidos }}</td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.dni }}</td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.telefono }}</td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.correo }}</td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ usuario.fechaNac }}</td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ usuario.direccion }}</td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.ubigeo.departamento }}</td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{ usuario.ubigeo.provincia }}</td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{ usuario.ubigeo.distrito }}</td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="align-middle">
-                        <mdb-icon (click)="openModalCrud(usuario)" type="button" fas size="2x" icon="edit">Estado</mdb-icon>
+                    <th class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{
+                        usuario.idusuario }}</th>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{
+                        usuario.nombres }}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{
+                        usuario.apellidos }}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{
+                        usuario.dni }}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{
+                        usuario.telefono }}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{
+                        usuario.correo }}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{
+                        usuario.fechaNac }}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{
+                        usuario.direccion }}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{
+                        usuario.ubigeo.departamento }}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{
+                        usuario.ubigeo.provincia }}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"> {{
+                        usuario.ubigeo.distrito }}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+                        class="align-middle">
+                        <mdb-icon (click)="openModalCrud(usuario)" type="button" fas size="2x" icon="edit">Estado
+                        </mdb-icon>
                     </td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="align-middle">
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+                        class="align-middle">
                         <mdb-icon (click)="modalEstado(usuario)" type="button" fas size="2x" icon="user-alt"></mdb-icon>
 
                     </td>
-                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="align-middle">
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+                        class="align-middle">
                         <mdb-icon (click)="modalRol(usuario)" type="button" fas size="2x" icon="users"></mdb-icon>
                     </td>
 
@@ -156,7 +187,8 @@
 
 
 
-<div mdbModal #modalUpdateEstado="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+<div mdbModal #modalUpdateEstado="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby=""
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-fluid" role="document">
         <div class="modal-content p-5">
             <div class="modal-header text-center">
@@ -168,12 +200,13 @@
                 <form id="form-producto" class="" enctype="multipart/form-data">
                     <div class=" md-form">
 
-                        <select class="form-control pl-3 pr-3" [(ngModel)]="usuario.estado" name="estado">                        
-                                <option  [ngValue]=undefined selected>--- selecionar un estado ---</option>
-                                    <option *ngFor="let est of status"  [ngValue]="est.estado">{{est.descripcion}} </option>
-                                   
-                               
-                        |</select>
+                        <select class="form-control pl-3 pr-3" [(ngModel)]="usuario.estado" name="estado">
+                            <option [ngValue]=undefined selected>--- selecionar un estado ---</option>
+                            <option *ngFor="let est of status" [ngValue]="est.estado">{{est.descripcion}} </option>
+
+
+                            |
+                        </select>
 
                     </div>
 
@@ -181,8 +214,10 @@
 
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button type="button" mdbBtn color="secondary" class="waves-light" (click)="cerrarmodal()" mdbWavesEffect>Cancelar</button>
-                <button type="submit" mdbBtn color="primary" class="waves-light" (click)="updateEstadoForm()" mdbWavesEffect>Actualizar</button>
+                <button type="button" mdbBtn color="secondary" class="waves-light" (click)="cerrarmodal()"
+                    mdbWavesEffect>Cancelar</button>
+                <button type="submit" mdbBtn color="primary" class="waves-light" (click)="updateEstadoForm()"
+                    mdbWavesEffect>Actualizar</button>
             </div>
         </div>
     </div>
@@ -190,7 +225,8 @@
 
 
 
-<div mdbModal #modalUpdateRol="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+<div mdbModal #modalUpdateRol="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby=""
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-fluid" role="document">
         <div class="modal-content p-5">
             <div class="modal-header text-center">
@@ -206,11 +242,13 @@
 
                     <div class=" md-form">
 
-                        <select [(ngModel)]="acceso_rol.rol" [compareWith]="compareRol" class="form-control pl-3 pr-3" name="rol">                        
-                                <option  [ngValue]="undefined" selected>--- selecionar un rol ---</option>
-                                    <option *ngFor="let rol of roles"  [ngValue]="rol">{{rol.descripcion}} </option>                                  
-                               
-                        |</select>
+                        <select [(ngModel)]="acceso_rol.rol" [compareWith]="compareRol" class="form-control pl-3 pr-3"
+                            name="rol">
+                            <option [ngValue]="undefined" selected>--- selecionar un rol ---</option>
+                            <option *ngFor="let rol of roles" [ngValue]="rol">{{rol.descripcion}} </option>
+
+                            |
+                        </select>
 
                     </div>
 
@@ -218,8 +256,10 @@
 
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button type="button" mdbBtn color="secondary" class="waves-light" (click)="cerrarmodalRol()" mdbWavesEffect>Cancelar</button>
-                <button type="submit" mdbBtn color="primary" class="waves-light" (click)="updateRolForm()" mdbWavesEffect>Actualizar</button>
+                <button type="button" mdbBtn color="secondary" class="waves-light" (click)="cerrarmodalRol()"
+                    mdbWavesEffect>Cancelar</button>
+                <button type="submit" mdbBtn color="primary" class="waves-light" (click)="updateRolForm()"
+                    mdbWavesEffect>Actualizar</button>
             </div>
         </div>
     </div>

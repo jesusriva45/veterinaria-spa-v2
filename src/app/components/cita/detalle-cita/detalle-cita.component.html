@@ -1,0 +1,199 @@
+<div class="row col-12">
+
+
+
+
+    <div class="col-11 container d-block p-5">
+
+        <h4>Citas</h4>
+
+        <div>
+            <div class="row col-md-12 mx-auto">
+                <div [hidden]="!authService.hasRole('ROLE_RECEPCIONISTA') && !authService.hasRole('ROLE_VETERINARIO') && !authService.hasRole('ROLE_ADMIN')"
+                    class="md-form w-25">
+                    <input type="text" [(ngModel)]="dniUser" class="form-control" id="search" mdbInput />
+                    <label for="search">DNI</label>
+                </div>
+                <div class="form-group col-4 ml-auto">
+                    <label>Estado</label>
+
+                    <select id="select-option" class="form-control pl-3 pr-3"
+                        (ngModelChange)="onChangeFiltrarCitaPorEstado($event)" [(ngModel)]="estadoCita" name="estado"
+                        ngOnCha>
+                        <option [ngValue]=null selected>
+                            --- selecionar un estado ---
+                        </option>
+
+                        <option *ngFor="let status of estados" [ngValue]="status">
+                            {{ status }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-4 ml-auto m-auto "
+                    *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_RECEPCIONISTA') || authService.hasRole('ROLE_VETERINARIO')">
+                    <button (click)="listarCitasDeUsuarioSistema()" mdbBtn type="button" color="secondary"
+                        rounded="true" mdbWavesEffect size="sm">Mis Citas</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!--div class="row">
+            <div class="col-md-12 mx-auto">
+                <div class="md-form">
+                    <input type="text" [(ngModel)]="searchText" class="form-control" id="search" mdbInput />
+                    <label for="search">Buscar</label>
+                </div>
+            </div>
+        </div-->
+        <table size="sm" id="tableMDB" mdbTable #tableEl="mdbTable" mdbTableScroll scrollX="true" maxWidth="100vw"
+            class="p-0 m-0 ml-auto">
+            <thead class="text-bolder bg-secondary">
+                <tr class="text-center">
+                    <!--th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements"
+                        [sortBy]="headElements[i]" scope="col">{{head | titlecase}} <mdb-icon fas icon="sort">
+                        </mdb-icon>
+                    </th-->
+                    <th [mdbTableSort]="citas" [sortBy]="headElements[0]" class="text-bolder" scope="col"># <mdb-icon
+                            fas icon="sort">
+                        </mdb-icon>
+                    </th>
+                    <th [mdbTableSort]="citas" [sortBy]="headElements[1]" class="text-bolder" scope="col"># Fecha y
+                        Hora de Registro <mdb-icon fas icon="sort">
+                        </mdb-icon>
+                    </th>
+                    <th [mdbTableSort]="citas" [sortBy]="headElements[2]" class="text-bolder" scope="col"># Dia de
+                        Atención <mdb-icon fas icon="sort">
+                        </mdb-icon>
+                    </th>
+                    <th [mdbTableSort]="citas" [sortBy]="headElements[3]" class="text-bolder" scope="col"># Hora de
+                        Atención <mdb-icon fas icon="sort">
+                        </mdb-icon>
+                    </th>
+                    <th [mdbTableSort]="citas" [sortBy]="headElements[4]" class="text-bolder" scope="col"># Estado
+                        <mdb-icon fas icon="sort">
+                        </mdb-icon>
+                    </th>
+                    <th class="text-bolder" scope="col">#</th>
+                    <th class="text-bolder" scope="col">#</th>
+                    <th [hidden]="authService.hasRole('ROLE_RECEPCIONISTA') || authService.hasRole('ROLE_CLIENTE')"
+                        class="text-bolder" scope="col">#</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center" *ngFor="let el of citas; let i = index">
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{el.idcita}}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{el.fecha_registro | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{el.dia_atencion | date:'dd-MM-yyyy'}}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{el.hora_inicio}} - {{el.hora_fin}}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{el.estado}}</td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        <button (click)="cancelarCita(el)" [disabled]="(el.estado == 'CANCELADO')" mdbBtn type="button"
+                            color="secondary" rounded="true" mdbWavesEffect size="sm">Anular</button>
+
+                    </td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        <button (click)="openModalPago(el)" [disabled]="(el.estado == 'PAGADO')" mdbBtn type="button"
+                            color="secondary" rounded="true" mdbWavesEffect size="sm">Pagar</button>
+                    </td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+                        [hidden]="authService.hasRole('ROLE_RECEPCIONISTA') || authService.hasRole('ROLE_CLIENTE')">
+                        <input type="checkbox" (change)="eventCheck($event,el)" class="check">
+                    </td>
+
+                </tr>
+            </tbody>
+            <tfoot class="grey lighten-5 w-100">
+                <tr>
+                    <td colspan="4">
+                        <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="citas"></mdb-table-pagination>
+                    </td>
+                </tr>
+
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<div mdbModal #modalPago="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby=""
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-secondary text-white text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Pago de Cita</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row col-12">
+                    <form [formGroup]="myform" class="row col-12 me-auto ms-auto justify-content-center">
+                        <fieldset class="row col-12">
+
+                            <div class="md-form col-6">
+
+                                <input type="text" class="form-input form-control" mdbInput mdbValidate
+                                    [(ngModel)]="creditNumber" onkeyup="$cc.validate(event)"
+                                    placeholder="0000 0000 0000 0000" maxlength="19" [formControl]="creditNumberForm"
+                                    required>
+                                <label class="pl-3">Nro. de Tarjeta</label>
+                            </div>
+
+                            <div class="md-form col-4">
+
+                                <input type="text" class="form-input form-control" mdbInput mdbValidate
+                                    [(ngModel)]="creditExpiration" onkeyup="$cc.expiry.call(this,event)" maxlength="7"
+                                    placeholder="mm/yyyy" [formControl]="creditExpirationForm" required>
+                                <label class="pl-3">Expiración</label>
+                            </div>
+                            <div class="md-form col-4">
+
+                                <input type="text" class="form-input form-control" mdbInput mdbValidate
+                                    [(ngModel)]="creditCVV" maxlength="3" placeholder="xxx"
+                                    [formControl]="creditCVVForm" required>
+                                <label class="pl-3">CVV</label>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <table mdbTable>
+                        <thead>
+                            <tr class="text-center">
+                                <th> Servicio </th>
+                                <th> Categoria </th>
+                                <th> Costo </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr mdbTableCol class="text-center">
+                                <td>{{ nombreServ }}</td>
+                                <td>{{ categoriaServ }}</td>
+                                <td>S/. {{ costo }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" mdbBtn color="secondary" class="waves-light" (click)="updatePago()"
+                    mdbWavesEffect>
+                    Pagar
+                </button>
+                <button type="button" mdbBtn color="secondary" class="waves-light" (click)="cerrarmodalPago()"
+                    mdbWavesEffect>
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

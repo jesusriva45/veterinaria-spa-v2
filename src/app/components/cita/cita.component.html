@@ -1,0 +1,113 @@
+<div class="container">
+
+    <h3 class="ml-auto mr-auto w-100 text-center mt-5"> RESERVACIÓN DE CITA</h3>
+
+    <form [formGroup]="myform" class="container ml-auto mr-auto row col-12">
+
+        <div class="row col-12">
+            <div class="mt-5 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+
+                <div class="md-form">
+                    <p class="">Categoria</p>
+                    <select [ngClass]="{
+                 'is-invalid': Categoria.invalid && (Categoria.dirty || Categoria.touched),
+                 'is-valid': Categoria.valid && (Categoria.dirty || Categoria.touched)
+               }" class="form-control" (ngModelChange)="onChangeCategoria($event)" [ngModel]="id_cate"
+                        [formControl]="Categoria" class="form-control pl-3 pr-3">
+                        <option [ngValue]=undefined selected>--- selecionar categoria ---</option>
+                        <option *ngFor="let cate of categorias" [ngValue]="cate?.idcategoria">{{ cate.descripcion }}
+                        </option>
+                    </select>
+                    <div class="pl-3 ">
+                        <mdb-error class="pl-3 mt-5"
+                            *ngIf="(Categoria.errors && submitted ) || ((Categoria.dirty || Categoria.touched) && Categoria.invalid)">
+                            Seleccione una categoria
+                        </mdb-error>
+                    </div>
+                </div>
+
+                <div class="md-form">
+                    <p class="">Servicio</p>
+                    <select [ngClass]="{
+                     'is-invalid': Servicio.invalid && (Servicio.dirty || Servicio.touched),
+                     'is-valid': Servicio.valid && (Servicio.dirty || Servicio.touched)
+                   }" class="form-control" (ngModelChange)="onChangeServicio($event)" [ngModel]="servicio"
+                        [formControl]="Servicio" class="form-control pl-3 pr-3">
+                        <option [ngValue]=undefined selected>--- selecionar servicio ---</option>
+                        <option *ngFor="let servi of servicios" [ngValue]="servi">{{ servi.nombre }}</option>
+                    </select>
+                    <div class="pl-3">
+                        <mdb-error class="pl-3 mt-5"
+                            *ngIf="(Servicio.errors && submitted ) || ((Servicio.dirty || Servicio.touched) && Servicio.invalid)">
+                            Seleccione un servicio
+                        </mdb-error>
+                    </div>
+                </div>
+
+
+
+
+
+                <!-- div class="">
+                 <label>Días de Atención</label>
+                 <select 
+                 [ngClass]="{
+                     'is-invalid': DiasAten.invalid && (DiasAten.dirty || DiasAten.touched),
+                     'is-valid': DiasAten.valid && (DiasAten.dirty || DiasAten.touched)
+                   }"             
+                 
+                 class="form-control" (ngModelChange)="onChangeDias($event)" [formControl]="DiasAten" [ngModel]="dias" >
+                 <option [ngValue]=undefined selected>--- selecionar una categoria ---</option>
+                     <option *ngFor="let dia of diasServ" [ngValue]="dia">{{ dia.dias }}</option>
+                 </select>
+             </div-->
+
+                <div class=" md-form">
+                    <p class="">Horario</p>
+                    <select [ngClass]="{
+                     'is-invalid': Horario.invalid && (Horario.dirty || Horario.touched),
+                     'is-valid': Horario.valid && (Horario.dirty || Horario.touched)
+                   }" class="form-control" (ngModelChange)="onChangeHorario($event)" [formControl]="Horario"
+                        [(ngModel)]="horario" class="form-control pl-3 pr-3">
+                        <option [ngValue]=undefined selected>--- selecionar horario ---</option>
+                        <option *ngFor="let hora of horarios" [ngValue]="hora">{{ hora.hora_inicio }} - {{ hora.hora_fin
+                            }}</option>
+                    </select>
+                    <div class="pl-3 ">
+                        <mdb-error class="pl-3 mt-5"
+                            *ngIf="(Horario.errors && submitted ) || ((Horario.dirty || Horario.touched) && Horario.invalid)">
+                            Seleccione la hora de atención
+                        </mdb-error>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-5 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <div>
+                    <ul>
+                        <li *ngFor="let dia of diasServ"> {{ dia.dias }}</li>
+                    </ul>
+                </div>
+
+
+                <input class="form-control" id="fecha" [disabled]="disabled" (change)="clickDay($event)" type="date"
+                    value="" min="{{ currentYear | date:'yyyy-MM-dd'}}">
+
+
+            </div>
+        </div>
+
+        <div class=" col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <button type="submit" color="secondary" [disabled]="disabled" mdbBtn mdbWavesEffect class="waves-light"
+                (click)="verificarDatos()">
+                Registrar
+            </button>
+        </div>
+
+
+
+    </form>
+
+
+</div>
