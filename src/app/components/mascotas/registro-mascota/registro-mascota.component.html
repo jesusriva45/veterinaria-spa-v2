@@ -148,7 +148,7 @@
                         <div class="form-group col-12">
                             <label>Fecha de Nacimiento</label>
                             <input type="date" class="form-input form-control" [(ngModel)]="mascota.fecha_nacimiento"
-                                formControlName="FechaNacimiento" required />
+                                formControlName="FechaNacimiento" required max="2021-06-21" />
                             <div class="form-control-feedback">
                                 <p class="alert alert-danger" *ngIf="
                     (FechaNacimiento.errors?.required && submitted) ||

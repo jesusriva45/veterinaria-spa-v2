@@ -74,7 +74,6 @@ export class DetalleCitaComponent implements OnInit {
 
   eventCheck(event, el: any) {
     sessionStorage.setItem('servicio', JSON.stringify(el.servicio));
-    console.log(JSON.stringify(el.servicio))
   }
 
   timeCheck() {
@@ -347,7 +346,7 @@ export class DetalleCitaComponent implements OnInit {
   mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
 
-  headElements = ['idcita', 'fecha_registro', 'dia_atencion', 'hora_inicio', 'estado'];
+  headElements = ['idcita', 'fecha_registro', 'dia_atencion', 'hora_inicio', 'servicio.nombre', 'estado'];
   previous: any = [];
   searchText: string = "";
 

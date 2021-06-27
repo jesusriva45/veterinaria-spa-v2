@@ -25,7 +25,7 @@ export class PedidoService {
     private http: HttpClient,
     private router: Router,
     public authService: AuthService
-  ) {}
+  ) { }
 
   //----------------------------------
   private agregarAuthorizationHeader() {
@@ -90,4 +90,65 @@ export class PedidoService {
         })
       );
   }
+
+  getPedidosDeUsuario(idUsuario: number): Observable<Pedido[]> {
+    return this.http
+      .get<Pedido[]>(`${this.urlEndPoint}/usuario/${idUsuario}`, {
+        headers: this.agregarAuthorizationHeader(),
+      })
+      .pipe(
+        catchError((e) => {
+          if (this.isNoAutorizado(e)) {
+            return throwError(e);
+          }
+        })
+      );
+  }
+
+  //-------------VENDEDOR -----------------------
+
+
+  updateEstado(pedido: Pedido): Observable<Pedido> {
+    return this.http
+      .put<Pedido>(`${this.urlEndPoint}/estado/${pedido.idpedido}`, pedido, {
+        headers: this.agregarAuthorizationHeader(),
+      })
+      .pipe(
+        catchError((e) => {
+          if (this.isNoAutorizado(e)) {
+            return throwError(e);
+          }
+        })
+      );
+  }
+
+
+  getPedidosDeUsuarioPorDni(dni: string): Observable<Pedido[]> {
+    return this.http
+      .get<Pedido[]>(`${this.urlEndPoint}/dni/${dni}`, {
+        headers: this.agregarAuthorizationHeader(),
+      })
+      .pipe(
+        catchError((e) => {
+          if (this.isNoAutorizado(e)) {
+            return throwError(e);
+          }
+        })
+      );
+  }
+
+  getPedidosDeUsuarioPorDniAndEstado(dni: string, estado: string): Observable<Pedido[]> {
+    return this.http
+      .get<Pedido[]>(`${this.urlEndPoint}/${dni}/${estado}`, {
+        headers: this.agregarAuthorizationHeader(),
+      })
+      .pipe(
+        catchError((e) => {
+          if (this.isNoAutorizado(e)) {
+            return throwError(e);
+          }
+        })
+      );
+  }
+
 }

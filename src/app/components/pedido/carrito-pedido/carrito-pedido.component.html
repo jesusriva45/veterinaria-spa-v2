@@ -1,4 +1,5 @@
-<div *ngIf="cartItems.detallesProducto.length == 0 && cartItems.detallePedidoServicio.length == 0" class="alert alert-warning col-md-12" role="alert">
+<div *ngIf="cartItems.detallesProducto.length == 0 && cartItems.detallePedidoServicio.length == 0"
+    class="alert alert-warning col-md-12" role="alert">
     Tu Carrito de compras está vacio.
 </div>
 
@@ -26,19 +27,21 @@
 
 
 
-                            <th><img [attr.src]="(item.producto?.foto1 != null || item.producto?.foto1 != undefined) ? item.producto?.foto1 : myImgUrl" width="50px" height="50px"></th>
+                            <th><img [attr.src]="(item.producto?.foto1 != null || item.producto?.foto1 != undefined) ? item.producto?.foto1 : myImgUrl"
+                                    width="50px" height="50px"></th>
                             <td>{{ item.producto.nombre }}</td>
                             <td>{{ item.producto.marca.nombre }}</td>
                             <td>
                                 <div class="">
 
-                                    <button class="minus ml-2 white-text" mdbWavesEffect (click)="decrementCantidad(item)">
-                            <mdb-icon class="m-auto" fas icon="minus">
-                            </mdb-icon>
-                            </button> {{ item.cantidad }}
+                                    <button class="minus ml-2 white-text" mdbWavesEffect
+                                        (click)="decrementCantidad(item)">
+                                        <mdb-icon class="m-auto" fas icon="minus">
+                                        </mdb-icon>
+                                    </button> {{ item.cantidad }}
                                     <button class="add mr-2" mdbWavesEffect (click)="incrementCantidad(item)">
-                                <mdb-icon class="m-auto white-text" fas icon="plus"></mdb-icon>
-                            </button>
+                                        <mdb-icon class="m-auto white-text" fas icon="plus"></mdb-icon>
+                                    </button>
 
 
                                     <ng-template #Remove>
@@ -53,7 +56,8 @@
                                 <p class="mt-2">S/.{{ item.cantidad * item.precio | number }}</p>
                             </td>
                             <td>
-                                <a placement="bottom" triggers="hover" [mdbPopover]="Remove" class="remove white-text p-2" mdbWavesEffect (click)="removeItem(item)">
+                                <a placement="bottom" triggers="hover" [mdbPopover]="Remove"
+                                    class="remove white-text p-2" mdbWavesEffect (click)="removeItem(item)">
                                     <mdb-icon fas icon="trash"></mdb-icon>
                                 </a>
                             </td>
@@ -83,24 +87,28 @@
                     </thead>
                     <tbody>
 
-                        <tr class="text-center" mdbTableCol *ngFor="let item of cartItems.detallePedidoServicio; let i=index ">
+                        <tr class="text-center" mdbTableCol
+                            *ngFor="let item of cartItems.detallePedidoServicio; let i=index ">
 
 
-                            <th><img [attr.src]="(item.servicio?.foto1 != null || item.servicio?.foto1 != undefined) ? item.servicio?.foto1 : myImgUrl" width="50px" height="50px"></th>
+                            <th><img [attr.src]="(item.servicio?.foto1 != null || item.servicio?.foto1 != undefined) ? item.servicio?.foto1 : myImgUrl"
+                                    width="50px" height="50px"></th>
                             <td>{{ item.servicio?.nombre }}</td>
                             <td width="260px">
-                                <input (ngModelChange)="fecha(item)" [(ngModel)]="item.fecha_atencion" type="date" class="form-control">
+                                <input (ngModelChange)="fecha(item)" [(ngModel)]="item.fecha_atencion" type="date"
+                                    class="form-control">
                             </td>
                             <td>
                                 <div class="">
 
-                                    <button class="minus ml-2 white-text" mdbWavesEffect (click)="decrementCantidadServicio(item)">
-                            <mdb-icon class="m-auto" fas icon="minus">
-                            </mdb-icon>
-                            </button> {{ item.cantidad }}
+                                    <button class="minus ml-2 white-text" mdbWavesEffect
+                                        (click)="decrementCantidadServicio(item)">
+                                        <mdb-icon class="m-auto" fas icon="minus">
+                                        </mdb-icon>
+                                    </button> {{ item.cantidad }}
                                     <button class="add mr-2" mdbWavesEffect (click)="incrementCantidadServicio(item)">
-                                <mdb-icon class="m-auto white-text" fas icon="plus"></mdb-icon>
-                            </button>
+                                        <mdb-icon class="m-auto white-text" fas icon="plus"></mdb-icon>
+                                    </button>
 
 
                                     <ng-template #Remove>
@@ -115,9 +123,10 @@
                                 <p class="mt-2"> S/.{{ item.cantidad * item.precio | number }}</p>
                             </td>
                             <td>
-                                <button placement="right" triggers="hover" [mdbPopover]="Remove" class="remove white-text" mdbWavesEffect (click)="removeItemServicio(item)">
-                                <mdb-icon fas icon="trash"></mdb-icon>
-                            </button>
+                                <button placement="right" triggers="hover" [mdbPopover]="Remove"
+                                    class="remove white-text" mdbWavesEffect (click)="removeItemServicio(item)">
+                                    <mdb-icon fas icon="trash"></mdb-icon>
+                                </button>
                             </td>
                         </tr>
                     </tbody>
@@ -137,10 +146,73 @@
                     <br>
                     <img src="../../../../assets/img/tarjetas-credito.jpg">
                     <br>
-                    <button [disabled]="(cartItems.detallePedidoServicio.length == 0 && cartItems.detallesProducto.length == 0)" type="button" class="ml-auto" mdbBtn color="success" (click)="insertar()" mdbWavesEffect>Confirmar pedido</button>
+                    <button
+                        [disabled]="(cartItems.detallePedidoServicio.length == 0 && cartItems.detallesProducto.length == 0)"
+                        type="button" class="ml-auto" mdbBtn color="success" (click)="insertar()"
+                        mdbWavesEffect>Confirmar pedido</button>
                 </td>
             </tr>
 
         </div>
     </div>
-</div>
+
+
+
+
+
+
+    <div mdbModal #modalPago="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby=""
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-secondary text-white text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Pago de Cita</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row col-12">
+                        <form [formGroup]="myform" class="row col-12 me-auto ms-auto justify-content-center">
+                            <fieldset class="row col-12">
+
+                                <div class="md-form col-6">
+
+                                    <input type="text" class="form-input form-control" mdbInput mdbValidate
+                                        [(ngModel)]="creditNumber" onkeyup="$cc.validate(event)"
+                                        placeholder="0000 0000 0000 0000" maxlength="19"
+                                        [formControl]="creditNumberForm" required>
+                                    <label class="pl-3">Nro. de Tarjeta</label>
+                                </div>
+
+                                <div class="md-form col-4">
+
+                                    <input type="text" class="form-input form-control" mdbInput mdbValidate
+                                        [(ngModel)]="creditExpiration" onkeyup="$cc.expiry.call(this,event)"
+                                        maxlength="7" placeholder="mm/yyyy" [formControl]="creditExpirationForm"
+                                        required>
+                                    <label class="pl-3">Expiración</label>
+                                </div>
+                                <div class="md-form col-4">
+
+                                    <input type="text" class="form-input form-control" mdbInput mdbValidate
+                                        [(ngModel)]="creditCVV" maxlength="3" placeholder="xxx"
+                                        [formControl]="creditCVVForm" required>
+                                    <label class="pl-3">CVV</label>
+                                </div>
+                            </fieldset>
+                        </form>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" mdbBtn color="secondary" class="waves-light" (click)="updatePago()"
+                        mdbWavesEffect>
+                        Pagar
+                    </button>
+                    <button type="button" mdbBtn color="secondary" class="waves-light" (click)="cerrarmodalPago()"
+                        mdbWavesEffect>
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>

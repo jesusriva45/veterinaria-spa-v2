@@ -25,7 +25,8 @@
 
         <ul class="navbar-nav ml-auto">
 
-            <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
+            <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_VENDEDOR')"
+                routerLinkActive="active">
                 <a class="nav-link waves-light" mdbWavesEffect routerLink="/estado-tracking"> Cambiar Estado
                     Tracking</a>
             </li>
@@ -38,7 +39,7 @@
             </li>
 
 
-            <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN')" routerLinkActive="active">
+            <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN') " routerLinkActive="active">
                 <a class="nav-link waves-light" mdbWavesEffect routerLink="/usuarios"> Crud de Usuarios</a>
             </li>
 
@@ -104,8 +105,7 @@
                 <a class="nav-link waves-light" mdbWavesEffect routerLink="/registro-cliente"> Registrarse</a>
             </li>
 
-            <li class="nav-item" *ngIf="(authService.isAuthenticated() && !authService.hasRole('ROLE_VETERINARIO'))"
-                routerLinkActive="active">
+            <li class="nav-item" *ngIf="authService.hasRole('ROLE_CLIENTE')" routerLinkActive="active">
                 <a class="nav-link " mdbWavesEffect routerLink="/registro-mascota"> Registra a tu Mascota</a>
             </li>
             <li class="nav-item" routerLinkActive="active">

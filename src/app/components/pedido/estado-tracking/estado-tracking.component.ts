@@ -55,7 +55,7 @@ export class EstadoTrackingComponent implements OnInit {
       if (this.elements != null) {
         this.checkBox();
       }
-    }, 5000);
+    }, 1000);
   }
 
   listarEstados() {

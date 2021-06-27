@@ -5,7 +5,7 @@ import { Usuario } from "./usuario";
 export class Pedido {
   idpedido: number;
   fecha_pedido: string;
-
+  estado: string;
   usuario: Usuario;
 
   detallesProducto: Array<DetallePedidoProducto> = [];

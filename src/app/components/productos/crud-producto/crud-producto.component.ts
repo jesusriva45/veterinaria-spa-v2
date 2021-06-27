@@ -303,6 +303,7 @@ export class CrudProductoComponent implements OnInit {
   cerrarmodal() {
     this.submitted = false;
     //this.modalService.dismissAll();
+    this.IdProducto.setValue(0);
     this.contentModal.hide();
     this.myform.reset();
     //this.usuarioService.getRegiones().subscribe((ubigeo) => (this.ubigeo = []));
@@ -333,6 +334,7 @@ export class CrudProductoComponent implements OnInit {
     } else if (accion == "agregar") {
       this.titulo = "REGISTRAR PRODUCTO";
       this.producto.idproducto = 0;
+      this.IdProducto.setValue(0);
       this.producto.foto1 = null;
       this.producto.foto2 = null;
       this.producto.foto3 = null;

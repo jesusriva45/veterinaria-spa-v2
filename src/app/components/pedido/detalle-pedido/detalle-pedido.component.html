@@ -21,10 +21,14 @@
         <tbody>
             <tr class="text-center" *ngFor="let el of elements; let i = index">
 
-                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.nomProducto}}</td>
-                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.cantidad}}</td>
-                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">S/. {{el.precio | number : '1.2-2'}}</td>
-                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">S/. {{el.cantidad*el.precio | number : '1.2-2'}}</td>
+                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                    {{el.nomProducto}}</td>
+                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                    {{el.cantidad}}</td>
+                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">S/.
+                    {{el.precio | number : '1.2-2'}}</td>
+                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">S/.
+                    {{el.cantidad*el.precio | number : '1.2-2'}}</td>
 
             </tr>
         </tbody>

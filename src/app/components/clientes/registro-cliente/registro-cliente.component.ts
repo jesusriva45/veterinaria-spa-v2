@@ -199,6 +199,13 @@ export class RegistroClienteComponent implements OnInit {
     });
   }
 
+
+  validaCampos(campo: string) {
+    let casoError = this.myform.controls[campo].errors;
+
+    return this.myform.controls[campo].errors && this.myform.controls[campo].touched
+  }
+
   validator(): Validators {
     if (this.usuario.direccion == "jesus@gmail.com")
       console.log("si sale la validacion con funciones");
@@ -206,6 +213,7 @@ export class RegistroClienteComponent implements OnInit {
   }
 
   get IdUsuario() {
+
     return this.myform.get("IdUsuario");
   }
 
@@ -304,16 +312,19 @@ export class RegistroClienteComponent implements OnInit {
         if (this.usuario.idusuario == null) {
           if (result.isConfirmed) {
 
+
             this.insert();
-            let timerInterval
-            Swal.fire({
-              title: 'Por favor espere mientras registramos sus datos',
-              html: '<br><br><div class="spinner-border" role="status" style="width: 4rem; height: 4rem;"><br><span class="sr-only">Loading...</span><br></div><br><br>',
-              timerProgressBar: true,
-              allowOutsideClick: false,
-              allowEscapeKey: false,
-              showConfirmButton: false,
-            })
+            //let timerInterval
+
+
+            /* Swal.fire({
+               title: 'Por favor espere mientras registramos sus datos',
+               html: '<br><br><div class="spinner-border" role="status" style="width: 4rem; height: 4rem;"><br><span class="sr-only">Loading...</span><br></div><br><br>',
+               timerProgressBar: true,
+               allowOutsideClick: false,
+               allowEscapeKey: false,
+               showConfirmButton: false,
+             })*/
           }
         } else if (
           this.usuario.idusuario != null &&
@@ -337,9 +348,7 @@ export class RegistroClienteComponent implements OnInit {
   //-------------------- CRUD DE CLIENTE --------------------------------------
   errores: string[];
   insert(): void {
-
     let nom = this.Nombres.value;
-
     this.clienteService.insert(this.usuario).subscribe(
       (usuario) => {
 
@@ -350,16 +359,24 @@ export class RegistroClienteComponent implements OnInit {
           "success"
         );
         this.Depart.setValue(undefined);
-
+        this.myform.reset()
       },
-      (err) => {
-        this.errores = err.error.errors as string[];
-        console.error("Código del error desde el backend: " + err.status);
-        console.error(err.error.errors);
-      },
-      () => {
-        console.warn("");
-      }
+      /*  (err) => {
+          this.errores = err.error.mensaje as string[];
+  
+          console.log(this.errores)
+  
+          Swal.fire(
+            "Error...!",
+            `${err.mensaje} `,
+            "error"
+          );
+          console.error("Código del error desde el backend: " + err.status);
+          console.error(err.error.errors);
+        },
+        () => {
+          console.warn("");
+        }*/
     );
   }
 

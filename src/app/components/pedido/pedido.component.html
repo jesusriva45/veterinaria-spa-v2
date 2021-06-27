@@ -1,68 +1,76 @@
 <div class="container-fluid p-5">
-    <h4>Mis Pedidos</h4>
-    <div class="row">
-        <div class="col-md-12 mx-auto">
-            <div class="md-form">
-                <input type="text" [(ngModel)]="searchText" class="form-control" id="search" mdbInput />
-                <label for="search">Search</label>
+    <h4>Pedidos</h4>
+
+    <div>
+        <div class="row col-md-12 mx-auto">
+            <div [hidden]="!authService.hasRole('ROLE_RECEPCIONISTA') && !authService.hasRole('ROLE_VENDEDOR') && !authService.hasRole('ROLE_ADMIN')"
+                class="md-form w-25">
+                <input type="text" [(ngModel)]="dniUser" class="form-control" id="search" mdbInput />
+                <label for="search">DNI</label>
+            </div>
+            <div class="form-group col-4 ml-auto">
+                <label>Estado</label>
+
+                <select id="select-option" class="form-control pl-3 pr-3"
+                    (ngModelChange)="onChangeFiltrarPedidoPorEstado($event)" [(ngModel)]="estadoPedido" name="estado"
+                    ngOnCha>
+                    <option [ngValue]=null selected>
+                        --- selecionar un estado ---
+                    </option>
+
+                    <option *ngFor="let status of estados" [ngValue]="status">
+                        {{ status }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-4 ml-auto m-auto "
+                *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_RECEPCIONISTA') || authService.hasRole('ROLE_VENDEDOR')">
+                <button (click)="getPedidosSistema()" mdbBtn type="button" color="secondary" rounded="true"
+                    mdbWavesEffect size="sm">Mis Pedidos</button>
             </div>
         </div>
     </div>
-    <table mdbTable #tableEl="mdbTable" striped="true" class="z-depth-1">
-        <thead class="bg-secondary text-bolder">
-            <tr class="text-center">
-                <th class="text-bolder" scope="col">ID</th>
-                <th class="text-bolder" scope="col">FECHA DEL PEDIDO</th>
-                <th class="text-bolder" scope="col">DESCRIPCIÓN</th>
-                <th class="text-bolder" scope="col">DETALLE</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="text-center" *ngFor="let el of elements; let i = index">
-                <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.idpedido}}</th>
-                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.fecha_pedido | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.descripcion}}</td>
-                <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-                    <mdb-icon style="cursor: pointer;" mdbWavesEffect far icon="file-alt" size="2x" [routerLink]="['/pedido/detalle-pedido', el.idpedido]"></mdb-icon>
-                </td>
+    <div id="print-section">
+        <table mdbTable #tableEl="mdbTable" striped="true" class="">
 
-            </tr>
-        </tbody>
-        <tfoot class="grey lighten-5 w-100">
-            <tr>
-                <td colspan="4">
-                    <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
+            <thead class="bg-secondary text-bolder ">
+                <tr class="text-center  w-100">
+                    <th class="text-bolder " scope="col">ID</th>
+                    <th class="text-bolder " scope="col">FECHA DEL PEDIDO</th>
+                    <th class="text-bolder " scope="col">ESTADO</th>
+                    <th class="text-bolder d-print-none" scope="col">DETALLE</th>
+                    <th class="text-bolder d-print-none" scope="col">#</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center" *ngFor="let el of pedidos; let i = index">
+                    <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{el.idpedido}}</th>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{el.fecha_pedido | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        {{el.estado}}</td>
+                    <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
+                        class="d-print-none">
+                        <mdb-icon style="cursor: pointer;" mdbWavesEffect far icon="file-alt" size="2x"
+                            [routerLink]="['/pedido/detalle-pedido', el.idpedido]"></mdb-icon>
+                    </td>
+                    <td class="align-middle"
+                        *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                        <button (click)="cancelarPedido(el)"
+                            [disabled]="(el.estado == 'CANCELADO') || authService.hasRole('ROLE_VETERINARIO')" mdbBtn
+                            type="button" color="secondary" rounded="true" mdbWavesEffect size="sm">Cancelar</button>
+
+                    </td>
+            </tbody>
+
+            <tfoot class="grey lighten-5 w-100 ">
+                <tr>
+                    <td colspan="4">
+                        <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="pedidos"></mdb-table-pagination>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 </div>
-
-
-
-<!--div class="container p-5">
-    <h4>Mis Pedidos</h4>
-    <table mdbTable striped="true">
-        <thead>
-            <tr class="text-center">
-                <th scope="col">ID</th>
-                <th scope="col">FECHA DEL PEDIDO</th>
-                <th scope="col"></th>
-                <th scope="col">DETALLE</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="text-center" *ngFor="let pedido of pedidos">
-                <th scope="row">{{pedido.idpedido}}</th>
-                <td>{{pedido.fecha_pedido | date:'dd-MM-yyyy hh:mm:ss'}}</td>
-                <td>NO SE</td>
-                <td>
-                    <mdb-icon style="cursor: pointer;" mdbWavesEffect far icon="file-alt" size="2x" [routerLink]="['/pedido/detalle-pedido', pedido.idpedido]"></mdb-icon>
-                </td>
-
-            </tr>
-        </tbody>
-    </table>
-
-    <p></p>
-</div-->

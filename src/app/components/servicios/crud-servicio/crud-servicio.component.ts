@@ -134,11 +134,8 @@ export class CrudServicioComponent implements OnInit {
       Validators.pattern("[0-9]+([.][0-9]{1,2})?"),
     ]);
     this.Descripcion = new FormControl("", Validators.required);
-    this.FechaAten = new FormControl("", Validators.required);
+
     this.IdCategoria = new FormControl(undefined, Validators.required);
-    this.DiaAtencion = new FormControl(undefined);
-    this.HoraIniAtencion = new FormControl("");
-    this.HoraFinAtencion = new FormControl("");
   }
 
 
@@ -150,55 +147,44 @@ export class CrudServicioComponent implements OnInit {
         Nombre: this.Nombre,
         Precio: this.Precio,
         Descripcion: this.Descripcion,
-        FechaAten: this.FechaAten,
+
         IdCategoria: this.IdCategoria,
-
-        DiaAtencion: this.DiaAtencion,
-        HoraIniAtencion: this.HoraIniAtencion,
-        HoraFinAtencion: this.HoraFinAtencion,
-
       }),
     });
 
   }
-
-  dia: string;
-  horaIni: string;
-  horaFin: string;
-  diaHora: String = " ";
-
-
-  limpiar() {
-    this.diaHora = " ";
-    this.FechaAten.setValue(`<h3><strong>Horarios de Atenci&oacute;n:</strong></h3>
-    <ul style="font-weight: 300;">
-    ${this.diaHora}
-    </ul>`);
-  }
-
-  agregarDiaHora() {
-    // HoraAtencion: this.HoraAtencion,
-
-    this.dia = this.DiaAtencion.value;
-    this.horaIni = this.HoraIniAtencion.value;
-    this.horaFin = this.HoraFinAtencion.value;
-
-    this.diaHora += `<li>${this.dia} : ${this.horaIni + ":00"} - ${this.horaFin + ":00"}</li>`;
-
-    this.FechaAten.setValue(`<h3><strong>Horarios de Atenci&oacute;n:</strong></h3>
-    <ul style="font-weight: 300;">
-    ${this.diaHora}
-    </ul>`);
-
-  }
-
-  onChangeCate(cate) {
+  /*
+    dia: string;
+    horaIni: string;
+    horaFin: string;
+    diaHora: String = " ";
+    
+    
+      limpiar() {
+        this.diaHora = " ";
+        this.FechaAten.setValue(`<h3><strong>Horarios de Atenci&oacute;n:</strong></h3>
+        <ul style="font-weight: 300;">
+        ${this.diaHora}
+        </ul>`);
+      }
+    
+      agregarDiaHora() {
+        // HoraAtencion: this.HoraAtencion,
+    
+        this.dia = this.DiaAtencion.value;
+        this.horaIni = this.HoraIniAtencion.value;
+        this.horaFin = this.HoraFinAtencion.value;
+    
+        this.diaHora += `<li>${this.dia} : ${this.horaIni + ":00"} - ${this.horaFin + ":00"}</li>`;
+    
+        this.FechaAten.setValue(`<h3><strong>Horarios de Atenci&oacute;n:</strong></h3>
+        <ul style="font-weight: 300;">
+        ${this.diaHora}
+        </ul>`);
+    
+      }*/
 
 
-
-    console.log("Fecha 1 " + cate?.descripcion);
-
-  }
   //----------------- CAPTURAR FILE FOTOS -----------------------------
 
   localUrl: ArrayBuffer[];
@@ -310,19 +296,20 @@ export class CrudServicioComponent implements OnInit {
     if (accion == "editar") {
       this.titulo = "ACTUALIZAR SERVICIO";
 
-      this.diaHora = " ";
+
 
       this.getServicio(servicio.idservicio);
-      this.IdServicio.setValue(this.servicio.idservicio);
-      this.Nombre.setValue(this.servicio.nombre);
-      this.Precio.setValue(this.servicio.precio);
-      this.Descripcion.setValue(this.servicio.descripcion);
-      this.FechaAten.setValue(this.servicio.fecha_atencion);
+      this.IdServicio.setValue(servicio.idservicio);
+      this.Nombre.setValue(servicio.nombre);
+      this.Precio.setValue(servicio.precio);
+      this.Descripcion.setValue(servicio.descripcion);
+      this.IdCategoria.setValue(servicio.serCategoria);
 
       this.getCategoria();
     } else if (accion == "agregar") {
       //this.myform.reset();
       this.titulo = "REGISTRAR SERVICIO";
+      this.IdServicio.setValue(0);
       this.servicio.idservicio = 0;
       this.servicio.foto1 = null;
       this.servicio.foto2 = null;
@@ -418,7 +405,7 @@ export class CrudServicioComponent implements OnInit {
       this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
         this.router.navigate([currentUrl]);
       });*/
-      this.diaHora = " ";
+
       this.listarServicios();
       // this.router.navigate([window.location.reload()]);
     });

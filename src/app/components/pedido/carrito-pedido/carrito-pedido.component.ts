@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 
 import { Router, ActivatedRoute } from "@angular/router";
 import { ProductoService } from "../../../services/producto.service";
@@ -18,6 +18,7 @@ import { DetallePedidoProducto } from "src/app/models/detalle-pedido-producto";
 import { Pedido } from "src/app/models/pedido";
 import { ClienteService } from "src/app/services/cliente.service";
 import { Servicio } from "../../../models/servicio";
+import { ModalDirective } from "projects/angular-bootstrap-md/src/public_api";
 
 @Component({
   selector: "app-carrito-pedido",
@@ -51,6 +52,7 @@ export class CarritoPedidoComponent implements OnInit {
   ngOnInit(): void {
     this.cargarProducto();
     this.listarItems();
+    this.createFormControls()
   }
 
   listarItems() {
@@ -145,17 +147,13 @@ export class CarritoPedidoComponent implements OnInit {
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Si, realizar pedido",
+
               })
               .then((result) => {
                 if (result.isConfirmed) {
-                  swal.fire(
-                    "Registro Exitoso...!",
-                    `Gracias por su compra, estaremos en contacto con usted`,
-                    "success"
-                  );
-
-                  this.registrarPedido();
+                  this.openModalPago()
                 } else {
+                  this.cerrarmodalPago()
                 }
               });
           }
@@ -168,13 +166,11 @@ export class CarritoPedidoComponent implements OnInit {
     this.pedidoService.insert(this.pedido).subscribe((resp) => {
       this.carritoService.vaciarCarrito();
       this.router.navigate(["/pedidos"]);
-
-      /* let currentUrl = this.router.url;
-      this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => {
-        this.router.navigate([currentUrl]);*/
-
-      //});
-      //console.log(resp);
+      swal.fire(
+        "Registro Exitoso...!",
+        `Gracias por su compra, estaremos en contacto con usted`,
+        "success"
+      );
     });
   }
 
@@ -200,4 +196,122 @@ export class CarritoPedidoComponent implements OnInit {
       }
     });
   }
+
+
+
+  //--------------------------- MODAL DETALLE -----------
+
+  @ViewChild("modalPago", { static: true }) modalPago: ModalDirective;
+  ProDescrip: string;
+
+  cerrarmodalPago() {
+    //this.modalService.dismissAll();
+    this.modalPago.hide();
+    this.myform.reset()
+    //this.usuarioService.getRegiones().subscribe((ubigeo) => (this.ubigeo = []));
+  }
+
+
+  costo: number;
+  nombreServ: string;
+  categoriaServ: string;
+
+  openModalPago() {
+    this.modalPago.show();
+  }
+
+  myform: FormGroup;
+
+  createFormControls() {
+    this.myform = new FormGroup({
+      creditNumberForm: new FormControl("", [Validators.nullValidator,
+      Validators.pattern(
+        "^([1-9]{4}[ ])([1-9]{4}[ ])([1-9]{4}[ ])([1-9]{4})$"
+      ),]),
+      creditExpirationForm: new FormControl("", [
+        Validators.required,
+        Validators.pattern(
+          "^([0-3][0-9][/])([2][0][2-9][1-9])$"
+        ),
+      ]),
+      creditCVVForm: new FormControl("", [Validators.nullValidator,
+      Validators.pattern(
+        "^([0-9]{3})$"
+      ),]),
+    });
+    //this.Cliente = new FormControl("", [Validators.required]);
+  }
+
+  get creditNumberForm() {
+    return this.myform.get("creditNumberForm");
+  }
+  get creditExpirationForm() {
+    return this.myform.get("creditExpirationForm");
+  }
+  get creditCVVForm() {
+    return this.myform.get("creditCVVForm");
+  }
+
+
+
+
+  creditNumber: string;
+  creditExpiration: string;
+  creditCVV: string;
+
+  updatePago() {
+
+
+    if (this.myform.invalid) {
+      swal
+        .fire({
+          title: "Completa tus datos",
+          text: "",
+          icon: "error",
+          confirmButtonColor: "#d33",
+          confirmButtonText: "Ok",
+        })
+    } else {
+      swal
+        .fire({
+          title: "Deseas realizar el pago de tu cita?...",
+          text: "",
+          icon: "warning",
+          showCancelButton: true,
+          cancelButtonText: "Cancelar",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si, pagar",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+
+            swal.fire({
+              title: 'Por favor espere mientras se realiza el pago',
+              html: '<br><br><div class="spinner-border" role="status" style="width: 4rem; height: 4rem;"><br><span class="sr-only">Loading...</span><br></div><br><br>',
+              timerProgressBar: true,
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+              showConfirmButton: false,
+              timer: 2500
+            })
+
+
+            setTimeout(() => {
+              this.registrarPedido()              //<<<---using ()=> syntax
+              console.log("PAGO REALIZADO");
+            }, 3000);
+          }
+        });
+    }
+
+
+  }
+
+
+
+
+  //--------------------------
+
+
 }

@@ -21,6 +21,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Imagen</th>
                         <th scope="col">Servicio</th>
+                        <th scope="col">Categoria</th>
                         <th scope="col">Precio</th>
                         <th scope="col">Handle</th>
                         <th scope="col"></th>
@@ -31,14 +32,18 @@
                 <tbody>
                     <tr *ngFor="let servicio of servicios">
                         <th class="align-middle">{{ servicio.idservicio }}</th>
-                        <th class="align-middle"><img mdbWavesEffect (click)="modalDetalle(servicio)" [src]="servicio.foto1  != null ? servicio.foto1 : myImgUrl" width="50px" height="50px"></th>
+                        <th class="align-middle"><img mdbWavesEffect (click)="modalDetalle(servicio)"
+                                [src]="servicio.foto1  != null ? servicio.foto1 : myImgUrl" width="50px" height="50px">
+                        </th>
                         <th class="align-middle">{{ servicio.nombre }}</th>
+                        <th class="align-middle">{{ servicio.serCategoria.descripcion }}</th>
                         <th class="align-middle">{{ servicio.precio | number : '1.2-2' }}</th>
                         <!--th class="align-middle">{{ servicio.descripcion }}</th-->
 
 
                         <td class="align-middle">
-                            <button type="button" mdbBtn class="btn btn-warning align-middle crud" (click)="openModalCrud('editar',servicio)">Editar</button>
+                            <button type="button" mdbBtn class="btn btn-warning align-middle crud"
+                                (click)="openModalCrud('editar',servicio)">Editar</button>
                         </td>
 
 
@@ -52,7 +57,8 @@
 
 
 
-<div mdbModal #modalDetail="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div mdbModal #modalDetail="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header text-center cyan text-white">
@@ -93,10 +99,14 @@
                         <div class="mr-auto ml-auto col-10">
                             <mdb-carousel [animation]="'slide'">
                                 <mdb-carousel-item>
-                                    <img class="d-block w-100" [attr.src]="servicio.foto1 != null ? servicio.foto1 : myImgUrl" height="200px" alt="First slide">
+                                    <img class="d-block w-100"
+                                        [attr.src]="servicio.foto1 != null ? servicio.foto1 : myImgUrl" height="200px"
+                                        alt="First slide">
                                 </mdb-carousel-item>
                                 <mdb-carousel-item>
-                                    <img class="d-block w-100" [attr.src]="servicio.foto2 != null ? servicio.foto2 : myImgUrl" height="200px" alt="Second slide">
+                                    <img class="d-block w-100"
+                                        [attr.src]="servicio.foto2 != null ? servicio.foto2 : myImgUrl" height="200px"
+                                        alt="Second slide">
                                 </mdb-carousel-item>
 
                             </mdb-carousel>
@@ -111,14 +121,16 @@
 
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button mdbBtn color="default" class="waves-light" (click)="cerrarmodalDetalle()" mdbWavesEffect>Cerrar</button>
+                <button mdbBtn color="default" class="waves-light" (click)="cerrarmodalDetalle()"
+                    mdbWavesEffect>Cerrar</button>
             </div>
         </div>
     </div>
 </div>
 
 
-<div mdbModal #contentModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+<div mdbModal #contentModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myBasicModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-fluid modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header text-center text-white cyan">
@@ -135,9 +147,12 @@
 
                             <div class="form-group col-12">
 
-                                <input type="text" class="form-input" [(ngModel)]="servicio.idservicio" formControlName="IdServicio" required hidden>
-                                <div class="form-control-feedback" *ngIf="IdServicio.errors && (IdServicio.dirty || IdServicio.touched)">
-                                    <p class="alert alert-danger" role="alert" *ngIf="IdServicio.errors.required">Codigo incorrecto</p>
+                                <input type="text" class="form-input" [(ngModel)]="servicio.idservicio"
+                                    formControlName="IdServicio" required hidden>
+                                <div class="form-control-feedback"
+                                    *ngIf="IdServicio.errors && (IdServicio.dirty || IdServicio.touched)">
+                                    <p class="alert alert-danger" role="alert" *ngIf="IdServicio.errors.required">Codigo
+                                        incorrecto</p>
                                 </div>
 
                             </div>
@@ -148,15 +163,18 @@
                                 <input type="text" [ngClass]="{
                                     'is-invalid': (Nombre.errors?.required && submitted) || ((Nombre.dirty || Nombre.touched) && Nombre.invalid ),
                                     'is-valid': Nombre.valid && (Nombre.dirty || Nombre.touched)
-                                  }" class="form-control" [(ngModel)]="servicio.nombre" formControlName="Nombre" required>
+                                  }" class="form-control" [(ngModel)]="servicio.nombre" formControlName="Nombre"
+                                    required>
 
                                 <div class="m-0">
-                                    <p class="alert-danger" *ngIf=" (Nombre.errors && Nombre.errors.required && submitted) || ((Nombre.dirty || Nombre.touched) && Nombre.invalid )">Nombre is required</p>
+                                    <p class="alert-danger"
+                                        *ngIf=" (Nombre.errors && Nombre.errors.required && submitted) || ((Nombre.dirty || Nombre.touched) && Nombre.invalid )">
+                                        Nombre is required</p>
                                     <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
                                 </div>
                             </div>
 
-                        
+
 
 
                             <div class="form-group col-12">
@@ -164,12 +182,15 @@
                                 <input type="text" [ngClass]="{
                                     'is-invalid': (Precio.errors?.required && submitted) || ((Precio.dirty || Precio.touched) && Precio.invalid ),
                                     'is-valid': Precio.valid && (Precio.dirty || Precio.touched)
-                                  }" class="form-control" [(ngModel)]="servicio.precio" formControlName="Precio" required>
+                                  }" class="form-control" [(ngModel)]="servicio.precio" formControlName="Precio"
+                                    required>
 
 
-                                <div class="form-control-feedback" *ngIf="(Precio.errors && submitted) || (Precio.dirty || Precio.touched) && Precio.invalid">
+                                <div class="form-control-feedback"
+                                    *ngIf="(Precio.errors && submitted) || (Precio.dirty || Precio.touched) && Precio.invalid">
                                     <p class="alert alert-danger" *ngIf="Precio.errors.required">Precio is required</p>
-                                    <p class="alert alert-danger" *ngIf="Precio.errors.pattern">Formato incorrecto, solo enteros o numero con 2 decimales </p>
+                                    <p class="alert alert-danger" *ngIf="Precio.errors.pattern">Formato incorrecto, solo
+                                        enteros o numero con 2 decimales </p>
                                 </div>
 
                             </div>
@@ -179,18 +200,23 @@
                             <div class="form-group col-12">
                                 <label>Categoria</label>
 
-                                <select class="w-100 form-control" (ngModelChange)="onChangeCate($event)" [(ngModel)]="servicio.serCategoria" [compareWith]="compareCategoria" formControlName="IdCategoria" required>
-                                       
-                                        <option class="form-control" [ngValue]=null aria-hidden="aria-hidden" selected>--- selecionar una marca ---</option>
+                                <select class="w-100 form-control" [(ngModel)]="servicio.serCategoria"
+                                    [compareWith]="compareCategoria" formControlName="IdCategoria" required>
 
-                                       
-                                        <option *ngFor="let cat of categoria" [ngValue]="cat" > {{ cat.descripcion  }}</option>
-                                   
-                                       
-                                    </select>
+                                    <option class="form-control" [ngValue]=null aria-hidden="aria-hidden" selected>---
+                                        selecionar una marca ---</option>
+
+
+                                    <option *ngFor="let cat of categoria" [ngValue]="cat"> {{ cat.descripcion }}
+                                    </option>
+
+
+                                </select>
 
                                 <div class="m-0">
-                                    <p class="alert-danger" *ngIf="(IdCategoria.errors?.required && submitted) || ((IdCategoria.dirty || IdCategoria.touched) && IdCategoria.invalid )">Categoria is required</p>
+                                    <p class="alert-danger"
+                                        *ngIf="(IdCategoria.errors?.required && submitted) || ((IdCategoria.dirty || IdCategoria.touched) && IdCategoria.invalid )">
+                                        Categoria is required</p>
                                     <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
                                 </div>
                             </div>
@@ -207,10 +233,14 @@
                                 <div class="mr-auto ml-auto bg-secondary">
                                     <mdb-carousel [animation]="'slide'">
                                         <mdb-carousel-item>
-                                            <img class="d-block w-100" [attr.src]="servicio.foto1 != null ? servicio.foto1 : myImgUrl" height="240px" alt="First slide">
+                                            <img class="d-block w-100"
+                                                [attr.src]="servicio.foto1 != null ? servicio.foto1 : myImgUrl"
+                                                height="240px" alt="First slide">
                                         </mdb-carousel-item>
                                         <mdb-carousel-item>
-                                            <img class="d-block w-100" [attr.src]="servicio.foto2 != null ? servicio.foto2 : myImgUrl" height="240px" alt="Second slide">
+                                            <img class="d-block w-100"
+                                                [attr.src]="servicio.foto2 != null ? servicio.foto2 : myImgUrl"
+                                                height="240px" alt="Second slide">
                                         </mdb-carousel-item>
 
                                     </mdb-carousel>
@@ -218,15 +248,19 @@
 
                                 <div class="d-inline-flex justify-content-center w-100 mt-5">
                                     <div class="photo">
-                                        <label for="photo1" class="w-100">        
-                                    <mdb-icon fas size="3x" icon="camera"></mdb-icon></label> Foto 1
-                                        <input type="file" id="photo1" (change)="showPreviewImage1($event)" name="foto1" required class="form-control" hidden>
+                                        <label for="photo1" class="w-100">
+                                            <mdb-icon fas size="3x" icon="camera"></mdb-icon>
+                                        </label> Foto 1
+                                        <input type="file" id="photo1" (change)="showPreviewImage1($event)" name="foto1"
+                                            required class="form-control" hidden>
                                     </div>
 
                                     <div class="photo">
-                                        <label for="photo2" class="w-100">        
-                                    <mdb-icon  fas size="3x" icon="camera"></mdb-icon></label> Foto 2
-                                        <input type="file" id="photo2" (change)="showPreviewImage2($event)" name="foto2" required class="form-control" hidden>
+                                        <label for="photo2" class="w-100">
+                                            <mdb-icon fas size="3x" icon="camera"></mdb-icon>
+                                        </label> Foto 2
+                                        <input type="file" id="photo2" (change)="showPreviewImage2($event)" name="foto2"
+                                            required class="form-control" hidden>
                                     </div>
 
                                 </div>
@@ -248,60 +282,6 @@
 
 
 
-                            <div class="form-group col-12">
-                                <label>Dia Atención</label>
-
-                                <select class="w-100 form-control"  [(ngModel)]="dia"  formControlName="DiaAtencion">
-                                       
-                                        <option class="form-control" [ngValue]=undefined aria-hidden="aria-hidden" selected>--- selecionar una día ---</option>
-                                        <option class="form-control" value="Lunes" aria-hidden="aria-hidden">Lunes</option>
-                                        <option class="form-control" value="Martes" aria-hidden="aria-hidden">Martes</option>
-                                        <option class="form-control" value="Miércoles" aria-hidden="aria-hidden">Miércoles</option>
-                                        <option class="form-control" value="Jueves" aria-hidden="aria-hidden">Jueves</option>
-                                        <option class="form-control" value="Viernes" aria-hidden="aria-hidden">Viernes</option>                
-                                       
-                                    </select>
-
-                                <div class="m-0">
-                                    <p class="alert-danger" *ngIf="(DiaAtencion.errors?.required && submitted) || ((DiaAtencion.dirty || DiaAtencion.touched) && DiaAtencion.invalid )">Dia Atención is required</p>
-                                    <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
-                                </div>
-                            </div>
-
-               
-
-                            <div class="form-group  col-12 mb-4">
-                                <label>Hora Atención</label>
-                                <div class="d-flex  justify-items-center"> 
-                                    <input type="text" placeholder="Inicio"  class="form-control col-2 mr-2 mt-auto mb-auto" [(ngModel)]="horaIni" formControlName="HoraIniAtencion">
-                                
-                                    <input type="text" placeholder="Fin" class="form-control col-2 ml-2 mr-5 mt-auto mb-auto" [(ngModel)]="horaFin" formControlName="HoraFinAtencion">
-
-                                    <button type="button" class="btn btn-success m-0 mr-2" (click)="agregarDiaHora()" >AGREGAR</button>
-                                    <button type="button" class="btn btn-warning m-0 ml-2" (click)="limpiar()" >Limpiar</button>
-                                </div>
-                                
-                               
-                            </div>
-
-                            
-
-                            <div class="form-group col-12">
-                                <label>Horarios de Atención</label>
-
-                                <angular-editor id="editor1" [config]="editorConfigHora" [ngClass]="{
-                                    'is-invalid': (FechaAten.errors?.required && submitted) || ((FechaAten.dirty || FechaAten.touched) && FechaAten.invalid ),
-                                    'is-valid': FechaAten.valid && (FechaAten.dirty || FechaAten.touched)
-                                  }" [(ngModel)]="servicio.fecha_atencion" formControlName="FechaAten" required>
-                                </angular-editor>
-
-
-                                <div class="m-0">
-                                    <p class="alert-danger" *ngIf=" (FechaAten.errors?.required && submitted) || ((FechaAten.dirty || FechaAten.touched) && FechaAten.invalid )">Descripcion is required</p>
-                                    <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
-                                </div>
-                            </div>
-
                             <div class=" col-12">
                                 <label>Descripcion</label>
 
@@ -313,7 +293,9 @@
 
 
                                 <div class="m-0">
-                                    <p class="alert-danger" *ngIf=" (Descripcion.errors?.required && submitted) || ((Descripcion.dirty || Descripcion.touched) && Descripcion.invalid )">Descripcion is required</p>
+                                    <p class="alert-danger"
+                                        *ngIf=" (Descripcion.errors?.required && submitted) || ((Descripcion.dirty || Descripcion.touched) && Descripcion.invalid )">
+                                        Descripcion is required</p>
                                     <!--div class="alert alert-success" *ngIf="Nombres.valid && (Nombres.dirty && Nombres.touched)">Campo valido</div-->
                                 </div>
                             </div>
@@ -328,18 +310,21 @@
 
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button type="button" mdbBtn color="secondary" mdbWavesEffect class="waves-light" aria-label="Close" (click)="cerrarmodal()">
-                        Cancelar
-                      </button>
+                <button type="button" mdbBtn color="secondary" mdbWavesEffect class="waves-light" aria-label="Close"
+                    (click)="cerrarmodal()">
+                    Cancelar
+                </button>
 
-                <button type="submit" mdbBtn color="secondary" mdbWavesEffect class="waves-light" (click)="verificarDatos()" *ngIf="servicio.idservicio == 0; else elseBlock">
-                        Registrar
-                      </button>
+                <button type="submit" mdbBtn color="secondary" mdbWavesEffect class="waves-light"
+                    (click)="verificarDatos()" *ngIf="servicio.idservicio == 0; else elseBlock">
+                    Registrar
+                </button>
 
                 <ng-template #elseBlock>
-                    <button type="" role="button" mdbBtn color="secondary" mdbWavesEffect class="waves-light" (click)="verificarDatos()" [disabled]="myform.invalid">
-                          Actualizar
-                        </button>
+                    <button type="" role="button" mdbBtn color="secondary" mdbWavesEffect class="waves-light"
+                        (click)="verificarDatos()" [disabled]="myform.invalid">
+                        Actualizar
+                    </button>
                 </ng-template>
             </div>
         </div>

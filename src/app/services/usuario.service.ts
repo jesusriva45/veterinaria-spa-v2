@@ -26,7 +26,7 @@ export class UsuarioService {
     private http: HttpClient,
     private router: Router,
     public authService: AuthService
-  ) {}
+  ) { }
 
   //@Output() error;
 

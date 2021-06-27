@@ -18,13 +18,15 @@ export class ClienteService {
 
   private httpHeaders = new HttpHeaders({
     "Content-Type": "application/json",
+    'Accept': 'application/json',
+
   });
 
   constructor(
     private http: HttpClient,
     private router: Router,
     public authService: AuthService
-  ) {}
+  ) { }
 
   //----------------------------------
   private agregarAuthorizationHeader() {
@@ -65,7 +67,14 @@ export class ClienteService {
       .pipe(
         map((response: any) => response.usuario as Usuario),
         catchError((e) => {
+
           if (e.status == 400) {
+
+            Swal.fire(e.error.mensaje, e.error.error, "error");
+            return throwError(e);
+          } if (e.status == 500) {
+            console.log(e.error.mensaje);
+            Swal.fire(e.error.mensaje, e.error.error, "error");
             return throwError(e);
           }
 
